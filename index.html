@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lønnsom – Sykepengekalkulator</title>
+  <meta name="description" content="Beregn arbeidsgiverperiode, NAV-periode, maksdato og gjenopptjening av sykepenger – laget for lønnsmedarbeidere i kommunal sektor." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Lønnsom – til toppen">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill">
+      <a href="#kalkulator" class="on">Kalkulator</a>
+      <a href="#kalender">Kalender</a>
+      <a href="#tidslinje">Tidslinje</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <a class="cta-pill sm" href="#kalkulator">Beregn <span>→</span></a>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <div class="reeds" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Kommunal sektor · HTA § 8</p>
+        <div class="fact"><span>Arbeidsgiverperiode</span><b>16 dager</b><i>dag 1–16</i></div>
+        <div class="fact"><span>Maks sykepenger</span><b>248 dager</b><i>≈ 52 uker</i></div>
+        <div class="fact"><span>1 G fra 1.5.2026</span><b id="chipG">136 549</b><i>kr</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Folketrygdloven kap. 8 · Sykepenger</p>
+        <h1>Sykepenger,<br />regnet ut riktig</h1>
+        <div class="hero-row">
+          <p class="lead">Regn ut arbeidsgiverperioden, når NAV overtar, maksdato og når den ansatte får ny rett. Laget for lønnsmedarbeidere i kommunen, med alt vist i en kalender.</p>
+          <a class="cta-pill" href="#kalkulator">Start beregning <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Arbeidsgiverperiode og NAV-periode dag for dag</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Maksdato med 248-dagersregelen</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.7L4 15.5M4 20v-4.5h4.5"/></svg><span>Ny rett etter 26 uker i arbeid</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>6G-tak, kommunens sykelønn og frister</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- KALKULATOR -->
+    <section id="kalkulator" class="calc">
+      <form id="form" class="card form" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <h2>Fravær</h2>
+          <button type="button" class="ghost" id="resetBtn">Nullstill</button>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Første fraværsdag</span>
+            <input type="date" id="start" required />
+          </label>
+          <label class="field">
+            <span>Sykmeldt t.o.m. <em>valgfritt</em></span>
+            <input type="date" id="end" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Sykmeldingsgrad <output id="gradOut">100 %</output></span>
+          <input type="range" id="grad" min="20" max="100" step="5" value="100" />
+          <small>Gradert sykmelding gir lavere utbetaling, men hver dag teller som en hel sykepengedag.</small>
+        </label>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Brukte dager <em>siste 3 år</em></span>
+            <input type="number" id="prior" min="0" max="248" value="0" inputmode="numeric" />
+          </label>
+          <label class="field">
+            <span>Ansatt fra <em>opptjening</em></span>
+            <input type="date" id="ansatt" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Årslønn (100 % lønn inkl. faste tillegg)</span>
+          <div class="suffix"><input type="text" id="lonn" value="620 000" inputmode="numeric" /><i>kr</i></div>
+        </label>
+
+        <details class="adv">
+          <summary>Flere faktorer <span>16-dagersregel · alder · ferie · G</span></summary>
+
+          <fieldset>
+            <legend>Tidligere sykefravær (16-dagersregelen)</legend>
+            <div class="grid2">
+              <label class="field">
+                <span>Forrige fravær slutt</span>
+                <input type="date" id="prevEnd" />
+              </label>
+              <label class="field">
+                <span>AGP-dager brukt</span>
+                <input type="number" id="prevAgp" min="0" max="16" value="0" inputmode="numeric" />
+              </label>
+            </div>
+            <small>Hvis det er færre enn 16 dager mellom to fravær, regnes de sammen, og den ansatte får ikke en ny arbeidsgiverperiode.</small>
+          </fieldset>
+
+          <div class="grid2">
+            <label class="field">
+              <span>Fødselsdato <em>67/70 år</em></span>
+              <input type="date" id="birth" />
+            </label>
+            <label class="field">
+              <span>Ferie <em>hverdager</em></span>
+              <input type="number" id="ferie" min="0" max="60" value="0" inputmode="numeric" />
+            </label>
+          </div>
+
+          <div class="grid2">
+            <label class="field">
+              <span>Tilbake i arbeid <em>etter maks</em></span>
+              <input type="date" id="back" />
+            </label>
+            <label class="field">
+              <span>Grunnbeløp (G)</span>
+              <div class="suffix"><input type="text" id="G" value="136 549" inputmode="numeric" /><i>kr</i></div>
+            </label>
+          </div>
+        </details>
+      </form>
+
+      <div class="results" id="results" aria-live="polite"></div>
+    </section>
+
+    <!-- KALENDER -->
+    <section id="kalender" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Kalender</p>
+          <h2>Hvem betaler hvilken dag</h2>
+        </div>
+        <div class="seg" role="group" aria-label="Kalenderperiode">
+          <button type="button" class="on" data-range="sick">Sykmeldingen</button>
+          <button type="button" data-range="maks">Fram til maksdato</button>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i class="sw agp"></i>Arbeidsgiver (AGP)</span>
+        <span><i class="sw nav"></i>NAV</span>
+        <span><i class="sw proj"></i>Framskrevet</span>
+        <span><i class="sw maks"></i>Maksdato</span>
+        <span><i class="sw hol"></i>Helligdag</span>
+      </div>
+      <div class="months" id="months"></div>
+    </section>
+
+    <!-- TIDSLINJE -->
+    <section id="tidslinje" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Oppfølging</p>
+          <h2>Tidslinje og frister</h2>
+        </div>
+      </div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- REGLER -->
+    <section id="regler" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Reglene i korte trekk</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Arbeidsgiverperioden</h3>
+          <p>Arbeidsgiveren betaler de første <b>16 kalenderdagene</b>. Egenmeldingsdager og sykmeldingsdager regnes sammen. Arbeidsgiveren har bare plikt til å betale når den ansatte har vært ansatt i minst <b>4 uker</b>.</p>
+          <span class="ref">ftrl. § 8-19</span>
+        </article>
+        <article class="rule">
+          <h3>16-dagersregelen</h3>
+          <p>Er det færre enn 16 dager mellom to fravær, regnes de som ett fravær. Dagene fra forrige arbeidsgiverperiode trekkes da fra. Var hele perioden brukt opp, betaler NAV fra første dag.</p>
+          <span class="ref">ftrl. § 8-19</span>
+        </article>
+        <article class="rule">
+          <h3>Maksdato – 248 dager</h3>
+          <p>Den ansatte kan få sykepenger i høyst <b>248 sykepengedager</b>, omtrent 52 uker. Bare hverdager telles (mandag til fredag), også helligdager som faller på en hverdag. Arbeidsgiverperioden er med i de 248 dagene. Dager brukt de siste 3 årene trekkes fra.</p>
+          <span class="ref">ftrl. § 8-12</span>
+        </article>
+        <article class="rule">
+          <h3>Ny rett – 26 uker</h3>
+          <p>Når maksdatoen er nådd, får den ansatte ikke ny rett til sykepenger før hen har vært <b>helt arbeidsfør i 26 uker</b> (182 dager) på rad. Etter maksdato kan AAP eller friskmelding til arbeidsformidling være aktuelt.</p>
+          <span class="ref">ftrl. § 8-12</span>
+        </article>
+        <article class="rule">
+          <h3>6G-tak og kommunal sykelønn</h3>
+          <p>NAV betaler sykepenger av en inntekt på opptil <b>6 G</b>. Etter HTA § 8 får ansatte i kommunen full lønn i inntil <b>12 måneder</b>. Kommunen betaler da forskjellen over 6 G. Kommunen betaler ut lønnen og får refusjon fra NAV.</p>
+          <span class="ref">HTA kap. 1 § 8</span>
+        </article>
+        <article class="rule">
+          <h3>Gradert sykmelding</h3>
+          <p>Utbetalingen følger sykmeldingsgraden, men en gradert dag teller som en <b>hel sykepengedag</b>. Den laveste graden er 20 %.</p>
+          <span class="ref">ftrl. § 8-13</span>
+        </article>
+        <article class="rule">
+          <h3>Opptjening og minsteinntekt</h3>
+          <p>Den ansatte må ha vært i arbeid i minst <b>4 uker</b> rett før fraværet. Inntekten må være minst <b>½ G</b> i året. Har hen vært i jobben kortere enn 4 uker, kan NAV betale fra første dag hvis opptjeningen kommer fra en annen arbeidsgiver.</p>
+          <span class="ref">ftrl. §§ 8-2, 8-3</span>
+        </article>
+        <article class="rule">
+          <h3>67 og 70 år</h3>
+          <p>Fra 67 år får den ansatte sykepenger i høyst <b>60 dager</b>, og inntekten må være over <b>2 G</b>. Retten til sykepenger faller bort fra og med dagen hen fyller 70 år.</p>
+          <span class="ref">ftrl. § 8-51</span>
+        </article>
+        <article class="rule">
+          <h3>Ferie og frister</h3>
+          <p>Ferie i sykmeldingen gir ikke sykepenger, og feriedagene skyver maksdatoen fram. Refusjonskravet må sendes til NAV innen <b>3 måneder</b> etter utgangen av måneden kravet gjelder.</p>
+          <span class="ref">ftrl. §§ 8-17, 22-13</span>
+        </article>
+      </div>
+      <p class="disclaimer">Verktøyet er et hjelpemiddel og ikke et vedtak. Maksdatoen er beregnet ut fra opplysningene du fyller inn, og regelen om 3 år bakover er forenklet. Det er alltid NAVs vedtak og egen lokal avtale (for eksempel IA og egenmelding) som gjelder.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>G = <b id="footG">136 549 kr</b> · Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
