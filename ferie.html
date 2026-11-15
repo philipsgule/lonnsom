@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lønnsom – Ferie og feriepenger</title>
+  <meta name="description" content="Ferie og feriepenger i kommunal sektor forklart kort – med feriepengekalkulator og teller for virkedager." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Sider">
+      <a href="index.html">Sykepenger</a>
+      <a href="ferie.html" aria-current="page">Ferie</a>
+    </nav>
+    <a class="cta-pill sm" href="#verktoy">Beregn <span>→</span></a>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <div class="reeds" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Kommunal sektor · HTA</p>
+        <div class="fact"><span>Ferie i kommunen</span><b>5 uker</b><i>+1 uke fra 60 år</i></div>
+        <div class="fact"><span>Feriepenger</span><b>12 %</b><i>lov: 10,2 %</i></div>
+        <div class="fact"><span>Feriepenger fra 60 år</span><b>14,3 %</b><i>+2,3 %</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Ferieloven · Hovedtariffavtalen (KS)</p>
+        <h1>Ferie og feriepenger,<br />enkelt forklart</h1>
+        <div class="hero-row">
+          <p class="lead">En kort oversikt over ferie og feriepenger for ansatte i kommunen. Du kan regne ut feriepengene og telle hvor mange virkedager en ferie bruker.</p>
+          <a class="cta-pill" href="#verktoy">Regn ut feriepenger <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/></svg><span>Feriepengekalkulator for kommunal sektor</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Teller virkedager og helligdager i ferien</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Ferieåret steg for steg</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="M12 9v6M9 12h6"/></svg><span>Sykdom før og under ferien</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- VERKTØY -->
+    <section id="verktoy" class="tools">
+      <!-- Feriepenger -->
+      <form class="card tool" id="fpForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kalkulator</p>
+            <h2>Feriepenger</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Sats">
+            <button type="button" class="on" data-sats="hta">Kommune (HTA)</button>
+            <button type="button" data-sats="lov">Ferieloven</button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Feriepengegrunnlag <em>opptjent i fjor</em></span>
+          <div class="suffix"><input type="text" id="fpGrunnlag" value="620 000" inputmode="numeric" /><i>kr</i></div>
+          <small>Lønn utbetalt i opptjeningsåret, inkludert faste og variable tillegg og overtid. Feriepenger fra året før regnes ikke med.</small>
+        </label>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Ferieår</span>
+            <input type="number" id="fpAar" min="2020" max="2040" inputmode="numeric" />
+          </label>
+          <label class="field">
+            <span>Fødselsår <em>60+</em></span>
+            <input type="number" id="fpFodt" min="1940" max="2010" placeholder="valgfritt" inputmode="numeric" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Grunnbeløp (G) <em>6G-tak for 60+</em></span>
+          <div class="suffix"><input type="text" id="fpG" value="136 549" inputmode="numeric" /><i>kr</i></div>
+        </label>
+
+        <div class="out" id="fpOut" aria-live="polite"></div>
+      </form>
+
+      <!-- Feriedager -->
+      <form class="card tool" id="fdForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Teller</p>
+            <h2>Feriedager</h2>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Første feriedag</span>
+            <input type="date" id="fdFra" />
+          </label>
+          <label class="field">
+            <span>Siste feriedag</span>
+            <input type="date" id="fdTil" />
+          </label>
+        </div>
+        <small class="hint">Ferieloven teller <b>virkedager</b>, det vil si alle dager unntatt søndager og helligdager. Lørdager teller altså med. En ferieuke er 6 virkedager.</small>
+
+        <div class="out" id="fdOut" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- SATSER -->
+    <section class="section" id="satser">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Satser</p>
+          <h2>Ferie og feriepenger i tall</h2>
+        </div>
+      </div>
+      <div class="rate-grid">
+        <div class="card rate">
+          <span class="rate-label">Ferieloven (minimum)</span>
+          <div class="rate-row"><div><b>25</b><span>virkedager<br />4 uker + 1 dag</span></div><div><b>10,2 %</b><span>feriepenger</span></div></div>
+          <div class="rate-row sub60"><div><b>+6</b><span>virkedager<br />fra 60 år</span></div><div><b>12,5 %</b><span>feriepenger<br />fra 60 år</span></div></div>
+        </div>
+        <div class="card rate hl">
+          <span class="rate-label">Kommunal sektor (HTA)</span>
+          <div class="rate-row"><div><b>5 uker</b><span>lovfestet + avtalefestet ferie</span></div><div><b>12 %</b><span>feriepenger</span></div></div>
+          <div class="rate-row sub60"><div><b>+1 uke</b><span>ekstra ferie<br />fra 60 år</span></div><div><b>14,3 %</b><span>feriepenger<br />fra 60 år</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FERIEÅRET -->
+    <section class="section" id="aaret">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Ferieåret</p>
+          <h2>Slik henger året sammen</h2>
+        </div>
+      </div>
+      <ol class="timeline" id="ferieTimeline"></ol>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Reglene i korte trekk</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Ferierett</h3>
+          <p>Ferieloven gir <b>25 virkedager</b> ferie i året, altså 4 uker og 1 dag. Hovedtariffavtalen gir i tillegg avtalefestet ferie, så ansatte i kommunen har <b>5 uker</b> ferie i året.</p>
+          <span class="ref">ferieloven § 5 · HTA</span>
+        </article>
+        <article class="rule">
+          <h3>Feriepenger</h3>
+          <p>Feriepengene regnes av lønnen som ble utbetalt i <b>opptjeningsåret</b>, altså året før ferieåret. I kommunen er satsen <b>12 %</b>, mens ferieloven krever minst 10,2 %. Feriepengene erstatter lønnen i ferien.</p>
+          <span class="ref">ferieloven § 10 · HTA</span>
+        </article>
+        <article class="rule">
+          <h3>Fra 60 år</h3>
+          <p>Ansatte som fyller 60 år i løpet av ferieåret, får <b>en ekstra ferieuke</b> (6 virkedager) og et tillegg på <b>2,3 %</b> i feriepenger. Tillegget regnes ikke av den delen av grunnlaget som er over <b>6 G</b>.</p>
+          <span class="ref">ferieloven §§ 5, 10</span>
+        </article>
+        <article class="rule">
+          <h3>Hovedferie</h3>
+          <p>Den ansatte kan kreve <b>18 virkedager</b> sammenhengende ferie i perioden <b>1. juni til 30. september</b>.</p>
+          <span class="ref">ferieloven § 7</span>
+        </article>
+        <article class="rule">
+          <h3>Fastsetting og varsel</h3>
+          <p>Arbeidsgiveren fastsetter ferien etter å ha drøftet den med den ansatte. Den ansatte har krav på beskjed om ferien senest <b>2 måneder</b> før den starter.</p>
+          <span class="ref">ferieloven § 6</span>
+        </article>
+        <article class="rule">
+          <h3>Syk før ferien</h3>
+          <p>Blir den ansatte helt arbeidsufør før ferien starter, kan hen kreve at ferien flyttes. Kravet må komme senest <b>siste arbeidsdag før ferien</b> og dokumenteres med legeerklæring.</p>
+          <span class="ref">ferieloven § 9</span>
+        </article>
+        <article class="rule">
+          <h3>Syk i ferien</h3>
+          <p>Blir den ansatte helt arbeidsufør i ferien, kan hen kreve å få like mange feriedager senere. Kravet må komme <b>uten unødig opphold</b> etter at hen er tilbake på jobb, og dokumenteres med legeerklæring.</p>
+          <span class="ref">ferieloven § 9</span>
+        </article>
+        <article class="rule">
+          <h3>Sykepenger og feriepenger</h3>
+          <p>Lønn i arbeidsgiverperioden gir feriepenger som vanlig. Etter arbeidsgiverperioden dekker NAV feriepenger av sykepenger for inntil <b>48 sykepengedager</b> per opptjeningsår. I kommunen betaler arbeidsgiveren ut og får refusjon fra NAV.</p>
+          <span class="ref">ftrl. § 8-33</span>
+        </article>
+        <article class="rule">
+          <h3>Overføring og forskuddsferie</h3>
+          <p>Den ansatte og arbeidsgiveren kan avtale skriftlig å overføre inntil <b>12 virkedager</b> til neste ferieår, eller å ta inntil 12 virkedager ferie på forskudd. Ferie som ikke ble tatt på grunn av sykdom, kan overføres.</p>
+          <span class="ref">ferieloven § 7</span>
+        </article>
+        <article class="rule">
+          <h3>Nyansatt</h3>
+          <p>En nyansatt har rett til ferie, men ikke alltid til feriepenger for hele ferien. Begynner den ansatte etter <b>30. september</b>, kan hen bare kreve 6 virkedager ferie det året.</p>
+          <span class="ref">ferieloven § 5</span>
+        </article>
+        <article class="rule">
+          <h3>Utbetaling i juni</h3>
+          <p>I kommunen utbetales feriepengene vanligvis i <b>juni</b>. Samtidig trekkes det lønn for feriedagene. Med tabelltrekk er skatten fordelt på 10,5 måneder, så det er normalt <b>ikke skattetrekk i juni</b> og halv skatt i desember.</p>
+          <span class="ref">lokal praksis · skattetrekk</span>
+        </article>
+        <article class="rule">
+          <h3>Når den ansatte slutter</h3>
+          <p>Når en ansatt slutter, skal opptjente feriepenger som ikke er utbetalt, betales ut senest ved <b>siste vanlige lønnsutbetaling</b>.</p>
+          <span class="ref">ferieloven § 11</span>
+        </article>
+      </div>
+      <p class="disclaimer">Siden er en kort oversikt og ikke juridisk rådgivning. Lokale avtaler, særavtaler og arbeidsgiverens rutiner kan gi andre løsninger. Sjekk alltid gjeldende ferielov og Hovedtariffavtale.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="ferie.js"></script>
+</body>
+</html>

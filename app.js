@@ -556,21 +556,6 @@
   if (!load()) defaults();
   update();
 
-  // Topbar: bakgrunn ved scroll + aktiv lenke i nav-pillen
-  const topbar = document.querySelector(".topbar");
-  const navLinks = [...document.querySelectorAll(".nav-pill a")];
-  const onScroll = () => {
-    topbar.classList.toggle("scrolled", window.scrollY > 40);
-    let current = navLinks[0];
-    for (const a of navLinks) {
-      const sec = document.querySelector(a.getAttribute("href"));
-      if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.4) current = a;
-    }
-    navLinks.forEach((a) => a.classList.toggle("on", a === current));
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
   // Eksponer for testing
   window.__lonnsom = { compute, parseDate, fmt };
 })();
