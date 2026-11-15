@@ -783,3 +783,51 @@ button { font-family: inherit; cursor: pointer; }
   .ex-steps b { grid-column: 2; text-align: left; }
   .ex-btn { justify-self: stretch; justify-content: center; }
 }
+
+/* ============ Permisjon-siden ============ */
+.pl-bar { display: flex; height: 34px; gap: 3px; }
+.pl-bar span { border-radius: 8px; min-width: 6px; }
+.pl-pre { background: rgba(254, 237, 101, 0.45); }
+.pl-mor { background: var(--yellow); }
+.pl-fmor { background: #d9ea5d; }
+.pl-ffar { background: var(--lime); }
+.pl-far { background: var(--green); }
+.pl-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.pl-row { display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.pl-row:last-child { border-bottom: 0; }
+.pl-dot { width: 12px; height: 12px; border-radius: 4px; }
+.pl-row span { color: rgba(240, 251, 244, 0.85); }
+.pl-row span b { color: #fff; font-weight: 600; }
+.pl-row small { display: block; font-size: 12px; color: var(--muted); }
+.pl-row em { font-style: normal; font-weight: 600; color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.oms-bar { position: relative; height: 16px; margin: 18px 0 6px; border-radius: 99px; background: rgba(232, 248, 238, 0.1); display: flex; overflow: visible; }
+.oms-egen { background: var(--yellow); border-radius: 99px 0 0 99px; }
+.oms-ref { background: var(--green); }
+.oms-10 { position: absolute; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; background: #fff; border-radius: 2px; }
+.oms-10 em { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font: 500 10.5px var(--mono); font-style: normal; color: var(--muted); }
+
+.leave-grid .leave { padding-top: 20px; }
+.leave[hidden] { display: none; }
+.pay { display: inline-block; margin-bottom: 12px; padding: 4px 10px; border-radius: 99px; font: 500 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.pay.lonn { background: rgba(254, 237, 101, 0.12); color: var(--yellow); border: 1px solid rgba(254, 237, 101, 0.3); }
+.pay.nav { background: rgba(31, 168, 94, 0.18); color: #8fe3b4; border: 1px solid rgba(31, 168, 94, 0.4); }
+.pay.uten { background: rgba(232, 248, 238, 0.06); color: var(--muted); border: 1px solid var(--line-2); }
+
+.impact { padding: 8px 24px; overflow-x: auto; }
+.impact-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13.5px; }
+.impact-table th, .impact-table td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.impact-table thead th { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+.impact-table tbody th { font-weight: 600; color: #fff; white-space: nowrap; }
+.impact-table td { color: rgba(240, 251, 244, 0.8); }
+.impact-table tr:last-child th, .impact-table tr:last-child td { border-bottom: 0; }
+.impact-table i { display: inline-block; width: 16px; height: 16px; margin: 0 8px -3px 0; border-radius: 50%; background-position: center; background-repeat: no-repeat; background-size: 10px; }
+.impact-table i.yes { background-color: var(--green); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-9'/%3E%3C/svg%3E"); }
+.impact-table i.no { background-color: rgba(255, 107, 90, 0.8); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E"); }
+.impact-table i.part { background-color: var(--yellow); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23073019' stroke-width='3.5' stroke-linecap='round'%3E%3Cpath d='M6 12h12'/%3E%3C/svg%3E"); }
+
+@media (max-width: 640px) {
+  .pl-row { grid-template-columns: 12px 1fr; }
+  .pl-row em { grid-column: 2; }
+  .impact { padding: 4px 12px; }
+}

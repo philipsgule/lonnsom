@@ -7,6 +7,7 @@
     { href: "index.html", title: "Sykepenger", desc: "Arbeidsgiverperiode, NAV og maksdato" },
     { href: "ferie.html", title: "Ferie", desc: "Ferie og feriepenger" },
     { href: "pensjon.html", title: "Pensjon", desc: "Folketrygd, tjenestepensjon og AFP" },
+    { href: "permisjon.html", title: "Permisjoner", desc: "Foreldrepermisjon, sykt barn og mer" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------

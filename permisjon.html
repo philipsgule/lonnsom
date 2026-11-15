@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lønnsom – Permisjoner</title>
+  <meta name="description" content="Permisjoner i kommunal sektor forklart kort – foreldrepermisjon, omsorgsdager, permisjon med og uten lønn, og hva det betyr for lønn, ferie og pensjon." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%230b4a2b%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23feed65%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#verktoy">Kalkulator</a>
+      <a href="#oversikt">Oversikt</a>
+      <a href="#konsekvenser">Konsekvenser</a>
+      <a href="#eksempler">Eksempler</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <div class="page-menu" data-current="permisjon.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <div class="reeds" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Kommunal sektor · HTA</p>
+        <div class="fact"><span>Foreldrepenger</span><b>49 uker</b><i>eller 61 uker på 80 %</i></div>
+        <div class="fact"><span>Omsorgsdager sykt barn</span><b>10 dager</b><i>15 ved 3+ barn</i></div>
+        <div class="fact"><span>Fri ved fødsel (far/medmor)</span><b>2 uker</b><i>med lønn (HTA)</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Arbeidsmiljøloven kap. 12 · Folketrygdloven · HTA</p>
+        <h1>Permisjoner,<br />samlet på ett sted</h1>
+        <div class="hero-row">
+          <p class="lead">Foreldrepermisjon, sykt barn, permisjon med og uten lønn, og hva permisjonen betyr for lønn, ferie og pensjon. Laget for lønnsmedarbeidere i kommunen.</p>
+          <a class="cta-pill" href="#verktoy">Planlegg permisjon <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c.8-3.5 3.2-5.5 6-5.5s5.2 2 6 5.5M15 15.5c2.6-.3 4.8 1.2 5.5 4.5"/></svg><span>Plan for foreldrepermisjon med datoer</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span>Omsorgsdager når barnet er sykt</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Alle typer permisjon med og uten lønn</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Hva det betyr for lønn, ferie og pensjon</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- VERKTØY -->
+    <section id="verktoy" class="tools">
+      <!-- Foreldrepermisjon -->
+      <form class="card tool" id="fpermForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Planlegger</p>
+            <h2>Foreldrepermisjon</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Dekningsgrad">
+            <button type="button" class="on" data-dek="100">100 %</button>
+            <button type="button" data-dek="80">80 %</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Termindato</span>
+            <input type="date" id="fpTermin" />
+          </label>
+          <label class="field">
+            <span>Årslønn <em>den som søker</em></span>
+            <div class="suffix"><input type="text" id="fpLonn" value="620 000" inputmode="numeric" /><i>kr</i></div>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Fellesperioden: mor tar <output id="fpFellesOut">8 uker</output></span>
+          <input type="range" id="fpFelles" min="0" max="16" step="1" value="8" />
+          <small>Resten av fellesperioden tar far eller medmor. Planen viser permisjonen samlet i én periode etter fødselen. I praksis kan kvotene tas ut fleksibelt fram til barnet er 3 år.</small>
+        </label>
+
+        <label class="field">
+          <span>Grunnbeløp (G)</span>
+          <div class="suffix"><input type="text" id="fpG" value="136 549" inputmode="numeric" /><i>kr</i></div>
+        </label>
+
+        <div class="out" id="fpermOut" aria-live="polite"></div>
+      </form>
+
+      <!-- Omsorgsdager -->
+      <form class="card tool" id="omsForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Teller</p>
+            <h2>Omsorgsdager</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Omsorg">
+            <button type="button" class="on" data-alene="0">Delt omsorg</button>
+            <button type="button" data-alene="1">Aleneomsorg</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Barn <em>t.o.m. 12 år i år</em></span>
+            <input type="number" id="omsBarn" min="0" max="12" value="2" inputmode="numeric" />
+          </label>
+          <label class="field">
+            <span>Dager brukt i år</span>
+            <input type="number" id="omsBrukt" min="0" max="60" value="4" inputmode="numeric" />
+          </label>
+        </div>
+        <small class="hint">Omsorgsdager gjelder til og med kalenderåret barnet fyller <b>12 år</b>, eller 18 år hvis barnet er kronisk sykt eller har nedsatt funksjonsevne. Den ansatte må ha vært i jobb i minst <b>4 uker</b>.</small>
+
+        <div class="out" id="omsOut" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- OVERSIKT -->
+    <section class="section" id="oversikt">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Oversikt</p>
+          <h2>Typer permisjon</h2>
+        </div>
+        <div class="seg" role="group" aria-label="Filter">
+          <button type="button" class="on" data-filter="alle">Alle</button>
+          <button type="button" data-filter="lonn">Med lønn</button>
+          <button type="button" data-filter="nav">NAV</button>
+          <button type="button" data-filter="uten">Uten lønn</button>
+        </div>
+      </div>
+      <div class="rules leave-grid">
+        <article class="rule leave" data-type="lonn">
+          <span class="pay lonn">Med lønn</span>
+          <h3>Svangerskapskontroll</h3>
+          <p>Gravide har rett til fri med lønn til svangerskapskontroller når de ikke kan tas utenom arbeidstiden.</p>
+          <span class="ref">aml. § 12-1</span>
+        </article>
+        <article class="rule leave" data-type="nav">
+          <span class="pay nav">NAV</span>
+          <h3>Svangerskapspermisjon</h3>
+          <p>Rett til permisjon i inntil <b>12 uker</b> under svangerskapet. De siste <b>3 ukene før termin</b> er forbeholdt mor og en del av foreldrepengeperioden.</p>
+          <span class="ref">aml. § 12-2</span>
+        </article>
+        <article class="rule leave" data-type="nav">
+          <span class="pay nav">NAV + kommunen</span>
+          <h3>Foreldrepermisjon</h3>
+          <p><b>49 uker</b> med 100 % eller <b>61 uker og 1 dag</b> med 80 % foreldrepenger. I kommunen betaler arbeidsgiveren normalt lønn og får refusjon fra NAV opptil 6 G.</p>
+          <span class="ref">aml. § 12-5 · ftrl. kap. 14 · HTA § 14</span>
+        </article>
+        <article class="rule leave" data-type="lonn">
+          <span class="pay lonn">Med lønn</span>
+          <h3>Fri ved fødsel</h3>
+          <p>Far eller medmor har rett til <b>2 uker</b> permisjon i forbindelse med fødselen. Etter Hovedtariffavtalen er permisjonen med lønn.</p>
+          <span class="ref">aml. § 12-3 · HTA</span>
+        </article>
+        <article class="rule leave" data-type="lonn">
+          <span class="pay lonn">Med lønn</span>
+          <h3>Ammefri</h3>
+          <p>Den som ammer, har rett til fri med lønn i inntil <b>1 time per dag</b> i barnets første leveår.</p>
+          <span class="ref">aml. § 12-8</span>
+        </article>
+        <article class="rule leave" data-type="lonn">
+          <span class="pay lonn">Med lønn</span>
+          <h3>Sykt barn</h3>
+          <p><b>10 omsorgsdager</b> per forelder i året (15 ved 3 eller flere barn, dobbelt ved aleneomsorg). Arbeidsgiveren betaler de 10 første dagene og kan få refusjon for resten.</p>
+          <span class="ref">aml. § 12-9 · ftrl. § 9-5</span>
+        </article>
+        <article class="rule leave" data-type="nav">
+          <span class="pay nav">NAV</span>
+          <h3>Pleiepenger</h3>
+          <p>Når barnet er alvorlig sykt eller innlagt og trenger tilsyn hele tiden. NAV betaler pleiepenger. Det gis også pleiepenger for pleie av nærstående i livets sluttfase.</p>
+          <span class="ref">aml. § 12-10 · ftrl. kap. 9</span>
+        </article>
+        <article class="rule leave" data-type="lonn">
+          <span class="pay lonn">Lokal avtale</span>
+          <h3>Velferdspermisjon</h3>
+          <p>Fri ved for eksempel dødsfall, begravelse eller flytting. Omfanget og om den er med lønn, står i kommunens eget permisjonsreglement.</p>
+          <span class="ref">lokalt reglement</span>
+        </article>
+        <article class="rule leave" data-type="uten">
+          <span class="pay uten">Uten lønn</span>
+          <h3>Utdanningspermisjon</h3>
+          <p>Rett til hel eller delvis permisjon i inntil <b>3 år</b> for utdanning. Krever minst 3 års arbeid og 2 år hos arbeidsgiveren.</p>
+          <span class="ref">aml. § 12-11</span>
+        </article>
+        <article class="rule leave" data-type="uten">
+          <span class="pay uten">Uten lønn / avtale</span>
+          <h3>Offentlige verv og militærtjeneste</h3>
+          <p>Rett til fri for lovpålagte offentlige verv, som meddommer eller valgmedarbeider, og for militærtjeneste og sivilforsvar.</p>
+          <span class="ref">aml. §§ 12-12, 12-13</span>
+        </article>
+        <article class="rule leave" data-type="uten">
+          <span class="pay uten">Uten lønn</span>
+          <h3>Religiøse høytider</h3>
+          <p>Den som ikke tilhører Den norske kirke, har rett til fri i inntil <b>2 dager</b> i året til religiøse høytider. Dagene kan kreves arbeidet inn.</p>
+          <span class="ref">aml. § 12-15</span>
+        </article>
+        <article class="rule leave" data-type="uten">
+          <span class="pay uten">Uten lønn</span>
+          <h3>Redusert arbeidstid</h3>
+          <p>Rett til redusert arbeidstid av helsemessige, sosiale eller andre viktige velferdsgrunner, og fra fylte 62 år, hvis det kan ordnes uten vesentlig ulempe for virksomheten.</p>
+          <span class="ref">aml. § 10-2 (4)</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- KONSEKVENSER -->
+    <section class="section" id="konsekvenser">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">For lønnsmedarbeideren</p>
+          <h2>Hva skjer med lønn, ferie og pensjon?</h2>
+        </div>
+      </div>
+      <div class="card impact">
+        <table class="impact-table">
+          <thead>
+            <tr><th></th><th>Permisjon med lønn</th><th>Foreldrepermisjon</th><th>Permisjon uten lønn</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Lønn</th><td><i class="yes"></i>Utbetales som vanlig</td><td><i class="yes"></i>Kommunen betaler, NAV refunderer opptil 6 G</td><td><i class="no"></i>Ingen lønn</td></tr>
+            <tr><th>Feriepenger</th><td><i class="yes"></i>Opptjenes</td><td><i class="part"></i>Ikke av foreldrepenger fra NAV. HTA kan gi feriepenger for en del av perioden</td><td><i class="no"></i>Opptjenes ikke</td></tr>
+            <tr><th>Rett til ferie</th><td><i class="yes"></i>Ja</td><td><i class="yes"></i>Ja, ferie kan tas etter permisjonen</td><td><i class="yes"></i>Ja, men uten feriepenger for perioden</td></tr>
+            <tr><th>Tjenestepensjon</th><td><i class="yes"></i>Opptjenes</td><td><i class="yes"></i>Opptjenes normalt</td><td><i class="no"></i>Normalt ingen opptjening</td></tr>
+            <tr><th>Ansiennitet</th><td><i class="yes"></i>Teller</td><td><i class="yes"></i>Teller</td><td><i class="part"></i>Teller normalt ikke. Sjekk HTA og lokale regler</td></tr>
+            <tr><th>Sykepenger</th><td><i class="yes"></i>Vanlige regler</td><td><i class="part"></i>Syk i permisjonen kan gi utsettelse av foreldrepengene</td><td><i class="no"></i>Lengre permisjon kan gi tap av retten under permisjonen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="disclaimer">Tabellen viser hovedreglene. Vilkårene i Hovedtariffavtalen (blant annet § 14 om lønn under foreldrepermisjon), pensjonsordningen og kommunens permisjonsreglement avgjør det konkrete tilfellet.</p>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples" id="permExamples"></div>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Godt å vite</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Kvotene</h3>
+          <p>Med 100 % er det <b>15 uker</b> mødrekvote, <b>15 uker</b> fedrekvote og <b>16 uker</b> fellesperiode. Med 80 % er det 19 + 19 uker og 20 uker og 1 dag. I tillegg kommer 3 uker før termin.</p>
+          <span class="ref">ftrl. § 14-9</span>
+        </article>
+        <article class="rule">
+          <h3>De første 6 ukene</h3>
+          <p>Mor må ta de første <b>6 ukene</b> etter fødselen. De er en del av mødrekvoten.</p>
+          <span class="ref">aml. § 12-4</span>
+        </article>
+        <article class="rule">
+          <h3>Fleksibelt uttak</h3>
+          <p>Foreldrepengene kan tas ut fleksibelt, også delvis og kombinert med arbeid, fram til barnet er <b>3 år</b>. Uttaket må avtales med arbeidsgiveren.</p>
+          <span class="ref">ftrl. § 14-16</span>
+        </article>
+        <article class="rule">
+          <h3>Krav for foreldrepenger</h3>
+          <p>Den som søker, må ha vært i arbeid i minst <b>6 av de siste 10 månedene</b> før permisjonen og ha tjent minst ½ G i året.</p>
+          <span class="ref">ftrl. § 14-6</span>
+        </article>
+        <article class="rule">
+          <h3>Varsel til arbeidsgiver</h3>
+          <p>Permisjon over 12 uker skal varsles minst <b>4 uker</b> før. Kortere permisjon skal varsles så tidlig som mulig, og senest 2 uker før.</p>
+          <span class="ref">aml. § 12-7</span>
+        </article>
+        <article class="rule">
+          <h3>Inntektsmelding</h3>
+          <p>Når den ansatte søker om foreldrepenger, må arbeidsgiveren sende inntektsmelding til NAV. Velger kommunen å betale lønn, krever den refusjon i inntektsmeldingen.</p>
+          <span class="ref">NAV · a-ordningen</span>
+        </article>
+        <article class="rule">
+          <h3>Vern mot oppsigelse</h3>
+          <p>Gravide og den som har lovfestet permisjon, er særlig beskyttet mot oppsigelse. Oppsigelse kan ikke tre i kraft mens permisjonen pågår.</p>
+          <span class="ref">aml. § 15-9</span>
+        </article>
+        <article class="rule">
+          <h3>Tilbake etter permisjon</h3>
+          <p>Den ansatte har rett til å komme tilbake til samme eller tilsvarende stilling, og har rett til lønnsøkninger som ble gitt under permisjonen.</p>
+          <span class="ref">aml. § 12-14</span>
+        </article>
+      </div>
+      <p class="disclaimer">Siden er en kort, forenklet oversikt og ikke juridisk rådgivning. Kvotene gjelder barn født eller adoptert etter 1. juli 2024. Sjekk alltid nav.no, arbeidsmiljøloven, Hovedtariffavtalen og kommunens eget permisjonsreglement.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="permisjon.js"></script>
+</body>
+</html>
