@@ -78,6 +78,45 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  // ---------- Rene adresser ----------
+  // På nettet (GitHub Pages) vises /lonnsom/ferie i stedet for /lonnsom/ferie.html,
+  // og /lonnsom/ i stedet for /lonnsom/index.html. Lokalt (file://) beholdes .html,
+  // fordi lenker uten filendelse ikke virker direkte fra disk.
+  const onWeb = location.protocol === "http:" || location.protocol === "https:";
+  const cleanHref = (href) => (href === "index.html" ? "./" : href.replace(/\.html$/, ""));
+  function cleanLinks(root = document) {
+    if (!onWeb) return;
+    root.querySelectorAll('a[href$=".html"]').forEach((a) => {
+      const href = a.getAttribute("href");
+      if (!/^[a-z0-9-]+\.html$/i.test(href)) return; // bare interne sider
+      a.setAttribute("href", cleanHref(href));
+    });
+  }
+
+  // Lenker innad på siden (#kalender osv.) scroller uten å legge #… i adressen
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const hash = a.getAttribute("href");
+    const target = hash === "#top" || hash === "#" ? document.body : document.querySelector(hash);
+    if (!target) return;
+    e.preventDefault();
+    if (target === document.body) window.scrollTo({ top: 0, behavior: "smooth" });
+    else target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  // Rydd adressen ved innlasting: fjern index.html, .html og #…
+  {
+    let path = location.pathname;
+    if (onWeb) path = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+    if (path !== location.pathname || location.hash) {
+      history.replaceState(null, "", path + location.search);
+    }
+  }
+
+  // Rene lenker til sidene (brand-lenken og sidemenyen, som er tegnet over)
+  cleanLinks();
+
   // ---------- «Prøv i kalkulatoren» i eksemplene ----------
   // Knappen har data-fill (felt-id → verdi), data-form (skjemaet) og data-scroll (hvor man skal).
   document.addEventListener("click", (e) => {
