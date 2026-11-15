@@ -111,7 +111,9 @@
           agpLen = Math.max(0, AGP_DAYS - Math.min(AGP_DAYS, i.prevAgp));
           r.alerts.push(["info", agpLen === 0
             ? `Det er bare ${r.gap} dager siden forrige fravær, og hele arbeidsgiverperioden ble brukt da. NAV betaler fra første dag.`
-            : `Det er bare ${r.gap} dager siden forrige fravær, så arbeidsgiverperioden fortsetter. Det gjenstår ${agpLen} dager.`]);
+            : i.prevAgp > 0
+              ? `Det er bare ${r.gap} dager siden forrige fravær, så arbeidsgiverperioden fortsetter. Det gjenstår ${agpLen} dager.`
+              : `Det er bare ${r.gap} dager siden forrige fravær, så fraværene regnes sammen. Fyll inn hvor mange AGP-dager som ble brukt i forrige fravær.`]);
         } else {
           r.alerts.push(["info", `Det er ${r.gap} dager siden forrige fravær (16 eller flere), så den ansatte får en ny, full arbeidsgiverperiode.`]);
         }
@@ -157,7 +159,9 @@
     }
     r.maks = maks;
     r.maksReason = reason;
-    r.noRight = reason === "exhausted" || (b70 != null && b70 <= start);
+    r.lowIncome = i.lonn > 0 && i.lonn < i.G / 2;
+    r.under2G67 = b67 != null && b67 <= start && i.lonn > 0 && i.lonn < 2 * i.G;
+    r.noRight = reason === "exhausted" || (b70 != null && b70 <= start) || r.lowIncome || r.under2G67;
     if (r.noRight) {
       r.agpLen = 0; r.agpStart = r.agpEnd = null; r.navStart = start;
     }
@@ -183,6 +187,8 @@
     r.remainingAfter = MAX_DAYS - r.usedTotal;
     r.agpWeekdays = r.agpLen && !r.noRight ? countWeekdays(start, Math.min(r.agpEnd, effEnd ?? r.agpEnd)) : 0;
     r.onlyAgp = r.end != null && r.agpEnd != null && r.end <= r.agpEnd;
+    r.agpShownEnd = r.onlyAgp ? r.end : r.agpEnd;
+    r.agpUsedDays = r.agpShownEnd != null ? diffDays(start, r.agpShownEnd) + 1 : 0;
 
     // Gjenopptjening
     r.back = i.back ?? (maks != null ? addDays(maks, 1) : null);
@@ -195,7 +201,7 @@
     // Økonomi
     const G = i.G;
     const grad = i.grad / 100;
-    if (i.lonn > 0 && i.lonn < G / 2) r.alerts.push(["stop", `Årsinntekten er under ½ G (${kr(G / 2)}). Den ansatte har ikke rett til sykepenger.`]);
+    if (r.lowIncome) r.alerts.push(["stop", `Årsinntekten er under ½ G (${kr(G / 2)}). Den ansatte har ikke rett til sykepenger.`]);
     r.grunnlag = Math.min(i.lonn, 6 * G);
     r.dayFull = (i.lonn / 260) * grad;
     r.dayNav = (r.grunnlag / 260) * grad;
@@ -259,14 +265,14 @@
     const agpPane = r.noRight
       ? `<div class="big">Ingen plikt</div><div class="sub">Den ansatte har ikke rett til sykepenger</div>`
       : r.agpLen
-      ?`<div class="big">${fmt(r.agpStart)}<span class="arrow">→</span>${fmt(r.agpEnd)}</div>
-         <div class="sub">${r.agpLen} kalenderdager · ${countWeekdays(r.agpStart, r.agpEnd)} virkedager${r.continued ? " · fortsetter fra forrige fravær" : ""}</div>`
+      ? `<div class="big">${fmt(r.agpStart)}<span class="arrow">→</span>${fmt(r.agpShownEnd)}</div>
+         <div class="sub">${r.onlyAgp ? `${r.agpUsedDays} av ${r.agpLen} dager brukt` : `${r.agpLen} kalenderdager`} · ${countWeekdays(r.agpStart, r.agpShownEnd)} virkedager${r.continued ? " · fortsetter fra forrige fravær" : ""}</div>`
       : `<div class="big">Ingen AGP</div><div class="sub">${!r.opptjent ? "Den ansatte har vært ansatt i under 4 uker" : "Arbeidsgiverperioden er allerede brukt opp (16-dagersregelen)"}</div>`;
 
     const navPane = r.noRight
       ? `<div class="big">Ingen rett</div><div class="sub">Se varselet over</div>`
       : r.onlyAgp
-      ?`<div class="big">Ikke aktuelt</div><div class="sub">Arbeidsgiverperioden dekker hele fraværet</div>`
+      ? `<div class="big">Ikke aktuelt</div><div class="sub">Arbeidsgiverperioden dekker hele fraværet. ${r.agpLen - r.agpUsedDays} AGP-dager gjenstår hvis den ansatte blir syk igjen innen 16 dager.</div>`
       : `<div class="big">Fra ${fmt(r.navStart)}</div>
          <div class="sub">${r.navDays} sykepengedager${r.end == null ? " fram til maksdato (sykmeldingen er åpen)" : ""} · ${i.grad} % gradering</div>`;
 
@@ -275,12 +281,15 @@
     const seg = (n) => (n / MAX_DAYS) * C;
     const pPrior = seg(r.prior), pAgp = seg(Math.min(r.agpWeekdays, r.usedThisPeriod)), pRest = seg(Math.max(0, r.usedThisPeriod - r.agpWeekdays));
 
-    const maksHead = r.maksReason === "exhausted"
-      ? `<div class="maks-date"><span class="red">Ingen rett</span></div><div class="sub">Alle 248 dager er brukt de siste 3 årene.</div>`
+    const maksHead = r.noRight
+      ? `<div class="maks-date"><span class="red">Ingen rett</span></div><div class="sub">${r.maksReason === "exhausted" ? "Alle 248 dager er brukt de siste 3 årene." : "Den ansatte har ikke rett til sykepenger. Se varselet over."}</div>`
       : `<div class="maks-date">${fmt(r.maks)}</div>
          <div class="sub" style="text-transform:none">${cap(fmtLong(r.maks))} · siste dag med sykepenger fordi ${reasonText[r.maksReason]}</div>`;
 
-    const requal = r.reachesMaks || r.maksReason === "exhausted"
+    const requal = r.noRight && r.maksReason !== "exhausted"
+      ? `<div class="stat"><b>–</b><span>Ingen sykepengedager brukes</span></div>
+         <div class="stat"><b>–</b><span>26-ukersregelen gjelder ikke</span></div>`
+      : r.reachesMaks || r.maksReason === "exhausted"
       ? `<div class="stat"><b>${REQUALIFY_DAYS}</b><span>dager (26 uker) i arbeid for ny rett</span></div>
          <div class="stat"><b>${fmt(r.newRight)}</b><span>tidligst ny rett hvis tilbake ${fmt(r.back)}</span></div>`
       : `<div class="stat"><b>${r.remainingAfter}</b><span>sykepengedager igjen etter ${fmt(r.end)}</span></div>
@@ -300,7 +309,7 @@
           ${agpPane}
           <dl class="kv">
             <dt>Kostnad for kommunen</dt><dd>${kr(r.agpCost)}</dd>
-            <dt>Opptjening</dt><dd>${r.employedDays == null ? "ikke oppgitt" : r.opptjent ? "OK (" + r.employedDays + " d)" : r.employedDays + " av 28 d"}</dd>
+            <dt>Opptjening</dt><dd>${r.employedDays == null ? "ikke oppgitt" : r.employedDays < 0 ? "sjekk dato" : r.opptjent ? "OK (" + r.employedDays + " d)" : r.employedDays + " av 28 d"}</dd>
           </dl>
         </div>
         <div class="card pane">
@@ -416,7 +425,7 @@
     const items = [
       { t: s, n: "1", title: "Første fraværsdag", body: "Arbeidsgiverperioden starter. Den ansatte bruker egenmelding eller sykmelding.", key: true },
     ];
-    if (r.agpEnd) items.push({ t: r.agpEnd, n: "16", title: "Arbeidsgiverperioden er slutt", body: "Siste dag kommunen betaler alene. Send inntektsmelding til NAV.", key: true });
+    if (r.agpEnd && !r.onlyAgp) items.push({ t: r.agpEnd, n: "16", title: "Arbeidsgiverperioden er slutt", body: "Siste dag kommunen betaler alene. Send inntektsmelding til NAV.", key: true });
     if (!r.onlyAgp) items.push({ t: r.navStart, n: "NAV", title: "NAV overtar", body: "Kommunen betaler fortsatt ut full lønn og sender refusjonskrav til NAV." });
     items.push(
       { t: w(4), n: "4u", title: "Oppfølgingsplan", body: "Arbeidsgiveren og den ansatte skal ha laget en oppfølgingsplan innen 4 uker." },
@@ -453,9 +462,9 @@
       "SYKEPENGER – SAMMENDRAG",
       `Første fraværsdag: ${fmt(i.start)}${r.end ? `  |  Sykmeldt t.o.m.: ${fmt(r.end)}` : "  |  Sykmeldingen er åpen"}`,
       `Sykmeldingsgrad: ${i.grad} %`,
-      `Arbeidsgiverperiode: ${r.agpLen ? `${fmt(r.agpStart)} – ${fmt(r.agpEnd)} (${r.agpLen} dager)` : "ingen"}`,
+      `Arbeidsgiverperiode: ${r.agpLen ? `${fmt(r.agpStart)} – ${fmt(r.agpShownEnd)} (${r.onlyAgp ? `${r.agpUsedDays} av ${r.agpLen}` : r.agpLen} dager)` : "ingen"}`,
       `NAV fra: ${r.onlyAgp ? "ikke aktuelt" : fmt(r.navStart)}`,
-      `Maksdato: ${r.maksReason === "exhausted" ? "ingen rett (248 dager er brukt)" : fmt(r.maks) + ` (${reasonText[r.maksReason]})`}`,
+      `Maksdato: ${r.maksReason === "exhausted" ? "ingen rett (248 dager er brukt)" : r.noRight ? "ingen rett til sykepenger" : fmt(r.maks) + ` (${reasonText[r.maksReason]})`}`,
       `Sykepengedager brukt: ${r.usedTotal} av 248 (${r.prior} tidligere)`,
       r.reachesMaks || r.maksReason === "exhausted" ? `Ny rett: tidligst ${fmt(r.newRight)} etter 26 uker i arbeid fra ${fmt(r.back)}` : `Dager igjen etter sykmeldingen: ${r.remainingAfter}`,
       `Dagsats NAV: ${kr(r.dayNav)}  |  Sykepengegrunnlag: ${kr(r.grunnlag)}`,

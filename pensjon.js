@@ -61,22 +61,27 @@
 
       <div class="axis" aria-hidden="true">
         <div class="axis-bar">
-          <span class="seg-a" style="width:${pct(g71)}%"><i>18,1 % + ${paaslag ? "5,7 %" : "–"}</i></span>
-          <span class="seg-b" style="width:${pct(g12) - pct(g71)}%"><i>${paaslag ? "18,1 %" : "–"}</i></span>
+          <span class="seg-a" style="width:${pct(g71)}%"></span>
+          <span class="seg-b${paaslag ? "" : " off"}" style="width:${pct(g12) - pct(g71)}%"></span>
           <span class="seg-c" style="width:${100 - pct(g12)}%"></span>
-          <b class="axis-marker" style="left:${pct(lonn)}%"><em>${kr(lonn)}</em></b>
+          <b class="axis-marker${pct(lonn) < 12 ? " edge-l" : pct(lonn) > 88 ? " edge-r" : ""}" style="left:${pct(lonn)}%"><em>${kr(lonn)}</em></b>
         </div>
         <div class="axis-labels">
           <span style="left:0">0</span>
           <span style="left:${pct(g71)}%">7,1 G</span>
           <span style="left:${pct(g12)}%">12 G</span>
         </div>
+        <div class="axis-rates">
+          <span style="width:${pct(g71)}%">${paaslag ? "18,1 % + 5,7 %" : "18,1 %"}</span>
+          <span style="width:${pct(g12) - pct(g71)}%">${paaslag ? "18,1 %" : "0 %"}</span>
+          <span style="width:${100 - pct(g12)}%"></span>
+        </div>
       </div>
 
       <table class="out-table">
-        <tr><td><span class="pill" style="background:var(--yellow)"></span>Folketrygden · 18,1 % av ${kr(Math.min(lonn, g71))}</td><td>${kr(ft)}</td></tr>
-        ${paaslag ? `<tr><td><span class="pill" style="background:var(--green)"></span>Tjenestepensjon · 5,7 % opptil 7,1 G</td><td>${kr(otpLav)}</td></tr>
-        <tr><td><span class="pill" style="background:var(--lime)"></span>Tjenestepensjon · 18,1 % mellom 7,1 og 12 G</td><td>${kr(otpHoy)}</td></tr>` : ""}
+        <tr><td><span class="pill" style="background:var(--yellow)"></span>Folketrygden<small>18,1 % av ${kr(Math.min(lonn, g71))}</small></td><td>${kr(ft)}</td></tr>
+        ${paaslag ? `<tr><td><span class="pill" style="background:var(--green)"></span>Tjenestepensjon<small>5,7 % av lønn opptil 7,1 G</small></td><td>${kr(otpLav)}</td></tr>
+        <tr><td><span class="pill" style="background:var(--lime)"></span>Tjenestepensjon<small>18,1 % av lønn mellom 7,1 og 12 G</small></td><td>${kr(otpHoy)}</td></tr>` : ""}
         <tr class="muted"><td>Egenandel 2 % trekkes av lønnen</td><td>${kr(egen)} / år · ${kr(egen / 12)} / mnd</td></tr>
       </table>
 

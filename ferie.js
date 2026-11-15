@@ -89,7 +89,7 @@
 
     el.fdOut.innerHTML = `
       <div class="out-main">
-        <span class="out-label">${fmt(fra)} – ${fmt(til)} · ${days} dager</span>
+        <span class="out-label">${fmt(fra)} – ${fmt(til)} · ${days} ${days === 1 ? "dag" : "dager"}</span>
         <b class="out-big">${virke} <small>virkedager</small></b>
         <span class="out-sub">≈ ${nf1.format(virke / 6)} ferieuker · ${arbeid} arbeidsdager (man–fre)${lor ? ` · ${lor} lørdager` : ""}</span>
       </div>
