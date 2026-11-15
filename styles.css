@@ -748,3 +748,38 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 900px) {
   .layers, .cohorts { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ============ Eksempler (alle sider) ============ */
+.examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.example { padding: 24px; display: grid; gap: 16px; }
+.ex-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; }
+.ex-head h3 { margin: 0; font-size: 18px; font-weight: 500; letter-spacing: -0.02em; }
+.ex-head p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.ex-avatar { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; font-weight: 600; color: #073019;
+  background: radial-gradient(circle at 30% 30%, var(--yellow), var(--lime) 70%); box-shadow: 0 0 0 4px rgba(254, 237, 101, 0.12); }
+.ex-tag { padding: 5px 12px; border-radius: 99px; font: 500 11px var(--mono); letter-spacing: .04em; color: var(--yellow); background: rgba(254, 237, 101, 0.08); border: 1px solid rgba(254, 237, 101, 0.25); white-space: nowrap; }
+.ex-text { margin: 0; font-size: 14px; line-height: 1.55; color: rgba(240, 251, 244, 0.85); }
+.ex-steps { list-style: none; margin: 0; padding: 4px 16px; border-radius: 16px; background: rgba(1, 8, 4, 0.28); border: 1px solid var(--line); counter-reset: step; }
+.ex-steps li { counter-increment: step; display: grid; grid-template-columns: 22px 1fr auto; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.ex-steps li:last-child { border-bottom: 0; }
+.ex-steps li::before { content: counter(step); font: 500 11px var(--mono); color: var(--faint); }
+.ex-steps span { color: rgba(240, 251, 244, 0.78); }
+.ex-steps b { font-weight: 600; color: #fff; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ex-note { margin: 0; padding-left: 14px; border-left: 2px solid var(--yellow); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.ex-btn { justify-self: start; padding: 11px 20px; font-size: 14px; }
+
+/* Kort markering av kalkulatoren når et eksempel fylles inn */
+@keyframes flash { 0% { box-shadow: 0 0 0 0 rgba(254, 237, 101, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(254, 237, 101, 0); } }
+.flash { animation: flash 1.1s ease-out; border-color: rgba(254, 237, 101, 0.5) !important; transition: border-color 1.5s; }
+
+@media (max-width: 900px) {
+  .examples { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .example { padding: 18px; }
+  .ex-head { grid-template-columns: auto 1fr; }
+  .ex-tag { grid-column: 1 / -1; justify-self: start; }
+  .ex-steps li { grid-template-columns: 22px 1fr; }
+  .ex-steps b { grid-column: 2; text-align: left; }
+  .ex-btn { justify-self: stretch; justify-content: center; }
+}

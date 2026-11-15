@@ -42,18 +42,70 @@
   // ---------- Topbar: frostet bakgrunn + aktiv seksjon i nav-pillen ----------
   const topbar = document.querySelector(".topbar");
   const navLinks = [...document.querySelectorAll('.nav-pill a[href^="#"]')];
+  const setActive = (link) => navLinks.forEach((a) => a.classList.toggle("on", a === link));
+
+  // Mens siden scroller etter et klikk i menyen, holdes markeringen fast på lenken
+  // man klikket, så den ikke «går gjennom» alle seksjonene på veien.
+  let locked = false, unlockTimer = null;
+  const scheduleUnlock = () => {
+    clearTimeout(unlockTimer);
+    unlockTimer = setTimeout(() => { locked = false; }, 160);
+  };
+  function lockNavTo(hash) {
+    const link = navLinks.find((a) => a.getAttribute("href") === hash);
+    if (!link) return;
+    setActive(link);
+    locked = true;
+    scheduleUnlock(); // frigjøres også hvis siden ikke trenger å scrolle
+  }
+  navLinks.forEach((a) => a.addEventListener("click", () => lockNavTo(a.getAttribute("href"))));
+
   const onScroll = () => {
     if (topbar) topbar.classList.toggle("scrolled", window.scrollY > 40);
     if (!navLinks.length) return;
+    if (locked) { scheduleUnlock(); return; }
     let currentLink = navLinks[0];
     for (const a of navLinks) {
       const sec = document.querySelector(a.getAttribute("href"));
       if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.4) currentLink = a;
     }
-    navLinks.forEach((a) => a.classList.toggle("on", a === currentLink));
+    // Helt nederst på siden: marker siste seksjon, selv om den er for kort til å nå terskelen
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atBottom) currentLink = navLinks[navLinks.length - 1];
+    setActive(currentLink);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  // ---------- «Prøv i kalkulatoren» i eksemplene ----------
+  // Knappen har data-fill (felt-id → verdi), data-form (skjemaet) og data-scroll (hvor man skal).
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-fill]");
+    if (!b) return;
+    let data;
+    try { data = JSON.parse(b.dataset.fill); } catch { return; }
+    for (const [id, v] of Object.entries(data)) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      el.value = v;
+      const det = el.closest("details");
+      if (det && v !== "" && v !== "0") det.open = true;
+    }
+    if (b.dataset.click) document.querySelector(b.dataset.click)?.click();
+    const form = document.getElementById(b.dataset.form);
+    if (form) {
+      form.dispatchEvent(new Event("input", { bubbles: true }));
+      form.dispatchEvent(new Event("change", { bubbles: true }));
+      form.classList.remove("flash");
+      void form.offsetWidth; // start animasjonen på nytt
+      form.classList.add("flash");
+    }
+    const target = document.querySelector(b.dataset.scroll);
+    if (target) {
+      lockNavTo(b.dataset.scroll);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 
   // ---------- Dato-hjelpere (UTC-midnatt i ms) ----------
   const DAY = 86400000;

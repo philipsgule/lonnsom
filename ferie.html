@@ -23,6 +23,7 @@
       <a href="#verktoy">Kalkulator</a>
       <a href="#satser">Satser</a>
       <a href="#aaret">Ferieåret</a>
+      <a href="#eksempler">Eksempler</a>
       <a href="#regler">Regler</a>
     </nav>
     <div class="page-menu" data-current="ferie.html"></div>
@@ -157,6 +158,50 @@
         </div>
       </div>
       <ol class="timeline" id="ferieTimeline"></ol>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples">
+        <article class="card example">
+          <header class="ex-head">
+            <span class="ex-avatar">P</span>
+            <div><h3>Per, enhetsleder</h3><p>61 år, høy lønn</p></div>
+            <span class="ex-tag">60+ og 6G-tak</span>
+          </header>
+          <p class="ex-text">Per er født i 1966 og fyller 61 år i 2027. I 2026 tjente han 1 000 000 kr. Hva får han i feriepenger i juni 2027?</p>
+          <ol class="ex-steps">
+            <li><span>12 % av 1 000 000 kr</span><b>120 000 kr</b></li>
+            <li><span>2,3 % tillegg, bare av 6 G (819 294 kr)</span><b>18 844 kr</b></li>
+            <li><span>Feriepenger i juni 2027</span><b>138 844 kr</b></li>
+            <li><span>Ekstra ferieuke fordi han er over 60</span><b>6 virkedager</b></li>
+          </ol>
+          <p class="ex-note">Uten 6G-taket ville tillegget vært 23 000 kr. Beløpet for G er per 1. mai 2026.</p>
+          <button type="button" class="primary ex-btn" data-form="fpForm" data-scroll="#verktoy" data-fill='{"fpGrunnlag": "1 000 000", "fpAar": "2027", "fpFodt": "1966", "fpG": "136 549"}' data-click='[data-sats="hta"]'>Prøv i kalkulatoren</button>
+        </article>
+        <article class="card example">
+          <header class="ex-head">
+            <span class="ex-avatar">M</span>
+            <div><h3>Mona, barnehagelærer</h3><p>Påskeferie 2027</p></div>
+            <span class="ex-tag">Virkedager</span>
+          </header>
+          <p class="ex-text">Mona har fri fra mandag 22. mars til fredag 2. april 2027, til sammen 12 dager. Hvor mange feriedager bruker hun?</p>
+          <ol class="ex-steps">
+            <li><span>Kalenderdager</span><b>12</b></li>
+            <li><span>Skjærtorsdag, langfredag, 1. og 2. påskedag teller ikke</span><b>− 4</b></li>
+            <li><span>Virkedager brukt (lørdag 27. mars teller med)</span><b>8</b></li>
+            <li><span>Arbeidsdager (mandag–fredag)</span><b>7</b></li>
+          </ol>
+          <p class="ex-note">Fordi helligdagene ikke regnes som feriedager, gir påsken mange fridager for få feriedager.</p>
+          <button type="button" class="primary ex-btn" data-form="fdForm" data-scroll="#verktoy" data-fill='{"fdFra": "2027-03-22", "fdTil": "2027-04-02"}'>Prøv i kalkulatoren</button>
+        </article>
+      </div>
     </section>
 
     <!-- REGLER -->

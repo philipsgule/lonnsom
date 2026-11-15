@@ -23,6 +23,7 @@
       <a href="#kalkulator">Kalkulator</a>
       <a href="#kalender">Kalender</a>
       <a href="#tidslinje">Tidslinje</a>
+      <a href="#eksempler">Eksempler</a>
       <a href="#regler">Regler</a>
     </nav>
     <div class="page-menu" data-current="index.html"></div>
@@ -178,6 +179,53 @@
         </div>
       </div>
       <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples">
+        <article class="card example">
+          <header class="ex-head">
+            <span class="ex-avatar">K</span>
+            <div><h3>Kari, sykepleier</h3><p>Sykmeldt hele 2026</p></div>
+            <span class="ex-tag">Maksdato</span>
+          </header>
+          <p class="ex-text">Kari blir syk mandag 5. januar 2026 og er sykmeldt ut året. Hun har ikke vært syk de siste 3 årene og har 560 000 kr i årslønn.</p>
+          <ol class="ex-steps">
+            <li><span>Arbeidsgiverperiode, 16 dager</span><b>5.–20. jan. 2026</b></li>
+            <li><span>NAV overtar</span><b>21. jan. 2026</b></li>
+            <li><span>248 sykepengedager (12 i AGP + 236 fra NAV)</span><b>16. des. 2026</b></li>
+            <li><span>Dagsats fra NAV (560 000 kr / 260)</span><b>2 154 kr</b></li>
+            <li><span>Tilbake i jobb 17. des. + 26 uker</span><b>Ny rett 17. juni 2027</b></li>
+          </ol>
+          <p class="ex-note">Sykmeldingen varer til 31. desember, men NAV betaler ikke sykepenger etter maksdatoen 16. desember. Kari må være helt arbeidsfør i 26 uker før hun får ny rett.</p>
+          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-01-05", "end": "2026-12-31", "grad": "100", "prior": "0", "ansatt": "2018-08-01", "lonn": "560 000", "prevEnd": "", "prevAgp": "0", "birth": "", "ferie": "0", "back": "", "G": "136 549"}'>Prøv i kalkulatoren</button>
+        </article>
+        <article class="card example">
+          <header class="ex-head">
+            <span class="ex-avatar">O</span>
+            <div><h3>Ole, saksbehandler</h3><p>To fravær tett på hverandre</p></div>
+            <span class="ex-tag">16-dagersregelen</span>
+          </header>
+          <p class="ex-text">Ole var syk 2.–9. mars 2026. Han blir syk igjen mandag 16. mars og er sykmeldt til 10. april. Årslønnen er 850 000 kr, som er over 6 G.</p>
+          <ol class="ex-steps">
+            <li><span>Dager mellom fraværene (10.–15. mars)</span><b>6 dager</b></li>
+            <li><span>Resten av arbeidsgiverperioden (16 − 8 dager)</span><b>16.–23. mars</b></li>
+            <li><span>NAV overtar</span><b>24. mars 2026</b></li>
+            <li><span>Dagsats fra NAV (6 G = 819 294 kr / 260)</span><b>3 151 kr</b></li>
+            <li><span>Kommunen dekker lønnen over 6 G (HTA)</span><b>118 kr / dag</b></li>
+            <li><span>Sykepengedager brukt (6 fra mars + 20 nå)</span><b>26 av 248</b></li>
+          </ol>
+          <p class="ex-note">Skjærtorsdag, langfredag og 2. påskedag (2., 3. og 6. april) faller på hverdager og teller som sykepengedager.</p>
+          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-03-16", "end": "2026-04-10", "grad": "100", "prior": "6", "ansatt": "2015-01-01", "lonn": "850 000", "prevEnd": "2026-03-09", "prevAgp": "8", "birth": "", "ferie": "0", "back": "", "G": "136 549"}'>Prøv i kalkulatoren</button>
+        </article>
+      </div>
     </section>
 
     <!-- REGLER -->
