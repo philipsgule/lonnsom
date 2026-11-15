@@ -2,13 +2,58 @@
 (() => {
   "use strict";
 
-  // Topbar får frostet bakgrunn når man scroller
-  const topbar = document.querySelector(".topbar");
-  if (topbar) {
-    const onScroll = () => topbar.classList.toggle("scrolled", window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+  // ---------- Sidene på nettstedet (legg nye sider til her) ----------
+  const PAGES = [
+    { href: "index.html", title: "Sykepenger", desc: "Arbeidsgiverperiode, NAV og maksdato" },
+    { href: "ferie.html", title: "Ferie", desc: "Ferie og feriepenger" },
+    { href: "pensjon.html", title: "Pensjon", desc: "Folketrygd, tjenestepensjon og AFP" },
+  ];
+
+  // ---------- Sidemeny oppe til høyre ----------
+  const menu = document.querySelector(".page-menu");
+  if (menu) {
+    const current = PAGES.find((p) => p.href === menu.dataset.current) || PAGES[0];
+    menu.innerHTML = `
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="pageMenuPanel" aria-haspopup="true">
+        <span class="menu-label">Side</span>${current.title}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="menu-panel" id="pageMenuPanel" hidden>
+        <p class="menu-head">Velg side</p>
+        ${PAGES.map((p, i) => `
+          <a href="${p.href}"${p === current ? ' aria-current="page"' : ""}>
+            <span class="menu-n">0${i + 1}</span>
+            <span class="menu-text"><b>${p.title}</b><small>${p.desc}</small></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>`).join("")}
+      </div>`;
+    const btn = menu.querySelector(".menu-btn");
+    const panel = menu.querySelector(".menu-panel");
+    const setOpen = (open) => {
+      btn.setAttribute("aria-expanded", String(open));
+      panel.hidden = !open;
+      menu.classList.toggle("open", open);
+    };
+    btn.addEventListener("click", (e) => { e.stopPropagation(); setOpen(panel.hidden); });
+    document.addEventListener("click", (e) => { if (!menu.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") { setOpen(false); btn.focus(); } });
   }
+
+  // ---------- Topbar: frostet bakgrunn + aktiv seksjon i nav-pillen ----------
+  const topbar = document.querySelector(".topbar");
+  const navLinks = [...document.querySelectorAll('.nav-pill a[href^="#"]')];
+  const onScroll = () => {
+    if (topbar) topbar.classList.toggle("scrolled", window.scrollY > 40);
+    if (!navLinks.length) return;
+    let currentLink = navLinks[0];
+    for (const a of navLinks) {
+      const sec = document.querySelector(a.getAttribute("href"));
+      if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.4) currentLink = a;
+    }
+    navLinks.forEach((a) => a.classList.toggle("on", a === currentLink));
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
   // ---------- Dato-hjelpere (UTC-midnatt i ms) ----------
   const DAY = 86400000;

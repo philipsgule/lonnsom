@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lønnsom – Pensjon i kommunen</title>
+  <meta name="description" content="Pensjon i kommunal sektor forklart kort – folketrygd, offentlig tjenestepensjon og AFP, med kalkulator for årlig pensjonsopptjening." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#verktoy">Kalkulator</a>
+      <a href="#lag">Tre lag</a>
+      <a href="#ordninger">Ordninger</a>
+      <a href="#sjekkliste">Sjekkliste</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <div class="page-menu" data-current="pensjon.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <div class="reeds" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Offentlig tjenestepensjon</p>
+        <div class="fact"><span>Egenandel</span><b>2 %</b><i>av lønn</i></div>
+        <div class="fact"><span>Påslag tjenestepensjon</span><b>5,7 %</b><i>opptil 7,1 G</i></div>
+        <div class="fact"><span>Fleksibelt uttak</span><b>62–75 år</b><i>født 1963+</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Folketrygden · Offentlig tjenestepensjon · AFP</p>
+        <h1>Pensjon i kommunen,<br />uten fagspråk</h1>
+        <div class="hero-row">
+          <p class="lead">Slik er pensjonen bygd opp for ansatte i kommunen, hva lønnsavdelingen har ansvar for, og hvor mye pensjon et år med lønn gir.</p>
+          <a class="cta-pill" href="#verktoy">Regn ut opptjening <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V10M10 20V6M14 20v-8M18 20V4"/></svg><span>Opptjening per år fra folketrygden og tjenestepensjonen</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>De tre lagene i pensjonen forklart</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Hvilken ordning gjelder etter fødselsår</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="m9 12 2 2 4-4"/></svg><span>Sjekkliste for lønnsmedarbeideren</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- KALKULATOR -->
+    <section id="verktoy" class="tools">
+      <form class="card tool" id="pForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kalkulator</p>
+            <h2>Pensjonsopptjening per år</h2>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Pensjonsgivende årslønn <em>faktisk lønn</em></span>
+          <div class="suffix"><input type="text" id="pLonn" value="620 000" inputmode="numeric" /><i>kr</i></div>
+          <small>Fast lønn og faste tillegg. Overtid er ikke pensjonsgivende.</small>
+        </label>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Fødselsår</span>
+            <input type="number" id="pFodt" min="1940" max="2010" value="1985" inputmode="numeric" />
+          </label>
+          <label class="field">
+            <span>Antall år <em>framskriving</em></span>
+            <input type="number" id="pAar" min="1" max="50" value="10" inputmode="numeric" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Grunnbeløp (G)</span>
+          <div class="suffix"><input type="text" id="pG" value="136 549" inputmode="numeric" /><i>kr</i></div>
+        </label>
+
+        <div id="pBadge"></div>
+      </form>
+
+      <div class="card tool" id="pResult" aria-live="polite"></div>
+    </section>
+
+    <!-- TRE LAG -->
+    <section class="section" id="lag">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Oppbygging</p>
+          <h2>Pensjonen har tre lag</h2>
+        </div>
+      </div>
+      <div class="layers">
+        <article class="card layer">
+          <span class="layer-n">01</span>
+          <h3>Folketrygden</h3>
+          <p>Alderspensjon fra NAV. Hvert år legges <b>18,1 %</b> av inntekten opptil 7,1 G til i pensjonsbeholdningen. Alle som har bodd eller jobbet i Norge, får pensjon fra folketrygden.</p>
+          <span class="ref">NAV</span>
+        </article>
+        <article class="card layer hl">
+          <span class="layer-n">02</span>
+          <h3>Offentlig tjenestepensjon</h3>
+          <p>Pensjonen fra jobben, som oftest i <b>KLP</b> eller en kommunal pensjonskasse. Lærere er med i <b>Statens pensjonskasse</b>. Den ansatte betaler <b>2 %</b> av lønnen, og arbeidsgiveren betaler resten.</p>
+          <span class="ref">KLP · pensjonskasse · SPK</span>
+        </article>
+        <article class="card layer">
+          <span class="layer-n">03</span>
+          <h3>AFP</h3>
+          <p>Avtalefestet pensjon i offentlig sektor. For dem som er født <b>1963 eller senere</b>, er AFP et livsvarig tillegg fra 62 år. Det krever blant annet at den ansatte er i offentlig stilling fram mot 62 år.</p>
+          <span class="ref">tariffavtale</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ETTER FØDSELSÅR -->
+    <section class="section" id="ordninger">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Hvilken ordning gjelder</p>
+          <h2>Det avhenger av fødselsår</h2>
+        </div>
+      </div>
+      <div class="cohorts">
+        <article class="card cohort" data-cohort="old">
+          <span class="cohort-years">Før 1954</span>
+          <h3>Bruttoordning</h3>
+          <p>Tjenestepensjonen gir omtrent <b>66 % av sluttlønnen</b> ved 30 års opptjening og full stilling. Den samordnes med folketrygden. Pensjonsalderen er 67 år.</p>
+        </article>
+        <article class="card cohort" data-cohort="mid">
+          <span class="cohort-years">1954–1962</span>
+          <h3>Bruttoordning med overgangsregler</h3>
+          <p>Den ansatte er i bruttoordningen, men overgangsregler gjør at mange er sikret omtrent 66 % ved 67 år, selv etter levealdersjustering. AFP er en tidligpensjon fra 62 til 67 år.</p>
+        </article>
+        <article class="card cohort" data-cohort="new">
+          <span class="cohort-years">1963 og senere</span>
+          <h3>Påslagsmodell</h3>
+          <p>Den ansatte bygger opp en pensjonsbeholdning: <b>5,7 %</b> av lønnen opptil 7,1 G og <b>18,1 %</b> av lønnen mellom 7,1 og 12 G. Pensjonen kan tas ut fra 62 år og kombineres med arbeid uten at den blir redusert.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SJEKKLISTE -->
+    <section class="section" id="sjekkliste">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">For lønnsmedarbeideren</p>
+          <h2>Dette må lønn ha kontroll på</h2>
+        </div>
+      </div>
+      <ul class="checklist">
+        <li class="card"><b>Innmelding</b><span>Nyansatte meldes inn i pensjonsordningen fra første arbeidsdag hvis stillingen er over grensen for medlemskap. Sjekk grensen i ordningen dere bruker.</span></li>
+        <li class="card"><b>Trekk på 2 %</b><span>Egenandelen trekkes av den pensjonsgivende lønnen hver måned og vises på lønnsslippen.</span></li>
+        <li class="card"><b>Pensjonsgivende tillegg</b><span>Fast lønn og faste tillegg er pensjonsgivende. Overtid er ikke pensjonsgivende. Variable tillegg følger reglene i pensjonsordningen.</span></li>
+        <li class="card"><b>Stilling og lønn</b><span>Endringer i stillingsprosent, lønn og ansettelsesform må meldes til pensjonsleverandøren, for eksempel via a-meldingen eller egen rapportering.</span></li>
+        <li class="card"><b>Permisjon uten lønn</b><span>Gir normalt ingen opptjening i tjenestepensjonen i permisjonstiden. Den ansatte bør få vite hva permisjonen betyr for pensjonen.</span></li>
+        <li class="card"><b>Sluttdato</b><span>Når en ansatt slutter, må sluttdatoen meldes. Pensjonsrettighetene beholdes og følger med til neste offentlige arbeidsgiver gjennom overføringsavtalen.</span></li>
+      </ul>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Godt å vite</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Uttak fra 62 år</h3>
+          <p>Folketrygden og tjenestepensjonen etter påslagsmodellen kan tas ut fra <b>62 til 75 år</b>, helt eller delvis. Jo senere uttaket starter, jo høyere blir den årlige pensjonen.</p>
+          <span class="ref">fleksibelt uttak</span>
+        </article>
+        <article class="rule">
+          <h3>Jobbe og ta ut pensjon</h3>
+          <p>Etter påslagsmodellen kan den ansatte jobbe fullt og samtidig ta ut pensjon <b>uten at den blir redusert</b>. Etter bruttoordningen kan arbeidsinntekt redusere tjenestepensjonen.</p>
+          <span class="ref">påslag · brutto</span>
+        </article>
+        <article class="rule">
+          <h3>Tak på 12 G</h3>
+          <p>Det tjenes ikke opp tjenestepensjon av lønn over <b>12 G</b>. Folketrygden regner bare med inntekt opptil <b>7,1 G</b>. Derfor dekker tjenestepensjonen også lønn mellom 7,1 og 12 G.</p>
+          <span class="ref">pensjonsgrunnlag</span>
+        </article>
+        <article class="rule">
+          <h3>Særaldersgrense</h3>
+          <p>Noen stillinger har lavere aldersgrense, for eksempel <b>65 år</b> for sykepleiere og helsefagarbeidere og <b>60 år</b> for brannkonstabler. Reglene for dem som er født 1963 eller senere, er under endring.</p>
+          <span class="ref">særalderspensjon</span>
+        </article>
+        <article class="rule">
+          <h3>Uførepensjon</h3>
+          <p>Tjenestepensjonen gir uførepensjon i tillegg til uføretrygden fra NAV hvis den ansatte mister hele eller deler av arbeidsevnen. Søknad sendes både til NAV og til pensjonsleverandøren.</p>
+          <span class="ref">uføre</span>
+        </article>
+        <article class="rule">
+          <h3>Etterlattepensjon</h3>
+          <p>Hvis den ansatte dør, kan ektefelle, samboer og barn ha rett til etterlattepensjon fra tjenestepensjonen. Vilkårene står i pensjonsordningens vedtekter.</p>
+          <span class="ref">etterlatte</span>
+        </article>
+        <article class="rule">
+          <h3>Bytte av jobb</h3>
+          <p>Pensjonen følger med ved jobbytte innenfor offentlig sektor. <b>Overføringsavtalen</b> sørger for at opptjeningen ses under ett, selv om ordningene er forskjellige.</p>
+          <span class="ref">overføringsavtalen</span>
+        </article>
+        <article class="rule">
+          <h3>Se din egen pensjon</h3>
+          <p>Den ansatte kan se prognosen sin på <b>nav.no/dinpensjon</b> og hos pensjonsleverandøren, for eksempel på Min side hos KLP. Norsk Pensjon samler pensjonen fra alle ordninger på ett sted.</p>
+          <span class="ref">nav.no · klp.no · norskpensjon.no</span>
+        </article>
+      </div>
+      <p class="disclaimer">Siden er en kort, forenklet oversikt og ikke pensjonsrådgivning. Pensjonsreglene er sammensatte og endres jevnlig. Det er vedtektene i pensjonsordningen, tariffavtalen og NAVs regler som gjelder. Konkrete spørsmål bør sendes til pensjonsleverandøren eller NAV.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="pensjon.js"></script>
+</body>
+</html>
