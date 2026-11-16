@@ -98,6 +98,32 @@
       r.alerts.push(["warn", `Den ansatte har bare vært ansatt i ${r.employedDays} dager (det kreves 28). Arbeidsgiveren har ikke plikt til å betale arbeidsgiverperiode. NAV kan betale fra første dag hvis den ansatte har opptjening fra en annen arbeidsgiver eller en NAV-ytelse.`]);
     }
 
+    // Timelønnede: grunnlag fra 3 måneder og 14-dagersregelen
+    r.timelonn = i.ltype === "time";
+    r.brokenEmployment = false;
+    if (r.timelonn) {
+      const sum = i.months.reduce((a, b) => a + b, 0);
+      r.monthAvg = sum / 3;
+      i.lonn = r.monthAvg * 12; // omregnet årsinntekt (ftrl. § 8-28)
+      if (sum === 0) r.alerts.push(["warn", "Fyll inn inntekten de tre siste kalendermånedene for å beregne sykepengegrunnlaget."]);
+      if (i.lastShift != null) {
+        if (i.lastShift > start) {
+          r.alerts.push(["warn", "Siste vakt er etter første fraværsdag. Sjekk datoene."]);
+        } else {
+          r.shiftGap = Math.max(0, diffDays(i.lastShift, start) - 1);
+          if (r.shiftGap > 14 && !i.turnus) {
+            r.brokenEmployment = true;
+            r.alerts.push(["stop", `Det er ${r.shiftGap} dager siden siste vakt (mer enn 14). Arbeidsforholdet regnes normalt som avbrutt, og den ansatte må ha jobbet 4 nye uker for å få rett til sykepenger.`]);
+          } else if (r.shiftGap > 14) {
+            r.alerts.push(["info", `Det er ${r.shiftGap} dager siden siste vakt, men med fast turnus eller avtalte vakter regnes ikke arbeidsforholdet som avbrutt.`]);
+          }
+        }
+      } else {
+        r.alerts.push(["info", "Fyll inn siste vakt før sykdommen for å sjekke 14-dagersregelen."]);
+      }
+      r.alerts.push(["info", `Timelønnet: arbeidsgiverperioden gjelder vakter den ansatte var satt opp på. Har hen tatt ekstravakter jevnlig i minst 3 måneder uten opphold over 14 dager, skal vaktene gjennomsnittsberegnes (KS).`]);
+    }
+
     // 16-dagersregelen
     let agpLen = AGP_DAYS;
     r.continued = false;
@@ -161,7 +187,7 @@
     r.maksReason = reason;
     r.lowIncome = i.lonn > 0 && i.lonn < i.G / 2;
     r.under2G67 = b67 != null && b67 <= start && i.lonn > 0 && i.lonn < 2 * i.G;
-    r.noRight = reason === "exhausted" || (b70 != null && b70 <= start) || r.lowIncome || r.under2G67;
+    r.noRight = reason === "exhausted" || (b70 != null && b70 <= start) || r.lowIncome || r.under2G67 || r.brokenEmployment;
     if (r.noRight) {
       r.agpLen = 0; r.agpStart = r.agpEnd = null; r.navStart = start;
     }
@@ -229,6 +255,7 @@
     prior: $("#prior"), ansatt: $("#ansatt"), lonn: $("#lonn"),
     prevEnd: $("#prevEnd"), prevAgp: $("#prevAgp"), birth: $("#birth"), ferie: $("#ferie"),
     back: $("#back"), G: $("#G"), toast: $("#toast"),
+    ltype: $("#ltype"), m1: $("#m1"), m2: $("#m2"), m3: $("#m3"), lastShift: $("#lastShift"), turnus: $("#turnus"),
   };
   let calRange = "sick";
   let last = null;
@@ -247,6 +274,10 @@
       ferie: Math.max(0, Math.floor(Number(els.ferie.value) || 0)),
       back: parseDate(els.back.value),
       G: num(els.G.value) || 136549,
+      ltype: els.ltype.value === "time" ? "time" : "fast",
+      months: [num(els.m1.value), num(els.m2.value), num(els.m3.value)],
+      lastShift: parseDate(els.lastShift.value),
+      turnus: els.turnus.value === "1",
     };
   }
 
@@ -495,7 +526,9 @@
     els.gradOut.textContent = g + " %";
     els.grad.style.setProperty("--p", ((g - 20) / 80) * 100 + "%");
 
+    syncToggles();
     const i = readInput();
+    labelMonths(i.start);
     const gTxt = nf.format(i.G);
     $("#chipG").textContent = gTxt;
     $("#footG").textContent = gTxt + " kr";
@@ -525,10 +558,33 @@
   }
   moneyMask(els.lonn);
   moneyMask(els.G);
+  [els.m1, els.m2, els.m3].forEach(moneyMask);
+
+  // Brytere (lønnstype, turnus) lagres i skjulte felt, så de følger med i lagring og eksempler
+  function syncToggles() {
+    document.querySelectorAll("#form [data-set]").forEach((b) => {
+      b.classList.toggle("on", els[b.dataset.set].value === b.dataset.val);
+    });
+    els.form.dataset.ltype = els.ltype.value;
+  }
+  els.form.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-set]"); if (!b) return;
+    els[b.dataset.set].value = b.dataset.val;
+    update();
+  });
+  // Månedsnavn for de tre siste hele kalendermånedene før første fraværsdag
+  const fMon = new Intl.DateTimeFormat("nb-NO", { month: "long", year: "numeric", timeZone: "UTC" });
+  function labelMonths(start) {
+    const base = start ?? todayUtc();
+    [3, 2, 1].forEach((back, k) => {
+      const t = addMonths(Date.UTC(new Date(base).getUTCFullYear(), new Date(base).getUTCMonth(), 1), -back);
+      $(`#m${k + 1}Label`).textContent = cap(fMon.format(t));
+    });
+  }
 
   // Lagring (kun i denne nettleseren)
   const KEY = "lonnsom.v1";
-  const fields = ["start", "end", "grad", "prior", "ansatt", "lonn", "prevEnd", "prevAgp", "birth", "ferie", "back", "G"];
+  const fields = ["start", "end", "grad", "prior", "ansatt", "lonn", "prevEnd", "prevAgp", "birth", "ferie", "back", "G", "ltype", "m1", "m2", "m3", "lastShift", "turnus"];
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(Object.fromEntries(fields.map((f) => [f, els[f].value])))); } catch {}
   }

@@ -27,6 +27,7 @@
       <a href="#tidslinje">Tidslinje</a>
       <a href="#eksempler">Eksempler</a>
       <a href="#regler">Regler</a>
+      <a href="#lovverk">Lovverk</a>
     </nav>
     <div class="page-menu" data-current="index.html"></div>
   </header>
@@ -73,6 +74,12 @@
           <button type="button" class="ghost" id="resetBtn">Nullstill</button>
         </div>
 
+        <input type="hidden" id="ltype" value="fast" />
+        <div class="seg seg-wide ltype-seg" role="group" aria-label="Lønnstype">
+          <button type="button" class="on" data-set="ltype" data-val="fast">Fast lønn</button>
+          <button type="button" data-set="ltype" data-val="time">Timelønnet</button>
+        </div>
+
         <div class="grid2">
           <label class="field">
             <span>Første fraværsdag</span>
@@ -101,10 +108,44 @@
           </label>
         </div>
 
-        <label class="field">
+        <label class="field only-fast">
           <span>Årslønn (100 % lønn inkl. faste tillegg)</span>
           <div class="suffix"><input type="text" id="lonn" value="620 000" inputmode="numeric" /><i>kr</i></div>
         </label>
+
+        <fieldset class="only-time time-box">
+          <legend>Timelønnet / tilkallingsvikar</legend>
+          <div class="grid3">
+            <label class="field">
+              <span id="m1Label">Måned 1</span>
+              <div class="suffix"><input type="text" id="m1" value="" inputmode="numeric" placeholder="0" /><i>kr</i></div>
+            </label>
+            <label class="field">
+              <span id="m2Label">Måned 2</span>
+              <div class="suffix"><input type="text" id="m2" value="" inputmode="numeric" placeholder="0" /><i>kr</i></div>
+            </label>
+            <label class="field">
+              <span id="m3Label">Måned 3</span>
+              <div class="suffix"><input type="text" id="m3" value="" inputmode="numeric" placeholder="0" /><i>kr</i></div>
+            </label>
+          </div>
+          <small>Inntekten de tre siste hele kalendermånedene før første fraværsdag, slik den er rapportert i a-meldingen. Gjennomsnittet omregnes til årsinntekt.</small>
+          <div class="grid2 time-row">
+            <label class="field">
+              <span>Siste vakt før sykdommen</span>
+              <input type="date" id="lastShift" />
+            </label>
+            <div class="field">
+              <span>Fast turnus / avtalte vakter</span>
+              <input type="hidden" id="turnus" value="0" />
+              <div class="seg seg-wide" role="group" aria-label="Fast turnus eller avtalte vakter">
+                <button type="button" class="on" data-set="turnus" data-val="0">Nei</button>
+                <button type="button" data-set="turnus" data-val="1">Ja</button>
+              </div>
+            </div>
+          </div>
+          <small>Har den ansatte vært uten arbeid i mer enn 14 dager, regnes arbeidsforholdet normalt som avbrutt. Fast turnus eller avtale om vakter fremover er unntak.</small>
+        </fieldset>
 
         <details class="adv">
           <summary>Flere faktorer <span>16-dagersregel · alder · ferie · G</span></summary>
@@ -208,7 +249,7 @@
             <li><span>Tilbake i jobb 17. des. + 26 uker</span><b>Ny rett 17. juni 2027</b></li>
           </ol>
           <p class="ex-note">Sykmeldingen varer til 31. desember, men NAV betaler ikke sykepenger etter maksdatoen 16. desember. Kari må være helt arbeidsfør i 26 uker før hun får ny rett.</p>
-          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-01-05", "end": "2026-12-31", "grad": "100", "prior": "0", "ansatt": "2018-08-01", "lonn": "560 000", "prevEnd": "", "prevAgp": "0", "birth": "", "ferie": "0", "back": "", "G": "136 549"}'>Prøv i kalkulatoren</button>
+          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-01-05", "end": "2026-12-31", "grad": "100", "prior": "0", "ansatt": "2018-08-01", "lonn": "560 000", "prevEnd": "", "prevAgp": "0", "birth": "", "ferie": "0", "back": "", "G": "136 549", "ltype": "fast"}'>Prøv i kalkulatoren</button>
         </article>
         <article class="card example">
           <header class="ex-head">
@@ -226,7 +267,24 @@
             <li><span>Sykepengedager brukt (6 fra mars + 20 nå)</span><b>26 av 248</b></li>
           </ol>
           <p class="ex-note">Skjærtorsdag, langfredag og 2. påskedag (2., 3. og 6. april) faller på hverdager og teller som sykepengedager.</p>
-          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-03-16", "end": "2026-04-10", "grad": "100", "prior": "6", "ansatt": "2015-01-01", "lonn": "850 000", "prevEnd": "2026-03-09", "prevAgp": "8", "birth": "", "ferie": "0", "back": "", "G": "136 549"}'>Prøv i kalkulatoren</button>
+          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-03-16", "end": "2026-04-10", "grad": "100", "prior": "6", "ansatt": "2015-01-01", "lonn": "850 000", "prevEnd": "2026-03-09", "prevAgp": "8", "birth": "", "ferie": "0", "back": "", "G": "136 549", "ltype": "fast"}'>Prøv i kalkulatoren</button>
+        </article>
+        <article class="card example">
+          <header class="ex-head">
+            <span class="ex-avatar">N</span>
+            <div><h3>Nora, tilkallingsvikar</h3><p>Timelønnet i hjemmetjenesten</p></div>
+            <span class="ex-tag">Timelønnet</span>
+          </header>
+          <p class="ex-text">Nora har vært ansatt siden september 2025 og tar vakter når hun blir spurt. Hun blir syk tirsdag 10. november 2026 og er sykmeldt til 20. november. Siste vakt var 2. november.</p>
+          <ol class="ex-steps">
+            <li><span>Inntekt august, september og oktober</span><b>18 400 + 22 600 + 15 800 kr</b></li>
+            <li><span>Gjennomsnitt per måned × 12</span><b>227 200 kr i året</b></li>
+            <li><span>Dager uten vakt før sykdommen (3.–9. nov.)</span><b>7 dager</b></li>
+            <li><span>Arbeidsgiverperioden (11 av 16 dager brukt)</span><b>10.–20. nov. 2026</b></li>
+            <li><span>Dagsats (227 200 kr / 260)</span><b>873,85 kr</b></li>
+          </ol>
+          <p class="ex-note">Hadde siste vakt vært 20. oktober, ville det gått 20 dager uten arbeid. Da regnes arbeidsforholdet som avbrutt, og Nora har ikke rett til sykepenger før hun har jobbet 4 nye uker, med mindre hun har fast turnus eller avtalte vakter.</p>
+          <button type="button" class="primary ex-btn" data-form="form" data-scroll="#kalkulator" data-fill='{"start": "2026-11-10", "end": "2026-11-20", "grad": "100", "prior": "0", "ansatt": "2025-09-01", "lonn": "", "prevEnd": "", "prevAgp": "0", "birth": "", "ferie": "0", "back": "", "G": "136 549", "ltype": "time", "m1": "18 400", "m2": "22 600", "m3": "15 800", "lastShift": "2026-11-02", "turnus": "0"}'>Prøv i kalkulatoren</button>
         </article>
       </div>
     </section>
@@ -286,7 +344,117 @@
           <span class="ref">ftrl. §§ 8-17, 22-13</span>
         </article>
       </div>
+      <div class="rules" style="margin-top:14px">
+        <article class="rule">
+          <h3>Timelønnede og tilkallingsvikarer</h3>
+          <p>Samme krav om <b>4 ukers</b> opptjening. Sykepengegrunnlaget er snittet av de <b>3 siste kalendermånedene</b>. Er det gått mer enn <b>14 dager</b> uten arbeid, regnes arbeidsforholdet normalt som avbrutt, med mindre det er fast turnus eller avtalte vakter.</p>
+          <span class="ref">ftrl. §§ 8-2, 8-28 · KS</span>
+        </article>
+        <article class="rule">
+          <h3>Arbeidsgiverperioden for timelønnede</h3>
+          <p>Arbeidsgiveren betaler for vaktene den ansatte var satt opp på. Ved jevnlige ekstravakter i minst <b>3 måneder</b> uten opphold over 14 dager skal vaktene <b>gjennomsnittsberegnes</b>.</p>
+          <span class="ref">ftrl. §§ 8-18, 8-19 · KS</span>
+        </article>
+      </div>
       <p class="disclaimer">Verktøyet er et hjelpemiddel og ikke et vedtak. Maksdatoen er beregnet ut fra opplysningene du fyller inn, og regelen om 3 år bakover er forenklet. Det er alltid NAVs vedtak og egen lokal avtale (for eksempel IA og egenmelding) som gjelder.</p>
+    </section>
+
+    <!-- LOVVERK -->
+    <section id="lovverk" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Lovverk</p>
+          <h2>Mer fra folketrygdloven</h2>
+        </div>
+      </div>
+
+      <div class="lov-group">
+        <div class="lov-head"><h3>Kapittel 8 – sykepenger</h3><span>ftrl. kap. 8</span></div>
+        <div class="rules">
+          <article class="rule">
+            <h3>Arbeidsuførhet</h3>
+            <p>Sykepenger gis når den ansatte ikke kan jobbe på grunn av <b>sykdom eller skade</b>. Det må være medisinske grunner. Sosiale problemer eller konflikter på jobben gir ikke rett i seg selv.</p>
+            <span class="ref">ftrl. § 8-4</span>
+          </article>
+          <article class="rule">
+            <h3>Egenmelding</h3>
+            <p>Etter loven kan den ansatte bruke egenmelding i inntil <b>3 dager</b>, høyst 4 ganger per 12 måneder. Mange kommuner har avtale om utvidet egenmelding, ofte inntil 8 dager per gang og 24 dager per år.</p>
+            <span class="ref">ftrl. §§ 8-23–8-27</span>
+          </article>
+          <article class="rule">
+            <h3>Sykmelding</h3>
+            <p>Fravær ut over egenmeldingen må dokumenteres med sykmelding fra lege, kiropraktor, manuellterapeut eller tannlege. Sykmeldingen kan være hel eller gradert.</p>
+            <span class="ref">ftrl. § 8-7</span>
+          </article>
+          <article class="rule">
+            <h3>Aktivitetsplikt</h3>
+            <p>Senest etter <b>8 uker</b> skal den ansatte være i aktivitet, for eksempel delvis i arbeid, hvis ikke medisinske grunner er til hinder. Ellers kan sykepengene stanses.</p>
+            <span class="ref">ftrl. § 8-8</span>
+          </article>
+          <article class="rule">
+            <h3>Reisetilskudd</h3>
+            <p>I stedet for sykepenger kan den ansatte få dekket ekstra reiseutgifter, for eksempel taxi, hvis hen kan jobbe, men ikke komme seg til jobben på vanlig måte.</p>
+            <span class="ref">ftrl. § 8-14</span>
+          </article>
+          <article class="rule">
+            <h3>Opphold i utlandet</h3>
+            <p>Den som er sykmeldt, må søke NAV på forhånd om å beholde sykepengene ved opphold utenfor EØS. Ferie under sykmelding må avtales med arbeidsgiveren.</p>
+            <span class="ref">ftrl. § 8-9</span>
+          </article>
+          <article class="rule">
+            <h3>Kronisk syk eller gravid</h3>
+            <p>Arbeidsgiveren kan søke NAV om å få dekket arbeidsgiverperioden når den ansatte har en <b>langvarig eller kronisk sykdom</b> med mye fravær, eller er gravid og fraværet skyldes svangerskapet.</p>
+            <span class="ref">ftrl. § 8-20</span>
+          </article>
+          <article class="rule">
+            <h3>Sykepengegrunnlaget</h3>
+            <p>Grunnlaget er gjennomsnittet av inntekten i de <b>3 siste kalendermånedene</b>, omregnet til årsinntekt. Avviker det mer enn <b>25 %</b> fra inntekten NAV ser i a-ordningen, kan grunnlaget fastsettes skjønnsmessig.</p>
+            <span class="ref">ftrl. §§ 8-28–8-30</span>
+          </article>
+          <article class="rule">
+            <h3>Feriepenger av sykepenger</h3>
+            <p>NAV betaler feriepenger av sykepenger for inntil <b>48 sykepengedager</b> per opptjeningsår. I kommunen betaler arbeidsgiveren ut og får refusjon.</p>
+            <span class="ref">ftrl. § 8-33</span>
+          </article>
+          <article class="rule">
+            <h3>Frist for å søke</h3>
+            <p>Krav om sykepenger og refusjon må sendes senest <b>3 måneder</b> etter utgangen av måneden kravet gjelder for. Etter fristen kan kravet tapes.</p>
+            <span class="ref">ftrl. § 22-13</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="lov-group">
+        <div class="lov-head"><h3>Kapittel 9 – syke barn og pårørende</h3><span>ftrl. kap. 9</span></div>
+        <div class="rules">
+          <article class="rule">
+            <h3>Omsorgspenger</h3>
+            <p>Når barnet er sykt: <b>10 dager</b> per forelder i året (15 ved 3 eller flere barn, dobbelt ved aleneomsorg), til og med året barnet fyller 12. Arbeidsgiveren betaler de første 10 dagene. Se også siden Permisjoner.</p>
+            <span class="ref">ftrl. §§ 9-5, 9-6</span>
+          </article>
+          <article class="rule">
+            <h3>Pleiepenger for sykt barn</h3>
+            <p>Når et barn under 18 år er alvorlig sykt eller skadet og trenger <b>tilsyn og pleie hele tiden</b>, for eksempel ved sykehusinnleggelse. Kan være graderte, ned til 20 %.</p>
+            <span class="ref">ftrl. § 9-10</span>
+          </article>
+          <article class="rule">
+            <h3>Pleiepenger i livets sluttfase</h3>
+            <p>For å pleie en nærstående som er i livets sluttfase, gis det pleiepenger i inntil <b>60 dager</b> per pasient. Dagene kan deles mellom flere.</p>
+            <span class="ref">ftrl. § 9-13</span>
+          </article>
+          <article class="rule">
+            <h3>Opplæringspenger</h3>
+            <p>Når en forelder må på kurs eller opplæring ved en helseinstitusjon for å kunne ta seg av et barn med langvarig sykdom eller nedsatt funksjonsevne.</p>
+            <span class="ref">ftrl. § 9-14</span>
+          </article>
+          <article class="rule">
+            <h3>Felles regler</h3>
+            <p>Ytelsene i kapittel 9 krever <b>4 ukers</b> opptjening, regnes av samme grunnlag som sykepenger og har samme <b>6G-tak</b>. Arbeidsgiveren kan betale lønn og kreve refusjon fra NAV.</p>
+            <span class="ref">ftrl. §§ 9-3, 9-8, 9-9</span>
+          </article>
+        </div>
+      </div>
+      <p class="disclaimer">Oversikten er forenklet. Lovteksten finnes på lovdata.no, og NAV har utfyllende rundskriv til kapittel 8 og 9.</p>
     </section>
   </main>
 
