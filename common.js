@@ -2,6 +2,79 @@
 (() => {
   "use strict";
 
+  // ---------- Tilgangskode ----------
+  // NB: Dette er en enkel sperre i nettleseren, ikke ekte sikkerhet. Siden er statisk,
+  // og kildekoden kan leses av alle. Koden lagres bare som SHA-256-hash.
+  // Bytt kode: regn ut ny hash (printf %s "nykode" | shasum -a 256) og oppdater
+  // ACCESS_HASH her og i <head> på alle sidene.
+  const ACCESS_HASH = "6b29b11ce68a262dfa3caf9f489eb4ff62b6685bd73b86b9f7c54dc0cec670ff";
+  const ACCESS_KEY = "lonnsom.tilgang";
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+  function lockSite() {
+    try { localStorage.removeItem(ACCESS_KEY); } catch {}
+    location.reload();
+  }
+  if (document.documentElement.classList.contains("locked")) {
+    const gate = document.createElement("div");
+    gate.className = "gate";
+    gate.setAttribute("role", "dialog");
+    gate.setAttribute("aria-modal", "true");
+    gate.setAttribute("aria-labelledby", "gateTitle");
+    gate.innerHTML = `
+      <form class="gate-card" autocomplete="off">
+        <span class="gate-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+        </span>
+        <p class="eyebrow">Lønnsom · kommunal sektor</p>
+        <h1 id="gateTitle">Skriv inn tilgangskoden</h1>
+        <p class="gate-text">Nettsiden er bare for interne brukere.</p>
+        <label class="gate-field">
+          <span class="sr-only">Tilgangskode</span>
+          <span class="gate-input">
+            <svg class="gate-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <input type="password" id="gateCode" placeholder="Tilgangskode" autocomplete="off" autocapitalize="off" spellcheck="false" required />
+            <button type="button" class="gate-eye" aria-label="Vis koden" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </span>
+          <button type="submit" class="primary">Lås opp</button>
+        </label>
+        <p class="gate-error" id="gateError" role="alert"></p>
+      </form>`;
+    document.body.appendChild(gate);
+    const form = gate.querySelector("form"), input = gate.querySelector("#gateCode"), err = gate.querySelector("#gateError");
+    setTimeout(() => input.focus(), 50);
+    const eye = gate.querySelector(".gate-eye");
+    eye.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      eye.setAttribute("aria-pressed", String(show));
+      eye.setAttribute("aria-label", show ? "Skjul koden" : "Vis koden");
+      input.focus();
+    });
+    input.addEventListener("input", () => { err.textContent = ""; });
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let ok = false;
+      try { ok = (await sha256(input.value.trim().toLowerCase())) === ACCESS_HASH; }
+      catch { err.textContent = "Nettleseren støtter ikke sjekk av koden. Prøv en annen nettleser."; return; }
+      if (!ok) {
+        err.textContent = "Feil kode. Prøv igjen.";
+        form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake");
+        input.select();
+        return;
+      }
+      try { localStorage.setItem(ACCESS_KEY, ACCESS_HASH); } catch {}
+      document.documentElement.classList.remove("locked");
+      gate.classList.add("open");
+      setTimeout(() => gate.remove(), 600);
+      window.dispatchEvent(new Event("resize")); // la partiklene måle siden på nytt
+    });
+  }
+
   // ---------- Sidene på nettstedet (legg nye sider til her) ----------
   const PAGES = [
     { href: "index.html", title: "Sykepenger", desc: "Arbeidsgiverperiode, NAV og maksdato" },
@@ -29,7 +102,12 @@
             <span class="menu-text"><b>${p.title}</b><small>${p.desc}</small></span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>`).join("")}
+        <button type="button" class="menu-lock">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          Lås nettsiden
+        </button>
       </div>`;
+    menu.querySelector(".menu-lock").addEventListener("click", lockSite);
     const btn = menu.querySelector(".menu-btn");
     const panel = menu.querySelector(".menu-panel");
     const setOpen = (open) => {

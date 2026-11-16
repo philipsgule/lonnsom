@@ -877,3 +877,60 @@ button { font-family: inherit; cursor: pointer; }
 .tu-rates { margin: 0 0 16px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
 .tu-rates .hint { margin: -4px 0 12px; }
 .tu-norms .ot-rate b { font-size: clamp(30px, 3.2vw, 42px); }
+
+/* ============ Tilgangskode ============ */
+html.locked { overflow: hidden; }
+html.locked body > :not(.gate):not(.page-particles):not(.glow) { visibility: hidden; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.gate {
+  position: fixed; inset: 0; z-index: 90;
+  display: grid; place-items: center; padding: 20px;
+  background: radial-gradient(800px 500px at 50% 35%, rgba(31, 168, 94, 0.22), transparent 70%), rgba(4, 18, 10, 0.55);
+  transition: opacity .5s ease, visibility .5s;
+}
+.gate.open { opacity: 0; visibility: hidden; }
+.gate-card {
+  width: min(440px, 100%); padding: 34px 30px 28px; text-align: center;
+  border-radius: 26px; border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(232, 248, 238, 0.1), rgba(232, 248, 238, 0.04));
+  backdrop-filter: blur(22px) saturate(1.2); -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+}
+.gate-mark { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 18px; background: radial-gradient(circle at 30% 30%, var(--yellow), var(--lime) 70%); box-shadow: 0 0 0 6px rgba(254, 237, 101, 0.12), 0 16px 40px -10px rgba(254, 237, 101, 0.5); }
+.gate-mark svg { width: 28px; height: 28px; fill: none; stroke: #073019; stroke-width: 2.4; stroke-linecap: round; }
+.gate h1 { font-size: clamp(26px, 5vw, 32px); line-height: 1.1; letter-spacing: -0.035em; margin: 2px 0 8px; text-shadow: none; }
+.gate .eyebrow { display: flex; justify-content: center; margin-bottom: 10px; }
+
+.gate-text { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+.gate-field { display: flex; gap: 8px; }
+.gate-input { position: relative; flex: 1; display: flex; align-items: center; min-width: 0; }
+.gate-input input[type="password"], .gate-input input[type="text"] {
+  width: 100%; height: 50px; padding: 0 48px 0 46px;
+  font: 500 15px var(--sans); letter-spacing: .04em; color: #fff;
+  background: rgba(1, 8, 4, 0.45);
+  border: 1px solid rgba(232, 248, 238, 0.16);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.gate-input input[type="password"] { letter-spacing: .3em; }
+.gate-input input::placeholder { color: rgba(232, 248, 238, 0.45); letter-spacing: .02em; }
+.gate-input input:hover { border-color: rgba(232, 248, 238, 0.28); }
+.gate-input input:focus { border-color: rgba(254, 237, 101, 0.65); background: rgba(1, 8, 4, 0.6); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(254, 237, 101, 0.14), 0 0 24px -6px rgba(254, 237, 101, 0.45); }
+.gate-lock { position: absolute; left: 17px; width: 18px; height: 18px; fill: none; stroke: rgba(232, 248, 238, 0.55); stroke-width: 2; stroke-linecap: round; pointer-events: none; transition: stroke .2s; }
+.gate-input:focus-within .gate-lock { stroke: var(--yellow); }
+.gate-eye { position: absolute; right: 6px; display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: rgba(232, 248, 238, 0.55); transition: background .15s, color .15s; }
+.gate-eye:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.gate-eye[aria-pressed="true"] { color: var(--yellow); }
+.gate-eye svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.gate-field .primary { height: 50px; padding: 0 22px; font-size: 14px; }
+.shake .gate-input input { border-color: rgba(255, 107, 90, 0.7); }
+.gate-error { min-height: 20px; margin: 12px 0 0; font-size: 13px; color: var(--danger); }
+.shake { animation: shake .4s; }
+@keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+@media (max-width: 420px) { .gate-field { flex-direction: column; } .gate-input { flex: none; } .gate-field .primary { justify-content: center; } }
+
+.menu-lock { display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 6px; padding: 12px; border: 0; border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; background: transparent; color: var(--muted); font: 500 13.5px var(--sans); text-align: left; }
+.menu-lock:hover { color: #fff; }
+.menu-lock svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
