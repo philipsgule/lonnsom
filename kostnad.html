@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <script>/* Tema: lyst eller mørkt, settes før siden tegnes */try{var t=localStorage.getItem("lonnsom.tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script>/* Tilgangskode: skjul siden til koden er skrevet inn (se common.js) */try{if(localStorage.getItem("lonnsom.tilgang")!=="6b29b11ce68a262dfa3caf9f489eb4ff62b6685bd73b86b9f7c54dc0cec670ff")document.documentElement.classList.add("locked")}catch(e){document.documentElement.classList.add("locked")}</script>
+  <title>Lønnsom – Lønnskostnad</title>
+  <meta name="description" content="Hva koster en ansatt? Fra årslønn til total lønnskostnad per år og per time, med feriepenger, pensjon og arbeidsgiveravgift – forklart for ledere." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%230b4a2b%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23feed65%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#verktoy">Kalkulator</a>
+      <a href="#forklaring">Forklaring</a>
+      <a href="#eksempler">Eksempler</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <div class="page-menu" data-current="kostnad.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <canvas class="hero-particles" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Budsjett og bemanning</p>
+        <div class="fact"><span>Arbeidsgiveravgift sone 1</span><b>14,1 %</b><i>0–14,1 %</i></div>
+        <div class="fact"><span>Feriepenger i kommunen</span><b>12 %</b><i>14,3 % fra 60</i></div>
+        <div class="fact"><span>Typisk påslag på lønn</span><b>+35–45 %</b><i>sone 1</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Arbeidsgiveravgift · Feriepenger · Pensjon</p>
+        <h1>Hva koster<br />en ansatt?</h1>
+        <div class="hero-row">
+          <p class="lead">Fra årslønn til hva den ansatte faktisk koster kommunen, per år, per måned og per time. Med en forklaring i klarspråk som kan deles med ledere.</p>
+          <a class="cta-pill" href="#verktoy">Regn ut kostnad <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg><span>Total lønnskostnad per år, måned og time</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V10M10 20V6M14 20v-8M18 20V4"/></svg><span>Hvor pengene går: lønn, feriepenger, pensjon og avgift</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Betalt time og produktiv time</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v10H9l-4 4V5Z"/><path d="M9 9h6M9 12h4"/></svg><span>Forklaring i klarspråk som kan deles</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- KALKULATOR -->
+    <section id="verktoy" class="tools kost-tools">
+      <form class="card tool" id="kForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kalkulator</p>
+            <h2>Lønnskostnad</h2>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Årslønn <em>100 % stilling</em></span>
+            <div class="suffix"><input type="text" id="kLonn" value="600 000" inputmode="numeric" /><i>kr</i></div>
+          </label>
+          <label class="field">
+            <span>Stilling</span>
+            <div class="suffix"><input type="number" id="kPct" min="1" max="100" value="100" inputmode="numeric" /><i>%</i></div>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Faste tillegg <em>per år, valgfritt</em></span>
+          <div class="suffix"><input type="text" id="kTillegg" value="" placeholder="0" inputmode="numeric" /><i>kr</i></div>
+        </label>
+
+        <div class="field">
+          <span>Arbeidsgiveravgift <em>sone etter kommunen</em></span>
+          <select id="kSone" class="k-select">
+            <option value="14.1">Sone 1 – 14,1 %</option>
+            <option value="10.6">Sone 1a – 10,6 % (opp til fribeløpet)</option>
+            <option value="10.6">Sone 2 – 10,6 %</option>
+            <option value="6.4">Sone 3 – 6,4 %</option>
+            <option value="5.1">Sone 4 – 5,1 %</option>
+            <option value="7.9">Sone 4a – 7,9 %</option>
+            <option value="0">Sone 5 – 0 %</option>
+          </select>
+        </div>
+
+        <div class="grid3">
+          <label class="field">
+            <span>Feriepenger</span>
+            <div class="suffix"><input type="number" id="kFerie" min="0" max="20" step="0.1" value="12" inputmode="decimal" /><i>%</i></div>
+          </label>
+          <label class="field">
+            <span>Pensjon <em>arb.giver</em></span>
+            <div class="suffix"><input type="number" id="kPensjon" min="0" max="40" step="0.1" value="14" inputmode="decimal" /><i>%</i></div>
+          </label>
+          <label class="field">
+            <span>Forsikring o.l.</span>
+            <div class="suffix"><input type="number" id="kForsikring" min="0" max="10" step="0.1" value="0.5" inputmode="decimal" /><i>%</i></div>
+          </label>
+        </div>
+        <small class="hint">Pensjonssatsen er arbeidsgiverens andel av premien til KLP eller pensjonskassen, inkludert AFP og administrasjon. Den er ulik fra kommune til kommune. Spør økonomiavdelingen om satsen dere bruker i budsjettet.</small>
+
+        <details class="adv">
+          <summary>Arbeidstid og fravær <span>timepris · ferie · sykefravær</span></summary>
+          <div class="grid3">
+            <label class="field">
+              <span>Timer per uke</span>
+              <div class="suffix"><input type="number" id="kUke" min="1" max="60" step="0.1" value="37.5" inputmode="decimal" /><i>t</i></div>
+            </label>
+            <label class="field">
+              <span>Ferie</span>
+              <div class="suffix"><input type="number" id="kFerieUker" min="0" max="8" step="1" value="5" inputmode="numeric" /><i>uker</i></div>
+            </label>
+            <label class="field">
+              <span>Sykefravær</span>
+              <div class="suffix"><input type="number" id="kSyk" min="0" max="50" step="0.5" value="8" inputmode="decimal" /><i>%</i></div>
+            </label>
+          </div>
+          <label class="field">
+            <span>År <em>for helligdager</em></span>
+            <input type="number" id="kAar" min="2024" max="2040" inputmode="numeric" />
+          </label>
+        </details>
+      </form>
+
+      <div class="card tool" id="kResult" aria-live="polite"></div>
+    </section>
+
+    <!-- FORKLARING -->
+    <section class="section" id="forklaring">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Forklaring</p>
+          <h2>Hva betyr tallene?</h2>
+        </div>
+        <button type="button" class="primary" id="kCopy">Kopier forklaringen</button>
+      </div>
+      <div class="card explain" id="kExplain"></div>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples" id="kExamples"></div>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk og forutsetninger</p>
+          <h2>Godt å vite</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Arbeidsgiveravgift</h3>
+          <p>Avgift til staten som arbeidsgiveren betaler av lønn, feriepenger og pensjonspremie. Satsen avhenger av hvor kommunen ligger: fra <b>14,1 %</b> i sone 1 til <b>0 %</b> i sone 5 (Nord-Troms og Finnmark).</p>
+          <span class="ref">folketrygdloven § 23-2 · Stortingets vedtak</span>
+        </article>
+        <article class="rule">
+          <h3>Feriepenger i budsjettet</h3>
+          <p>Kalkulatoren følger den vanlige budsjettmodellen der feriepengene, <b>12 %</b> i kommunen, kommer i tillegg til årslønnen. Det gir et trygt anslag. I praksis trekkes lønn for feriedagene i juni, så faktisk utbetalt blir litt lavere.</p>
+          <span class="ref">ferieloven § 10 · HTA</span>
+        </article>
+        <article class="rule">
+          <h3>Pensjon</h3>
+          <p>Kommunen betaler premie til KLP eller en pensjonskasse. Den ansatte betaler <b>2 %</b> selv, og arbeidsgiveren resten. Arbeidsgiverens andel varierer mellom kommuner og år, ofte mellom 10 og 20 % av lønnen.</p>
+          <span class="ref">KLP · pensjonskasse</span>
+        </article>
+        <article class="rule">
+          <h3>Forsikringer</h3>
+          <p>Yrkesskadeforsikring er lovpålagt, og kommunen har i tillegg gruppelivsforsikring etter Hovedtariffavtalen. Kostnaden er vanligvis liten, typisk under 1 % av lønnen.</p>
+          <span class="ref">yrkesskadeforsikringsloven · HTA</span>
+        </article>
+        <article class="rule">
+          <h3>Betalt time og produktiv time</h3>
+          <p>En betalt time er alle timene i stillingen. En produktiv time er tiden den ansatte faktisk er på jobb, etter ferie, helligdager og sykefravær. Produktive timer er derfor dyrere.</p>
+          <span class="ref">budsjett</span>
+        </article>
+        <article class="rule">
+          <h3>Det som ikke er med</h3>
+          <p>Overtid, ubekvemstillegg, vikarer ved fravær, opplæring, utstyr, lokaler og ledelse er ikke med. Refusjon fra NAV ved sykdom trekker kostnaden ned. Bruk tallet som grunnkostnad.</p>
+          <span class="ref">forutsetning</span>
+        </article>
+      </div>
+      <p class="disclaimer">Kalkulatoren gir et anslag til budsjett og bemanning. Satsene for pensjon og forsikring varierer mellom kommuner. Bruk satsene fra økonomiavdelingen for et presist tall.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="search.js"></script>
+  <script src="particles.js"></script>
+  <script src="fun.js"></script>
+  <script src="kostnad.js"></script>
+</body>
+</html>

@@ -84,6 +84,7 @@
     { href: "overtid.html", title: "Overtid", desc: "Satser, utbetaling og grenser" },
     { href: "turnus.html", title: "Turnus", desc: "Arbeidstid, tillegg og hviletid" },
     { href: "pensjonist.html", title: "Pensjonister", desc: "Pensjonistlønn, avkorting og alder" },
+    { href: "kostnad.html", title: "Lønnskostnad", desc: "Hva en ansatt koster per år og time" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------

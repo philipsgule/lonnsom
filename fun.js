@@ -1,4 +1,4 @@
-/* Lønnsom – litt moro: nedtellinger i heroen, lysglød på kortene og et påskeegg */
+/* Lønnsom – litt moro: nedtellinger i heroen og et påskeegg */
 (() => {
   "use strict";
   const { DAY, addDays, dow, todayUtc, holidayName, fmt } = window.LS;
@@ -76,29 +76,6 @@
   }
   document.addEventListener("click", () => { const p = box && box.querySelector(".cd-pop"); if (p) p.hidden = true; });
   renderCountdowns();
-
-  // ---------- Lysglød på kortene ----------
-  // Én lysflekk som følger pekeren inne i kortet man holder over (bare med mus).
-  if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    const spot = document.createElement("span");
-    spot.className = "spot";
-    spot.setAttribute("aria-hidden", "true");
-    let host = null;
-    const SEL = "main .card, main .rule, .facts .fact, .gate-card";
-    document.addEventListener("pointerover", (e) => {
-      const c = e.target.closest(SEL);
-      if (c === host) return;
-      host = c;
-      if (c) { c.classList.add("has-spot"); c.appendChild(spot); }
-      else spot.remove();
-    });
-    document.addEventListener("pointermove", (e) => {
-      if (!host) return;
-      const r = host.getBoundingClientRect();
-      spot.style.setProperty("--x", `${e.clientX - r.left}px`);
-      spot.style.setProperty("--y", `${e.clientY - r.top}px`);
-    }, { passive: true });
-  }
 
   // ---------- Påskeegg: Konami-koden gir nordlys ----------
   const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
