@@ -107,7 +107,7 @@
     switch (key) {
       case "lonn": return r.tillegg ? `${kr(r.lonn - r.tillegg)} + faste tillegg ${kr(r.tillegg)}` : `${kr(r.lonn)} for ${nf.format(r.stilling * 100)} % stilling`;
       case "ferie": return `${pct(r.ferieSats)} av lønnen`;
-      case "pensjon": return `${pct(r.pensjonSats)} av lønnen (arbeidsgivers andel)`;
+      case "pensjon": return `${pct(r.pensjonSats)} av lønnen (arbeidsgivers andel${r.pensjonSats === 14 ? ", eksempelsats" : ""})`;
       case "aga": return `${pct(r.agaSats)} av lønn, feriepenger og pensjon`;
       case "forsikring": return `${pct(r.forsikringSats)} av lønnen`;
     }
@@ -122,6 +122,7 @@
       ["Hvorfor mer enn lønnen?", `I tillegg til lønnen kommer feriepenger (${kr(r.ferie)}), kommunens del av pensjonen (${kr(r.pensjon)}), arbeidsgiveravgift til staten (${kr(r.aga)}) og forsikringer (${kr(r.forsikring)}). Til sammen er dette ${kr(r.total - r.lonn)}, eller ${pct(r.paslag * 100)} på toppen av lønnen.`],
       ["Timelønn og timepris", `Den ansatte får ${kr2(r.timelonn)} per time i lønn. Når alle kostnadene tas med, koster hver time i stillingen ${kr2(r.prisBetalt)}. Det er tallet å bruke når man sammenligner med for eksempel innleie.`],
       ["Hvorfor er en produktiv time dyrere?", `Av ${t(r.betalte)} i stillingen går omtrent ${t(r.ferieT)} til ferie, ${t(r.helligT)} til ${r.hellig} helligdager på hverdager i ${r.aar}, og ${t(r.sykT)} til sykefravær (${pct(r.syk)}). Da står det igjen omtrent <b>${t(r.produktive)}</b> på jobb. Fordelt på disse timene koster hver time <b>${kr2(r.prisProduktiv)}</b>.`],
+      ["Om tallene", `Pensjonssatsen (${pct(r.pensjonSats)}) og sykefraværet (${pct(r.syk)}) er ${r.pensjonSats === 14 && r.syk === 8 ? "eksempelverdier" : "verdiene som er fylt inn"}. Kommunens egen pensjonssats og enhetens faktiske sykefravær gir et mer presist tall.`],
       ["Hva er ikke med?", `Overtid, ubekvemstillegg, vikarer ved fravær, opplæring, utstyr og lokaler er ikke med. Refusjon fra NAV ved sykefravær kan trekke kostnaden noe ned. Bruk tallet som grunnkostnad for stillingen.`],
     ];
     const html = p.map(([h, txt]) => `<div class="exp-item"><h3>${h}</h3><p>${txt}</p></div>`).join("");
