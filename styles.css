@@ -1085,3 +1085,158 @@ main:focus { outline: none; }
   .fun-toast { white-space: normal; text-align: center; width: calc(100% - 32px); }
 }
 @media print { .countdowns, .aurora-layer, .fun-toast { display: none !important; } }
+
+/* =====================================================================
+   LYST TEMA – aktiveres med html[data-theme="light"] (temabryteren)
+   Heroen og nedtellingene beholder den grønne gløden i begge temaer.
+   ===================================================================== */
+.theme-btn {
+  display: grid; place-items: center; width: 42px; height: 42px; padding: 0;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(2, 28, 14, 0.38); color: #fff;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  transition: background .15s, transform .3s;
+}
+.theme-btn:hover { background: rgba(2, 28, 14, 0.55); transform: rotate(-15deg); }
+.theme-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+html.theme-switching, html.theme-switching * { transition: background-color .35s, color .35s, border-color .35s !important; }
+
+html[data-theme="light"] {
+  --text: #0d2a1a;
+  --ink: #0d2a1a;
+  --muted: rgba(13, 42, 26, 0.64);
+  --faint: rgba(13, 42, 26, 0.45);
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-2: rgba(255, 255, 255, 0.88);
+  --line: rgba(13, 42, 26, 0.10);
+  --line-2: rgba(13, 42, 26, 0.18);
+  --night: #eef5f0;
+  --accent-ink: #3f7a12;
+  color-scheme: light;
+}
+html[data-theme="light"] body { background: #eef5f0; color: var(--ink); }
+html[data-theme="light"] body::before { opacity: 0.05; filter: invert(1); }
+html[data-theme="light"] body::after { background: radial-gradient(ellipse 120% 95% at 50% 40%, transparent 55%, rgba(11, 74, 43, 0.08) 85%, rgba(11, 74, 43, 0.16) 100%); }
+html[data-theme="light"] .glow {
+  background:
+    radial-gradient(700px 520px at 90% 20%, rgba(31, 168, 94, 0.12), transparent 70%),
+    radial-gradient(800px 600px at 0% 75%, rgba(155, 217, 74, 0.16), transparent 70%),
+    radial-gradient(600px 400px at 60% 110%, rgba(254, 237, 101, 0.18), transparent 70%);
+}
+html[data-theme="light"] ::selection { background: var(--green); color: #fff; }
+
+/* Topbar når man har scrollet ned på lys bakgrunn */
+html[data-theme="light"] .topbar.scrolled { background: rgba(238, 245, 240, 0.85); border-bottom-color: var(--line); }
+html[data-theme="light"] .topbar.scrolled .brand { color: var(--ink); }
+html[data-theme="light"] .topbar.scrolled .brand-mark { stroke: var(--ink); }
+html[data-theme="light"] .menu-btn { box-shadow: 0 0 0 1px rgba(13, 42, 26, 0.08), 0 14px 36px -14px rgba(0, 0, 0, 0.35); }
+
+/* Kort og flater */
+html[data-theme="light"] .card { background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)); border-color: rgba(13, 42, 26, 0.09); box-shadow: 0 1px 0 #fff inset, 0 22px 44px -30px rgba(11, 74, 43, 0.35); }
+html[data-theme="light"] .rule { background: rgba(255, 255, 255, 0.7); border-color: rgba(13, 42, 26, 0.09); }
+html[data-theme="light"] .rule:hover { background: #fff; }
+html[data-theme="light"] :is(.stat, .ex-steps, .strip-wrap, .ot-row, .disclaimer) { background: rgba(13, 42, 26, 0.035); }
+html[data-theme="light"] .time-box { background: rgba(254, 237, 101, 0.16); border-color: rgba(180, 160, 20, 0.35); }
+html[data-theme="light"] :is(.rate.hl, .layer.hl, .ot-rate.hl, .cohort.on) { background: linear-gradient(180deg, rgba(254, 237, 101, 0.22), rgba(255, 255, 255, 0.75)); border-color: rgba(180, 160, 20, 0.4); }
+html[data-theme="light"] .alert { background: rgba(255, 255, 255, 0.75); }
+
+/* Overskrifter og sterk tekst */
+html[data-theme="light"] :is(main h2, main h3, .month h4, .big, .kv dd, .ring-label b, .maks-date, .stat b, .money td, .timeline .tl-date,
+  .rule b, .hint b, .out-table td:last-child, .out-note b, .rate-row b, .layer b, .cohort b, .checklist b, .ex-steps b,
+  .pl-row span b, .pl-row em, .impact-table tbody th, .gr-top b, .ot-rate b, .pj-list b, .foot b, .adv summary, .search-body b) { color: var(--ink); }
+/* Vanlig tekst */
+html[data-theme="light"] :is(.field > span, .money td:first-child, .seg button, .legend, .rule p, .out-table td, .out-note, .rate-row.sub60 b,
+  .axis-rates span, .layer p, .cohort p, .checklist span, .ex-text, .ex-steps span, .pl-row span, .impact-table td, .ot-rows-head span,
+  .ot-del, .gr-top, .ot-rate p, .pj-list li, .ghost, .alert, legend) { color: rgba(13, 42, 26, 0.78); }
+/* Gul tekst blir uleselig på hvitt – bruk mørk olivengrønn */
+html[data-theme="light"] :is(.field output, .rule .ref, .out-table tr.muted td:last-child, .rate.hl .rate-label, .layer.hl .layer-n, .layer .ref,
+  .cohort.on::after, .ex-tag, .pay.lonn, .ot-chip, .ot-rate.hl .rate-label, .time-box legend, .lov-head span) { color: var(--accent-ink); }
+html[data-theme="light"] .pj-list li::marker { color: var(--accent-ink); }
+html[data-theme="light"] .layer-n { color: rgba(13, 42, 26, 0.2); }
+html[data-theme="light"] :is(.pay.nav, .search-kind.k-regel) { color: #137a43; }
+html[data-theme="light"] .ex-tag { background: rgba(254, 237, 101, 0.35); border-color: rgba(180, 160, 20, 0.4); }
+html[data-theme="light"] .cohort.on .cohort-years { color: #073019; }
+
+/* Grønne resultatkort beholder hvit tekst */
+html[data-theme="light"] .pane.agp :is(.big, .kv dd) { color: #fff; }
+
+/* Skjema */
+html[data-theme="light"] :is(input[type="date"], input[type="number"], input[type="text"], .ot-row input[type="time"], .cd-pop select) { background: #fff; color: var(--ink); border-color: rgba(13, 42, 26, 0.18); }
+html[data-theme="light"] input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(31, 168, 94, 0.18); background: #fff; }
+html[data-theme="light"] :is(input[type="date"], input[type="time"])::-webkit-calendar-picker-indicator { filter: none; opacity: .55; }
+html[data-theme="light"] .seg { background: rgba(13, 42, 26, 0.05); border-color: var(--line); }
+html[data-theme="light"] .seg button.on { background: var(--ink); color: #fff; }
+html[data-theme="light"] .adv summary::after { color: var(--ink); background: rgba(13, 42, 26, 0.07); }
+html[data-theme="light"] input[type="range"] { background: linear-gradient(90deg, var(--green), var(--lime) calc(var(--p, 100%) * .7), #d4b106 var(--p, 100%), rgba(13, 42, 26, 0.12) var(--p, 100%)); }
+html[data-theme="light"] input[type="range"]::-webkit-slider-thumb { box-shadow: 0 0 0 5px rgba(31, 168, 94, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25); border: 1px solid rgba(13, 42, 26, 0.15); }
+html[data-theme="light"] .primary, html[data-theme="light"] .ex-btn { background: #0b4a2b; color: #fff; }
+html[data-theme="light"] .ghost { background: rgba(255, 255, 255, 0.8); border-color: var(--line-2); }
+html[data-theme="light"] .ghost:hover { color: var(--ink); background: #fff; }
+
+/* Kalender */
+html[data-theme="light"] .d { color: rgba(13, 42, 26, 0.75); }
+html[data-theme="light"] .d.we { color: rgba(13, 42, 26, 0.4); }
+html[data-theme="light"] .d.agp { color: #fff; }
+html[data-theme="light"] .d.agp.we { background: rgba(31, 168, 94, 0.6); }
+html[data-theme="light"] .d.nav { color: #073019; }
+html[data-theme="light"] .d.nav.we { background: rgba(254, 237, 101, 0.55); }
+html[data-theme="light"] .d.proj { color: var(--ink); border-color: rgba(180, 160, 20, 0.6); }
+html[data-theme="light"] .d.maks { outline-color: var(--ink); color: var(--ink); }
+html[data-theme="light"] .d.today { box-shadow: inset 0 0 0 1.5px var(--ink); }
+html[data-theme="light"] .d.hol::after { box-shadow: 0 0 0 1.5px #fff; }
+html[data-theme="light"] .sw.maks { border-color: var(--ink); }
+
+/* Ring, stolper og tidslinje */
+html[data-theme="light"] .ring .bg { stroke: rgba(13, 42, 26, 0.08); }
+html[data-theme="light"] .ring .prior { stroke: rgba(13, 42, 26, 0.3); }
+html[data-theme="light"] .ring .used { stroke: #d4b106; }
+html[data-theme="light"] :is(.gr-bar, .oms-bar) { background: rgba(13, 42, 26, 0.08); }
+html[data-theme="light"] .seg-c { background: repeating-linear-gradient(135deg, rgba(13,42,26,.07) 0 6px, rgba(13,42,26,.02) 6px 12px); }
+html[data-theme="light"] .timeline .node { background: #fff; color: var(--ink); border-color: var(--line-2); }
+html[data-theme="light"] .timeline li.key .node { background: #fff; color: var(--green); border-color: var(--green); }
+html[data-theme="light"] .timeline li.past .node { background: rgba(13, 42, 26, 0.75); color: #fff; border-color: transparent; }
+html[data-theme="light"] .timeline li.key.past .node { background: var(--green); color: #fff; }
+
+/* Sidemeny og søk */
+html[data-theme="light"] .menu-panel { background: rgba(255, 255, 255, 0.97); border-color: var(--line-2); }
+html[data-theme="light"] .menu-panel a { color: var(--ink); }
+html[data-theme="light"] .menu-panel a:hover { background: rgba(13, 42, 26, 0.05); }
+html[data-theme="light"] .menu-panel a[aria-current="page"] { background: rgba(31, 168, 94, 0.1); box-shadow: inset 0 0 0 1px rgba(31, 168, 94, 0.35); }
+html[data-theme="light"] .menu-panel a[aria-current="page"] .menu-n { color: var(--green); }
+html[data-theme="light"] .menu-lock:hover { color: var(--ink); }
+html[data-theme="light"] .search { background: rgba(13, 42, 26, 0.25); }
+html[data-theme="light"] .search-panel { background: rgba(255, 255, 255, 0.98); border-color: var(--line-2); }
+html[data-theme="light"] .search-field input { color: var(--ink); }
+html[data-theme="light"] .search-field input::placeholder { color: var(--faint); }
+html[data-theme="light"] .search-field svg { stroke: var(--green); }
+html[data-theme="light"] .search-item { color: var(--ink); }
+html[data-theme="light"] :is(.search-item.on, .search-item:hover) { background: rgba(13, 42, 26, 0.05); }
+html[data-theme="light"] .search-item.on { box-shadow: inset 0 0 0 1px rgba(31, 168, 94, 0.35); }
+html[data-theme="light"] .search-kind { background: rgba(13, 42, 26, 0.06); color: rgba(13, 42, 26, 0.7); }
+html[data-theme="light"] .search-body mark { background: rgba(254, 237, 101, 0.75); color: var(--ink); }
+html[data-theme="light"] :is(.search-panel kbd, .search-foot kbd) { border-color: rgba(13, 42, 26, 0.2); background: rgba(13, 42, 26, 0.05); color: rgba(13, 42, 26, 0.7); }
+html[data-theme="light"] .search-chip { color: var(--ink); background: rgba(13, 42, 26, 0.04); }
+
+/* Inngangsbilde med kode */
+html[data-theme="light"] .gate { background: radial-gradient(800px 500px at 50% 35%, rgba(31, 168, 94, 0.18), transparent 70%), rgba(238, 245, 240, 0.6); }
+html[data-theme="light"] .gate-card { background: rgba(255, 255, 255, 0.85); border-color: var(--line-2); }
+html[data-theme="light"] .gate h1 { color: var(--ink); }
+html[data-theme="light"] :is(.gate-input input[type="password"], .gate-input input[type="text"]) { background: #fff; color: var(--ink); border-color: rgba(13, 42, 26, 0.2); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06); }
+html[data-theme="light"] .gate-input input::placeholder { color: var(--faint); }
+html[data-theme="light"] .gate-lock { stroke: rgba(13, 42, 26, 0.45); }
+html[data-theme="light"] .gate-input:focus-within .gate-lock { stroke: var(--green); }
+html[data-theme="light"] .gate-eye { color: rgba(13, 42, 26, 0.5); }
+html[data-theme="light"] .gate-eye:hover { color: var(--ink); background: rgba(13, 42, 26, 0.06); }
+html[data-theme="light"] .gate .primary { background: #0b4a2b; color: #fff; }
+
+/* Moro i lyst tema */
+html[data-theme="light"] .spot { background: radial-gradient(280px circle at var(--x, -999px) var(--y, -999px), rgba(31, 168, 94, 0.10), rgba(155, 217, 74, 0.05) 40%, transparent 70%); mix-blend-mode: multiply; }
+html[data-theme="light"] .aurora-layer { mix-blend-mode: multiply; opacity: 0.75; }
+html[data-theme="light"] :focus-visible { outline-color: var(--green); }
+html[data-theme="light"] .pane.agp {
+  border-color: rgba(11, 74, 43, 0.25);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(254, 237, 101, 0.35), transparent 50%),
+    linear-gradient(135deg, var(--green), var(--deep));
+}
+html[data-theme="light"] .topbar.scrolled :is(.nav-pill, .search-btn, .theme-btn) { background: rgba(11, 74, 43, 0.9); border-color: rgba(11, 74, 43, 0.3); }

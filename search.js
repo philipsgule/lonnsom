@@ -164,6 +164,30 @@
   btn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>Søk</span><kbd>${isMac ? "⌘" : "Ctrl"} K</kbd>`;
   right.insertBefore(btn, right.firstChild);
 
+  // ---------- Temabryter (lyst/mørkt) ----------
+  const themeBtn = document.createElement("button");
+  themeBtn.type = "button";
+  themeBtn.className = "theme-btn";
+  const SUN = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>`;
+  const MOON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>`;
+  const isLight = () => document.documentElement.dataset.theme === "light";
+  function paintThemeBtn() {
+    const light = isLight();
+    themeBtn.innerHTML = light ? MOON : SUN;
+    themeBtn.setAttribute("aria-label", light ? "Bytt til mørkt tema" : "Bytt til lyst tema");
+    themeBtn.title = light ? "Mørkt tema" : "Lyst tema";
+  }
+  themeBtn.addEventListener("click", () => {
+    const next = isLight() ? "dark" : "light";
+    document.documentElement.classList.add("theme-switching");
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("lonnsom.tema", next); } catch {}
+    paintThemeBtn();
+    setTimeout(() => document.documentElement.classList.remove("theme-switching"), 400);
+  });
+  paintThemeBtn();
+  right.insertBefore(themeBtn, btn.nextSibling);
+
   const dlg = document.createElement("div");
   dlg.className = "search";
   dlg.hidden = true;

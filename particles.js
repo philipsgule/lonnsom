@@ -165,22 +165,24 @@
           const dx = a.sx - b.sx, dy = a.sy - b.sy, d2 = dx * dx + dy * dy;
           if (d2 > L2) continue;
           const al = (1 - Math.sqrt(d2) / link) * 0.17 * Math.min(a.vis, b.vis) * Math.min(1, prog * 2.2) * (0.5 + a.z * 0.5);
-          ctx.strokeStyle = `rgba(${sprite(clamp(a.t * 0.55 + prog * 0.6, 0, 1)).rgb},${al.toFixed(3)})`;
+          ctx.strokeStyle = `rgba(${sprite(document.documentElement.dataset.theme === "light" ? 0.12 : clamp(a.t * 0.55 + prog * 0.6, 0, 1)).rgb},${al.toFixed(3)})`;
           ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke();
         }
       }
     }
 
     // Partiklene (glød + lysstripe ved rask scrolling)
-    ctx.globalCompositeOperation = "lighter";
+    // Lyst tema: lysende partikler blir usynlige på hvitt, så de tegnes som mørkere grønne prikker.
+    const light = document.documentElement.dataset.theme === "light";
+    ctx.globalCompositeOperation = light ? "source-over" : "lighter";
     ctx.lineCap = "round";
     for (const p of page.parts) {
       if (p.vis <= 0) continue;
-      const tcol = clamp(p.t * 0.55 + prog * 0.6, 0, 1);
+      const tcol = light ? clamp(p.t * 0.3 + prog * 0.2, 0, 0.5) : clamp(p.t * 0.55 + prog * 0.6, 0, 1);
       const s = sprite(tcol);
       const r = p.r * p.z * grow;
       const tw = reduce ? 1 : 0.7 + 0.3 * Math.sin(time * 0.002 * (0.6 + p.z) + p.ph);
-      const alpha = Math.min(1, p.vis * (0.28 + 0.47 * p.z) * tw * (1 + auroraLevel() * 1.4));
+      const alpha = Math.min(1, p.vis * (0.28 + 0.47 * p.z) * tw * (1 + auroraLevel() * 1.4)) * (light ? 0.6 : 1);
       const streak = Math.min(26, Math.abs(v) * p.z * 0.7);
       if (streak > 4) {
         ctx.strokeStyle = `rgba(${s.rgb},${(alpha * 0.3).toFixed(3)})`;
