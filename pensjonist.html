@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <script>/* Tilgangskode: skjul siden til koden er skrevet inn (se common.js) */try{if(localStorage.getItem("lonnsom.tilgang")!=="6b29b11ce68a262dfa3caf9f489eb4ff62b6685bd73b86b9f7c54dc0cec670ff")document.documentElement.classList.add("locked")}catch(e){document.documentElement.classList.add("locked")}</script>
+  <title>Lønnsom – Pensjonister i jobb</title>
+  <meta name="description" content="Pensjonister som jobber i kommunen – pensjonistlønn, avkorting av pensjon, aldersgrenser og sykepenger, med aldersoversikt og kalkulator." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%230b4a2b%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23feed65%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#verktoy">Kalkulator</a>
+      <a href="#ordninger">Ordninger</a>
+      <a href="#eksempler">Eksempler</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <div class="page-menu" data-current="pensjonist.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <canvas class="hero-particles" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> KS-området · SGS 2020</p>
+        <div class="fact"><span>Pensjonistlønn</span><b>269 kr</b><i>per time fra 1.1.2026</i></div>
+        <div class="fact"><span>Aldersgrense offentlig sektor</span><b>72 år</b><i>fra 2026</i></div>
+        <div class="fact"><span>Sykepenger fra NAV</span><b>til 70 år</b><i>60 dager etter 67</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Pensjonister i jobb · KLP · Folketrygden</p>
+        <h1>Pensjonister,<br />tilbake i jobb</h1>
+        <div class="hero-row">
+          <p class="lead">Hva skjer når en pensjonist tar vakter eller jobber i kommunen? Pensjonistlønn, avkorting av pensjonen, aldersgrenser og sykepenger, forklart for lønnsmedarbeidere.</p>
+          <a class="cta-pill" href="#verktoy">Sjekk alder og lønn <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Aldersoversikt med datoer fra 62 til 75 år</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg><span>Kalkulator for pensjonistlønn</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Regler etter fødselsår: før og etter 1963</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Sykepenger, skatt og feriepenger</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- VERKTØY -->
+    <section id="verktoy" class="tools">
+      <!-- Aldersoversikt -->
+      <form class="card tool" id="alForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Oversikt</p>
+            <h2>Alder og regler</h2>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Fødselsdato</span>
+            <input type="date" id="alBirth" value="1960-06-15" />
+          </label>
+          <div class="field">
+            <span>Særaldersgrense</span>
+            <input type="hidden" id="alSaer" value="0" />
+            <div class="seg seg-wide" role="group" aria-label="Særaldersgrense">
+              <button type="button" class="on" data-saer="0">Ingen</button>
+              <button type="button" data-saer="60">60</button>
+              <button type="button" data-saer="63">63</button>
+              <button type="button" data-saer="65">65</button>
+            </div>
+          </div>
+        </div>
+        <small class="hint">Særaldersgrense gjelder blant annet sykepleiere og helsefagarbeidere (65 år) og brannkonstabler (60 år).</small>
+
+        <div class="out" id="alOut" aria-live="polite"></div>
+      </form>
+
+      <!-- Pensjonistlønn -->
+      <form class="card tool" id="plForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kalkulator</p>
+            <h2>Pensjonistlønn</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Type arbeid">
+            <button type="button" class="on" data-pltype="vanlig">Vanlig arbeid</button>
+            <button type="button" data-pltype="und">Undervisning</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Timer per måned</span>
+            <div class="suffix"><input type="number" id="plTimer" min="0" max="300" step="0.5" value="40" inputmode="decimal" /><i>t</i></div>
+          </label>
+          <label class="field">
+            <span>Timesats <em>fra 1.1.2026</em></span>
+            <div class="suffix"><input type="number" id="plSats" min="0" max="2000" step="1" value="269" inputmode="numeric" /><i>kr</i></div>
+          </label>
+        </div>
+
+        <label class="field pl-und">
+          <span>Årsramme for faget <em>SFS 2213</em></span>
+          <div class="suffix"><input type="number" id="plRamme" min="300" max="1400" step="1" value="741" inputmode="numeric" /><i>t</i></div>
+          <small>For undervisning regnes satsen om: timesats × 1400 / årsrammen for faget.</small>
+        </label>
+
+        <div class="out" id="plOut" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- ORDNINGER -->
+    <section class="section" id="ordninger">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Hvem gjelder hva</p>
+          <h2>Det avhenger av fødselsår</h2>
+        </div>
+      </div>
+      <div class="cohorts pj-cohorts">
+        <article class="card cohort" data-cohort="old">
+          <span class="cohort-years">Født 1962 eller tidligere</span>
+          <h3>Pensjonen kan reduseres</h3>
+          <ul class="pj-list">
+            <li><b>Vanlig ansettelse</b> i en stilling med offentlig tjenestepensjon gir i de fleste tilfeller <b>redusert eller stanset</b> pensjon fra KLP.</li>
+            <li><b>Pensjonistlønn</b> gir ikke innmelding i pensjonsordningen, så pensjonen reduseres ikke.</li>
+            <li><b>AFP</b> tatt ut før 67 år kan reduseres ved arbeidsinntekt.</li>
+            <li>Alderspensjonen fra <b>folketrygden</b> reduseres ikke av arbeid.</li>
+          </ul>
+        </article>
+        <article class="card cohort" data-cohort="new">
+          <span class="cohort-years">Født 1963 eller senere</span>
+          <h3>Jobb og pensjon fritt</h3>
+          <ul class="pj-list">
+            <li>Pensjon fra KLP etter <b>påslagsmodellen</b> og folketrygden <b>reduseres ikke</b>, uansett hvor mye den ansatte jobber.</li>
+            <li>Den ansatte ansettes på <b>vanlige lønnsvilkår</b> og fortsetter å tjene opp pensjon.</li>
+            <li><b>Pensjonistlønn</b> kan bare brukes av dem med <b>særaldersgrense</b> (videreført fra april 2025).</li>
+            <li>Født 1963–1970 kan ha rett til <b>overgangstillegg</b> fra KLP.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples" id="pjExamples"></div>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Godt å vite</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Pensjonistlønn</h3>
+          <p>En fast timesats, <b>269 kr</b> fra 1. januar 2026. Pensjonisten meldes ikke inn i pensjonsordningen, og lønnen er ikke pensjonsgivende. Satsen følger tilsvarende sats i staten.</p>
+          <span class="ref">SGS 2020 § 3-2 · KS B-rundskriv 3/2026</span>
+        </article>
+        <article class="rule">
+          <h3>Krever avtale</h3>
+          <p>Ansettelse på pensjonistlønn krever at <b>både pensjonisten og arbeidsgiveren</b> ønsker det. Den ansatte kan ikke kreve det, og arbeidsgiveren kan ikke pålegge det.</p>
+          <span class="ref">SGS 2020</span>
+        </article>
+        <article class="rule">
+          <h3>Aldersgrense 72 år</h3>
+          <p>Den alminnelige aldersgrensen i offentlig sektor er <b>72 år</b> fra 1. januar 2026, tidligere 70 år. Etter aldersgrensen kan pensjonisten fortsatt jobbe på pensjonistlønn eller i kortere oppdrag.</p>
+          <span class="ref">aldersgrenseloven</span>
+        </article>
+        <article class="rule">
+          <h3>Sykepenger 67–70 år</h3>
+          <p>Fra 67 år gis det sykepenger i høyst <b>60 dager</b>, og inntekten må være over <b>2 G</b>. Fra og med 70 år gis det ikke sykepenger fra folketrygden.</p>
+          <span class="ref">ftrl. § 8-51</span>
+        </article>
+        <article class="rule">
+          <h3>Feriepenger</h3>
+          <p>Pensjonister som jobber, har rett til ferie og feriepenger etter ferieloven. Fra året den ansatte fyller 60 år kommer tillegget på 2,3 % og en ekstra ferieuke. Se siden Ferie.</p>
+          <span class="ref">ferieloven §§ 5, 10</span>
+        </article>
+        <article class="rule">
+          <h3>Skattekort</h3>
+          <p>Pensjonisten må ha et skattekort som dekker både pensjon og lønn. Arbeidsgiveren trekker skatt etter skattekortet. Det er lurt å be den ansatte endre skattekortet når lønnen øker.</p>
+          <span class="ref">Skatteetaten</span>
+        </article>
+        <article class="rule">
+          <h3>Særaldersgrense</h3>
+          <p>Ansatte med særaldersgrense kan gå av tidligere. Jobber de videre etter særaldersgrensen, kan reglene for pensjonen være annerledes. Sjekk med KLP.</p>
+          <span class="ref">KLP</span>
+        </article>
+        <article class="rule">
+          <h3>Rekrutteringstillegg</h3>
+          <p>Ved store rekrutteringsproblemer kan kommunen gi et ekstra tillegg til pensjonistlønnen etter reglene i KS-rundskrivet.</p>
+          <span class="ref">KS B-rundskriv 3/2026</span>
+        </article>
+      </div>
+      <p class="disclaimer">Siden er en kort, forenklet oversikt. Reglene for avkorting av pensjon er sammensatte. Konkrete spørsmål om hva arbeid betyr for pensjonen, bør sendes til KLP eller pensjonsleverandøren. Satsen for pensjonistlønn justeres jevnlig.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="particles.js"></script>
+  <script src="pensjonist.js"></script>
+</body>
+</html>

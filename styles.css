@@ -950,3 +950,19 @@ html.locked body > :not(.gate):not(.page-particles):not(.glow) { visibility: hid
 .lov-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 14px; }
 .lov-head h3 { margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
 .lov-head span { font: 500 11px var(--mono); letter-spacing: .08em; color: var(--yellow); text-transform: uppercase; }
+
+/* ============ Pensjonister-siden ============ */
+#plForm:not([data-type="und"]) .pl-und { display: none; }
+.pj-cohorts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pj-list { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+.pj-list li { font-size: 13.5px; color: rgba(240, 251, 244, 0.78); }
+.pj-list li::marker { color: var(--yellow); }
+.pj-list b { color: #fff; font-weight: 600; }
+.pj-timeline { gap: 8px; }
+.pj-timeline li { grid-template-columns: 36px minmax(0, 1fr) 112px; gap: 10px; }
+.pj-timeline .tl-body { padding: 11px 14px; }
+.pj-timeline .tl-body h3 { font-size: 14px; margin-bottom: 2px; }
+.pj-timeline .tl-body p { font-size: 12.5px; }
+.pj-timeline .tl-date { font-size: 13px; }
+@media (max-width: 900px) { .pj-cohorts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .pj-timeline li { grid-template-columns: 36px minmax(0, 1fr); } }

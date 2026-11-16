@@ -83,6 +83,7 @@
     { href: "permisjon.html", title: "Permisjoner", desc: "Foreldrepermisjon, sykt barn og mer" },
     { href: "overtid.html", title: "Overtid", desc: "Satser, utbetaling og grenser" },
     { href: "turnus.html", title: "Turnus", desc: "Arbeidstid, tillegg og hviletid" },
+    { href: "pensjonist.html", title: "Pensjonister", desc: "Pensjonistlønn, avkorting og alder" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------
