@@ -187,6 +187,8 @@
   });
 
   // Rydd adressen ved innlasting: fjern index.html, .html og #…
+  // (#… tas vare på først, så søket kan hoppe til riktig kort – se search.js)
+  const initialHash = decodeURIComponent(location.hash.slice(1));
   {
     let path = location.pathname;
     if (onWeb) path = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
@@ -278,6 +280,7 @@
   const nf1 = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1 });
 
   window.LS = {
+    PAGES, initialHash, onWeb, cleanHref,
     DAY, parseDate, toIso, addDays, dow, todayUtc, holidayName,
     fmt: (t) => (t == null ? "–" : fDate.format(t).replace(/\.$/, "")),
     kr: (n) => nf.format(Math.round(n)) + " kr",
