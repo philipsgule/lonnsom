@@ -8,6 +8,7 @@
     { href: "ferie.html", title: "Ferie", desc: "Ferie og feriepenger" },
     { href: "pensjon.html", title: "Pensjon", desc: "Folketrygd, tjenestepensjon og AFP" },
     { href: "permisjon.html", title: "Permisjoner", desc: "Foreldrepermisjon, sykt barn og mer" },
+    { href: "overtid.html", title: "Overtid", desc: "Satser, utbetaling og grenser" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------

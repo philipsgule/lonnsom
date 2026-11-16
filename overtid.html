@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lønnsom – Overtid</title>
+  <meta name="description" content="Overtid i kommunal sektor forklart kort – med kalkulator som fordeler timene på 50 og 100 prosent, og oversikt over lovens grenser." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%230b4a2b%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23feed65%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#verktoy">Kalkulator</a>
+      <a href="#satser">Satser</a>
+      <a href="#eksempler">Eksempler</a>
+      <a href="#regler">Regler</a>
+    </nav>
+    <div class="page-menu" data-current="overtid.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <canvas class="hero-particles" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Kommunal sektor · HTA § 6</p>
+        <div class="fact"><span>Overtid på dagtid</span><b>+50 %</b><i>lov: minst 40 %</i></div>
+        <div class="fact"><span>Kveld, natt, søn- og helligdag</span><b>+100 %</b><i>kl. 21–06</i></div>
+        <div class="fact"><span>Timelønn</span><b>lønn / 1850</b><i>37,5 t/uke</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Arbeidsmiljøloven § 10-6 · HTA kap. 1 § 6</p>
+        <h1>Overtid,<br />time for time</h1>
+        <div class="hero-row">
+          <p class="lead">Registrer overtiden, så fordeles timene automatisk på 50 % og 100 %, og du ser hva som skal utbetales eller avspaseres. Med lovens grenser og reglene for deltidsansatte.</p>
+          <a class="cta-pill" href="#verktoy">Regn ut overtid <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Fordeler timene på 50 % og 100 %</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></svg><span>Utbetaling eller avspasering</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V10M10 20V6M14 20v-8M18 20V4"/></svg><span>Lovens grenser per uke, 4 uker og år</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Merarbeid, hviletid og fritak</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- VERKTØY -->
+    <section id="verktoy" class="tools">
+      <!-- Overtidskalkulator -->
+      <form class="card tool" id="otForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kalkulator</p>
+            <h2>Overtid</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Oppgjør">
+            <button type="button" class="on" data-opp="ut">Utbetaling</button>
+            <button type="button" data-opp="av">Avspasering</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>Årslønn <em>100 % stilling</em></span>
+            <div class="suffix"><input type="text" id="otLonn" value="600 000" inputmode="numeric" /><i>kr</i></div>
+          </label>
+          <label class="field">
+            <span>Delingstall <em>timelønn</em></span>
+            <input type="number" id="otDiv" min="1000" max="2500" value="1850" inputmode="numeric" />
+          </label>
+        </div>
+
+        <div class="ot-rows-head"><span>Dato</span><span>Fra</span><span>Til</span><span></span></div>
+        <div id="otRows" class="ot-rows"></div>
+        <button type="button" class="ghost ot-add" id="otAdd">+ Legg til overtid</button>
+
+        <div class="out" id="otOut" aria-live="polite"></div>
+      </form>
+
+      <!-- Grenser -->
+      <form class="card tool" id="grForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Kontroll</p>
+            <h2>Overtidsgrenser</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Grunnlag">
+            <button type="button" class="on" data-avtale="0">Loven</button>
+            <button type="button" data-avtale="1">Avtale med tillitsvalgte</button>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <label class="field">
+            <span>Denne uken</span>
+            <div class="suffix"><input type="number" id="grUke" min="0" max="80" step="0.5" value="6" inputmode="decimal" /><i>t</i></div>
+          </label>
+          <label class="field">
+            <span>Siste 4 uker</span>
+            <div class="suffix"><input type="number" id="gr4" min="0" max="200" step="0.5" value="18" inputmode="decimal" /><i>t</i></div>
+          </label>
+          <label class="field">
+            <span>Siste 52 uker</span>
+            <div class="suffix"><input type="number" id="gr52" min="0" max="600" step="0.5" value="140" inputmode="decimal" /><i>t</i></div>
+          </label>
+        </div>
+        <small class="hint">Grensene gjelder overtid ut over den alminnelige arbeidstiden. Samlet arbeidstid kan i tillegg ikke være mer enn <b>13 timer per døgn</b> og <b>48 timer per uke</b>.</small>
+
+        <div class="out" id="grOut" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- SATSER -->
+    <section class="section" id="satser">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Satser</p>
+          <h2>Hva overtiden gir</h2>
+        </div>
+      </div>
+      <div class="ot-rates">
+        <article class="card ot-rate">
+          <span class="rate-label">Dagtid hverdager</span>
+          <b>+50 %</b>
+          <p>Overtid mandag til lørdag mellom kl. 06 og 21. Loven krever minst 40 %, Hovedtariffavtalen gir 50 %.</p>
+        </article>
+        <article class="card ot-rate hl">
+          <span class="rate-label">Kveld, natt og helg</span>
+          <b>+100 %</b>
+          <p>Overtid mellom kl. 21 og 06, og hele døgnet på søndager og helligdager.</p>
+        </article>
+        <article class="card ot-rate">
+          <span class="rate-label">Merarbeid (deltid)</span>
+          <b>+0 %</b>
+          <p>Ekstra timer for deltidsansatte opp til full stilling er merarbeid og betales med vanlig timelønn, uten overtidstillegg.</p>
+        </article>
+        <article class="card ot-rate">
+          <span class="rate-label">Timelønn</span>
+          <b>/ 1850</b>
+          <p>Timelønnen er årslønnen for 100 % stilling delt på 1850 ved 37,5 timers uke. Faste tillegg kan inngå. Sjekk HTA for andre arbeidstidsordninger.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EKSEMPLER -->
+    <section class="section" id="eksempler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Eksempler</p>
+          <h2>Slik blir det i praksis</h2>
+        </div>
+      </div>
+      <div class="examples" id="otExamples"></div>
+    </section>
+
+    <!-- REGLER -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Regelverk</p>
+          <h2>Godt å vite</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Hva er overtid?</h3>
+          <p>Arbeid ut over den <b>alminnelige arbeidstiden</b>, som i kommunen normalt er 37,5 timer i uken. Overtid skal bare brukes når det er et <b>særlig og tidsavgrenset behov</b>.</p>
+          <span class="ref">aml. § 10-6</span>
+        </article>
+        <article class="rule">
+          <h3>Pålagt overtid</h3>
+          <p>Overtiden skal være pålagt eller godkjent av arbeidsgiveren på forhånd. Arbeid den ansatte gjør på eget initiativ, gir ikke uten videre krav på overtidsbetaling.</p>
+          <span class="ref">HTA kap. 1 § 6</span>
+        </article>
+        <article class="rule">
+          <h3>Grenser etter loven</h3>
+          <p>Høyst <b>10 timer</b> per uke, <b>25 timer</b> per 4 uker og <b>200 timer</b> per 52 uker. Etter avtale med tillitsvalgte: 20 timer per uke, 50 timer per 4 uker og 300 timer per 52 uker.</p>
+          <span class="ref">aml. § 10-6 (4)–(5)</span>
+        </article>
+        <article class="rule">
+          <h3>Avspasering</h3>
+          <p>Etter avtale kan overtiden tas ut som fritid, time for time. <b>Overtidstillegget skal likevel utbetales.</b></p>
+          <span class="ref">aml. § 10-6 (12)</span>
+        </article>
+        <article class="rule">
+          <h3>Merarbeid for deltidsansatte</h3>
+          <p>Timer ut over avtalt arbeidstid, men innenfor full stilling, er merarbeid. Det gir vanlig timelønn. Først når den ansatte jobber mer enn full stilling, blir det overtid.</p>
+          <span class="ref">HTA kap. 1 § 6</span>
+        </article>
+        <article class="rule">
+          <h3>Hviletid</h3>
+          <p>Den ansatte skal ha minst <b>11 timer</b> sammenhengende fri per døgn og <b>35 timer</b> sammenhengende fri per uke. Overtid kan ikke tas fra den lovpålagte hvilen.</p>
+          <span class="ref">aml. §§ 10-8, 10-6 (8)</span>
+        </article>
+        <article class="rule">
+          <h3>Fritak fra overtid</h3>
+          <p>Den ansatte kan be om fritak av helsemessige eller viktige sosiale grunner, og gravide eller ammende kan kreve fritak.</p>
+          <span class="ref">aml. § 10-6 (3)</span>
+        </article>
+        <article class="rule">
+          <h3>Ledere</h3>
+          <p>Ansatte i <b>ledende eller særlig uavhengige stillinger</b> er unntatt fra arbeidstidsreglene og får normalt ikke overtidsbetaling. Lønnen skal da ta høyde for dette.</p>
+          <span class="ref">aml. § 10-12</span>
+        </article>
+        <article class="rule">
+          <h3>Feriepenger og pensjon</h3>
+          <p>Overtidsbetaling gir <b>feriepenger</b>, men er <b>ikke pensjonsgivende</b> i offentlig tjenestepensjon.</p>
+          <span class="ref">ferieloven § 10 · tjenestepensjon</span>
+        </article>
+      </div>
+      <p class="disclaimer">Siden er en kort, forenklet oversikt og ikke juridisk rådgivning. Hovedtariffavtalen har egne regler, blant annet for utrykning, høytidsaftener og andre arbeidstidsordninger. Kommunens rutiner og lokale avtaler gjelder.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="particles.js"></script>
+  <script src="overtid.js"></script>
+</body>
+</html>
