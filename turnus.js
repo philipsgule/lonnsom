@@ -118,7 +118,7 @@
     const ok = Math.abs(diff) < 0.01;
     $("#tsOut").innerHTML = `
       <div class="out-main">
-        <span class="out-label">${nf1.format(norm)} t × ${pct} % × ${uker} uker</span>
+        <span class="out-label">${nf1.format(norm)} t × ${pct} % × ${uker} uke${uker === 1 ? "" : "r"}</span>
         <b class="out-big">${nf2.format(skal)} <small>timer skal turnusen ha</small></b>
         <span class="out-sub">${nf2.format(norm * pct / 100)} t i snitt per uke</span>
       </div>

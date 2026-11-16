@@ -180,7 +180,7 @@
       const s = sprite(tcol);
       const r = p.r * p.z * grow;
       const tw = reduce ? 1 : 0.7 + 0.3 * Math.sin(time * 0.002 * (0.6 + p.z) + p.ph);
-      const alpha = p.vis * (0.28 + 0.47 * p.z) * tw;
+      const alpha = Math.min(1, p.vis * (0.28 + 0.47 * p.z) * tw * (1 + auroraLevel() * 1.4));
       const streak = Math.min(26, Math.abs(v) * p.z * 0.7);
       if (streak > 4) {
         ctx.strokeStyle = `rgba(${s.rgb},${(alpha * 0.3).toFixed(3)})`;
@@ -194,6 +194,80 @@
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
   }
+
+  // ---------- Påskeegg: nordlys ----------
+  // Startes utenfra med window.LSParticles.aurora(). Tegnes som lysgardiner over hele siden.
+  let auroraStart = 0, auroraEnd = 0;
+  const AURORA_MS = 8000;
+  // Bruker klokka direkte: tidsstempelet fra requestAnimationFrame kan ligge litt før start.
+  function auroraLevel() {
+    const t = performance.now();
+    if (t >= auroraEnd || t < auroraStart) return 0;
+    const k = (t - auroraStart) / (auroraEnd - auroraStart);
+    return Math.min(1, k / 0.15, (1 - k) / 0.25); // myk inn og ut
+  }
+  // Ferdigtegnet gardin-sprite: gjennomsiktig topp, sterk farge, falmende bunn
+  function curtain(rgb) {
+    const c = document.createElement("canvas"); c.width = 4; c.height = 256;
+    const g = c.getContext("2d"), grd = g.createLinearGradient(0, 0, 0, 256);
+    grd.addColorStop(0, `rgba(${rgb},0)`);
+    grd.addColorStop(0.18, `rgba(${rgb},0.9)`);
+    grd.addColorStop(0.45, `rgba(${rgb},0.35)`);
+    grd.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle = grd; g.fillRect(0, 0, 4, 256);
+    return c;
+  }
+  // Grønt, turkis, gult, fiolett og en rosa underkant – som ekte nordlys, og synlig mot den grønne heroen
+  const CURTAINS = [curtain("60,235,140"), curtain("70,225,215"), curtain("254,237,101"), curtain("150,110,255"), curtain("255,110,190")];
+  const auroraCanvas = document.createElement("canvas");
+  auroraCanvas.className = "aurora-layer";
+  auroraCanvas.setAttribute("aria-hidden", "true");
+  const actx = auroraCanvas.getContext("2d");
+  let auroraRunning = false;
+  function drawAurora(t) {
+    const lvl = auroraLevel();
+    const w = window.innerWidth, h = window.innerHeight;
+    if (auroraCanvas.width !== Math.round(w * DPR)) { auroraCanvas.width = Math.round(w * DPR); auroraCanvas.height = Math.round(h * DPR); }
+    actx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    actx.clearRect(0, 0, w, h);
+    if (lvl <= 0) return false;
+    actx.globalCompositeOperation = "lighter";
+    const bands = [
+      { y: 0.14, amp: 70, f: 0.0035, sp: 0.0007, c: 0, hgt: 0.55, a: 0.7 },
+      { y: 0.24, amp: 55, f: 0.0052, sp: -0.0009, c: 1, hgt: 0.45, a: 0.55 },
+      { y: 0.08, amp: 90, f: 0.0024, sp: 0.0005, c: 3, hgt: 0.55, a: 0.6 },
+      { y: 0.40, amp: 45, f: 0.0061, sp: 0.0011, c: 4, hgt: 0.22, a: 0.45 },
+      { y: 0.32, amp: 40, f: 0.0071, sp: 0.0012, c: 2, hgt: 0.3, a: 0.3 },
+    ];
+    const step = 6;
+    for (const b of bands) {
+      for (let x = -step; x < w + step; x += step) {
+        const y = h * b.y + Math.sin(x * b.f + t * b.sp) * b.amp + Math.sin(x * b.f * 2.7 - t * b.sp * 1.6) * b.amp * 0.35;
+        // Jevn, langsom variasjon i styrke (ingen striper), og overlappende strimler
+        const shimmer = 0.6 + 0.4 * Math.sin(x * 0.006 + t * 0.0018 + b.y * 10);
+        actx.globalAlpha = lvl * b.a * shimmer * 0.55;
+        actx.drawImage(CURTAINS[b.c], x - step, y - 30, step * 3, h * b.hgt);
+      }
+    }
+    actx.globalAlpha = 1;
+    actx.globalCompositeOperation = "source-over";
+    return true;
+  }
+  function auroraLoop(t) {
+    if (drawAurora(t)) requestAnimationFrame(auroraLoop);
+    else { auroraRunning = false; auroraCanvas.remove(); }
+  }
+  window.LSParticles = {
+    aurora() {
+      if (reduce) return false;
+      const now = performance.now();
+      auroraStart = now; auroraEnd = now + AURORA_MS;
+      if (!auroraCanvas.isConnected) document.body.appendChild(auroraCanvas);
+      drawAurora(now); // første bilde med en gang
+      if (!auroraRunning) { auroraRunning = true; requestAnimationFrame(auroraLoop); }
+      return true;
+    },
+  };
 
   // ---------- Størrelser ----------
   function resizeAll() {

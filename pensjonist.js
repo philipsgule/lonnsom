@@ -35,6 +35,7 @@
     const out = $("#alOut");
     if (birth == null) { out.innerHTML = `<p class="out-note">Velg fødselsdato.</p>`; return; }
     const today = todayUtc();
+    if (birth > today) { out.innerHTML = `<p class="out-note stop">Fødselsdatoen er frem i tid. Sjekk datoen.</p>`; return; }
     const m = milestones(birth, saer);
     let age = new Date(today).getUTCFullYear() - m.by;
     if (addYears(birth, age) > today) age--;
