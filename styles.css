@@ -870,3 +870,10 @@ button { font-family: inherit; cursor: pointer; }
   .ot-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 40px; }
   .ot-row input[type="date"] { grid-column: 1 / -1; }
 }
+
+/* ============ Turnus-siden ============ */
+.seg-wide { display: flex; width: 100%; }
+.seg-wide button { flex: 1; }
+.tu-rates { margin: 0 0 16px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+.tu-rates .hint { margin: -4px 0 12px; }
+.tu-norms .ot-rate b { font-size: clamp(30px, 3.2vw, 42px); }

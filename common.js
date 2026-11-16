@@ -9,6 +9,7 @@
     { href: "pensjon.html", title: "Pensjon", desc: "Folketrygd, tjenestepensjon og AFP" },
     { href: "permisjon.html", title: "Permisjoner", desc: "Foreldrepermisjon, sykt barn og mer" },
     { href: "overtid.html", title: "Overtid", desc: "Satser, utbetaling og grenser" },
+    { href: "turnus.html", title: "Turnus", desc: "Arbeidstid, tillegg og hviletid" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------
