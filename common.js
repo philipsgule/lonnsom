@@ -85,6 +85,7 @@
     { href: "turnus.html", title: "Turnus", desc: "Arbeidstid, tillegg og hviletid" },
     { href: "pensjonist.html", title: "Pensjonister", desc: "Pensjonistlønn, avkorting og alder" },
     { href: "kostnad.html", title: "Lønnskostnad", desc: "Hva en ansatt koster per år og time" },
+    { href: "kalkulatorer.html", title: "Kalkulatorer", desc: "Datoer, arbeidsdager og prosent" },
   ];
 
   // ---------- Sidemeny oppe til høyre ----------
@@ -256,7 +257,7 @@
   function holidays(y) {
     if (cache.has(y)) return cache.get(y);
     const e = easter(y);
-    const map = new Map([
+    const entries = [
       [Date.UTC(y, 0, 1), "Første nyttårsdag"],
       [addDays(e, -3), "Skjærtorsdag"],
       [addDays(e, -2), "Langfredag"],
@@ -269,7 +270,10 @@
       [addDays(e, 50), "Andre pinsedag"],
       [Date.UTC(y, 11, 25), "Første juledag"],
       [Date.UTC(y, 11, 26), "Andre juledag"],
-    ]);
+    ];
+    // To helligdager kan falle på samme dato (f.eks. 17. mai og 2. pinsedag i 2027) – vis begge navnene
+    const map = new Map();
+    for (const [t, name] of entries) map.set(t, map.has(t) ? `${map.get(t)} og ${name.toLowerCase()}` : name);
     cache.set(y, map);
     return map;
   }

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <script>/* Tema: lyst eller mørkt, settes før siden tegnes */try{var t=localStorage.getItem("lonnsom.tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script>/* Tilgangskode: skjul siden til koden er skrevet inn (se common.js) */try{if(localStorage.getItem("lonnsom.tilgang")!=="6b29b11ce68a262dfa3caf9f489eb4ff62b6685bd73b86b9f7c54dc0cec670ff")document.documentElement.classList.add("locked")}catch(e){document.documentElement.classList.add("locked")}</script>
+  <title>Lønnsom – Kalkulatorer</title>
+  <meta name="description" content="Prosentkalkulatorer og datokalkulator for lønnsmedarbeidere – dager mellom datoer, arbeidsdager uten helger og helligdager, og antall helligdager." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%230b4a2b%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23feed65%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+      Lønnsom
+    </a>
+    <nav class="nav-pill" aria-label="Seksjoner">
+      <a href="#datoer">Datoer</a>
+      <a href="#prosent">Prosent</a>
+      <a href="#regler">Godt å vite</a>
+    </nav>
+    <div class="page-menu" data-current="kalkulatorer.html"></div>
+  </header>
+
+  <section class="stage" id="top">
+    <div class="stage-bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span>
+    </div>
+    <canvas class="hero-particles" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="stage-inner">
+      <aside class="facts">
+        <p class="facts-head"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Hverdagsverktøy</p>
+        <div class="fact"><span>Datokalkulator</span><b>Arbeidsdager</b><i>uten helg og helligdag</i></div>
+        <div class="fact"><span>Norske helligdager</span><b>Alle år</b><i>påske og pinse</i></div>
+        <div class="fact"><span>Prosentkalkulatorer</span><b>6 stk.</b><i>lønn og stilling</i></div>
+      </aside>
+
+      <div class="hero">
+        <p class="eyebrow">Datoer · Arbeidsdager · Prosent</p>
+        <h1>Kalkulatorer for<br />hverdagen i lønn</h1>
+        <div class="hero-row">
+          <p class="lead">Regn ut dager mellom to datoer, arbeidsdager uten helger og helligdager, og alle de små prosentregnestykkene som dukker opp i lønnsarbeidet.</p>
+          <a class="cta-pill" href="#datoer">Start å regne <span>→</span></a>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Kalenderdager, arbeidsdager og helligdager</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Legg til arbeidsdager for frister</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg><span>Prosent av, prosentandel og endring</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Stillingsprosent og lønn</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main>
+    <!-- DATOER -->
+    <section id="datoer" class="tools dato-tools">
+      <form class="card tool" id="dForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Datokalkulator</p>
+            <h2>Dager mellom to datoer</h2>
+          </div>
+        </div>
+        <div class="grid2">
+          <label class="field">
+            <span>Fra og med</span>
+            <input type="date" id="dFra" />
+          </label>
+          <label class="field">
+            <span>Til</span>
+            <input type="date" id="dTil" />
+          </label>
+        </div>
+        <div class="field">
+          <span>Sluttdatoen</span>
+          <div class="seg seg-wide" role="group" aria-label="Sluttdatoen">
+            <button type="button" class="on" data-incl="1">Telles med</button>
+            <button type="button" data-incl="0">Telles ikke med</button>
+          </div>
+        </div>
+        <div class="out" id="dOut" aria-live="polite"></div>
+      </form>
+
+      <form class="card tool" id="aForm" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Frister</p>
+            <h2>Legg til arbeidsdager</h2>
+          </div>
+        </div>
+        <div class="grid2">
+          <label class="field">
+            <span>Startdato</span>
+            <input type="date" id="aStart" />
+          </label>
+          <label class="field">
+            <span>Antall arbeidsdager <em>minus = bakover</em></span>
+            <input type="number" id="aAntall" value="10" min="-1000" max="1000" step="1" inputmode="numeric" />
+          </label>
+        </div>
+        <small class="hint">Arbeidsdager er mandag–fredag uten helligdager. Telling starter dagen etter startdatoen.</small>
+        <div class="out" id="aOut" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- PROSENT -->
+    <section class="section" id="prosent">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Prosent</p>
+          <h2>Prosentkalkulatorer</h2>
+        </div>
+      </div>
+      <div class="pct-grid">
+        <form class="card pct" data-calc="avY" onsubmit="return false">
+          <h3>Prosent av et tall</h3>
+          <p class="pct-q">Hva er <input class="pin" data-k="a" value="12" inputmode="decimal" aria-label="Prosent" /> % av <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Tall" />?</p>
+          <div class="pct-out"></div>
+        </form>
+        <form class="card pct" data-calc="andel" onsubmit="return false">
+          <h3>Prosentandel</h3>
+          <p class="pct-q"><input class="pin wide" data-k="a" value="74 400" inputmode="decimal" aria-label="Del" /> er hvor mange prosent av <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Helhet" />?</p>
+          <div class="pct-out"></div>
+        </form>
+        <form class="card pct" data-calc="endring" onsubmit="return false">
+          <h3>Prosentvis endring</h3>
+          <p class="pct-q">Fra <input class="pin wide" data-k="a" value="600 000" inputmode="decimal" aria-label="Fra" /> til <input class="pin wide" data-k="b" value="624 000" inputmode="decimal" aria-label="Til" /></p>
+          <div class="pct-out"></div>
+        </form>
+        <form class="card pct" data-calc="pluss" onsubmit="return false">
+          <h3>Legg til eller trekk fra prosent</h3>
+          <p class="pct-q"><input class="pin wide" data-k="b" value="600 000" inputmode="decimal" aria-label="Tall" /> pluss <input class="pin" data-k="a" value="4,5" inputmode="decimal" aria-label="Prosent" /> % <small>(bruk minus for å trekke fra)</small></p>
+          <div class="pct-out"></div>
+        </form>
+        <form class="card pct" data-calc="stilling" onsubmit="return false">
+          <h3>Stillingsprosent fra timer</h3>
+          <p class="pct-q"><input class="pin" data-k="a" value="28" inputmode="decimal" aria-label="Timer per uke" /> timer per uke av <input class="pin" data-k="b" value="37,5" inputmode="decimal" aria-label="Full stilling" /> timer i full stilling</p>
+          <div class="pct-out"></div>
+        </form>
+        <form class="card pct" data-calc="lonn" onsubmit="return false">
+          <h3>Lønn ved stillingsprosent</h3>
+          <p class="pct-q"><input class="pin" data-k="a" value="80" inputmode="decimal" aria-label="Stillingsprosent" /> % av årslønn <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Årslønn" /></p>
+          <div class="pct-out"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- GODT Å VITE -->
+    <section class="section" id="regler">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Godt å vite</p>
+          <h2>Slik regnes det</h2>
+        </div>
+      </div>
+      <div class="rules">
+        <article class="rule">
+          <h3>Helligdager</h3>
+          <p>De offisielle helligdagene: 1. nyttårsdag, skjærtorsdag, langfredag, 1. og 2. påskedag, 1. mai, 17. mai, Kristi himmelfartsdag, 1. og 2. pinsedag og 1. og 2. juledag. <b>Julaften og nyttårsaften er ikke helligdager.</b></p>
+          <span class="ref">helligdagsfredloven · lov om 1. og 17. mai</span>
+        </article>
+        <article class="rule">
+          <h3>Arbeidsdager og virkedager</h3>
+          <p><b>Arbeidsdager</b> er mandag–fredag uten helligdager. <b>Virkedager</b> etter ferieloven er mandag–lørdag uten helligdager. Lørdag teller altså som virkedag, men ikke som arbeidsdag.</p>
+          <span class="ref">ferieloven § 2</span>
+        </article>
+        <article class="rule">
+          <h3>Sluttdatoen</h3>
+          <p>Fra 1. til 31. januar er 31 dager når sluttdatoen telles med, og 30 dager når den ikke gjør det. Ved fravær og permisjon telles som regel begge dagene med.</p>
+          <span class="ref">datokalkulator</span>
+        </article>
+        <article class="rule">
+          <h3>Prosent og prosentpoeng</h3>
+          <p>Går en sats fra 10 % til 12 %, er det en økning på <b>2 prosentpoeng</b>, men <b>20 prosent</b>. Prosentvis endring sammenligner med utgangspunktet.</p>
+          <span class="ref">prosentregning</span>
+        </article>
+        <article class="rule">
+          <h3>Tillegg og fradrag</h3>
+          <p>Et tillegg på 10 % og et fradrag på 10 % opphever ikke hverandre: 100 + 10 % = 110, og 110 − 10 % = 99.</p>
+          <span class="ref">prosentregning</span>
+        </article>
+        <article class="rule">
+          <h3>Stillingsprosent</h3>
+          <p>Stillingsprosenten er avtalte timer delt på timene i full stilling. Full stilling er 37,5 timer på dagtid, og 35,5 eller 33,6 timer i turnus.</p>
+          <span class="ref">HTA kap. 1 § 4</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Lønnsom</span>
+    <span>Beregningene skjer lokalt i nettleseren</span>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="search.js"></script>
+  <script src="particles.js"></script>
+  <script src="fun.js"></script>
+  <script src="kalkulatorer.js"></script>
+</body>
+</html>
