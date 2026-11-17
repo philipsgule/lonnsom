@@ -286,6 +286,8 @@
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "center" });
     el.classList.remove("hit"); void el.offsetWidth; el.classList.add("hit");
+    clearTimeout(el._hitTimer);
+    el._hitTimer = setTimeout(() => el.classList.remove("hit"), 5000);
   }
   // Noen eksempelkort lages av sidens eget skript, som lastes etter denne filen.
   // Vent derfor til alt er lastet før id-ene settes og vi hopper til kortet.

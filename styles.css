@@ -1009,8 +1009,12 @@ html.search-open { overflow: hidden; }
 .search-foot { display: flex; gap: 16px; padding: 10px 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); }
 .search-foot kbd { margin-right: 3px; }
 
-@keyframes hit { 0%, 30% { box-shadow: 0 0 0 3px rgba(254, 237, 101, 0.7), 0 0 40px -6px rgba(254, 237, 101, 0.6); } 100% { box-shadow: 0 0 0 0 rgba(254, 237, 101, 0); } }
-.hit { animation: hit 2.2s ease-out; border-color: rgba(254, 237, 101, 0.5) !important; }
+/* Søketreff: gul markering som fader helt ut i løpet av 5 sekunder */
+@keyframes hit {
+  0%, 20% { box-shadow: 0 0 0 3px rgba(254, 237, 101, 0.7), 0 0 40px -6px rgba(254, 237, 101, 0.6); border-color: rgba(254, 237, 101, 0.6); }
+  100% { box-shadow: 0 0 0 0 rgba(254, 237, 101, 0), 0 0 0 0 rgba(254, 237, 101, 0); }
+}
+.hit { animation: hit 5s ease-out; }
 
 .to-top { position: fixed; right: 22px; bottom: 22px; z-index: 70; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(6, 30, 17, 0.85); color: #fff; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.7); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .25s, transform .25s, background .15s; }
 .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
