@@ -140,6 +140,40 @@
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen) { setOpen(false); btn.focus(); } });
   }
 
+  // ---------- Footer (lik på alle sider, bygges fra PAGES) ----------
+  const foot = document.querySelector("footer.foot");
+  if (foot) {
+    const gText = document.getElementById("footG")?.textContent || "136 549 kr";
+    foot.innerHTML = `
+      <div class="foot-inner">
+        <div class="foot-brand">
+          <a class="brand" href="index.html" aria-label="Lønnsom – forsiden">
+            <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 15.5 15.5 8.5M10 6.5l1.3-1.3a4.6 4.6 0 0 1 6.5 6.5L16.5 13M14 17.5l-1.3 1.3a4.6 4.6 0 0 1-6.5-6.5L7.5 11"/></svg>
+            Lønnsom
+          </a>
+          <p>Oppslagsverk og kalkulatorer for lønnsmedarbeidere i kommunal sektor.</p>
+          <span class="foot-note">Beregningene skjer lokalt i nettleseren. Ikke juridisk rådgivning – sjekk alltid NAV, lovverket og tariffavtalen.</span>
+        </div>
+        <nav class="foot-col" aria-label="Alle sider">
+          <h4>Sider</h4>
+          <ul class="foot-links">${PAGES.map((p) => `<li><a href="${p.href}"${p.href === (menu?.dataset.current || "") ? ' aria-current="page"' : ""}>${p.title}</a></li>`).join("")}</ul>
+        </nav>
+        <div class="foot-col">
+          <h4>Satser</h4>
+          <dl class="foot-rates">
+            <div><dt>1 G fra 1.5.2026</dt><dd id="footG">${gText}</dd></div>
+            <div><dt>6 G</dt><dd>819 294 kr</dd></div>
+            <div><dt>Arbeidsgiverperiode</dt><dd>16 dager</dd></div>
+            <div><dt>Maks sykepenger</dt><dd>248 dager</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© ${new Date().getFullYear()} Lønnsom</span>
+        <a href="#top" class="foot-top">Til toppen <span aria-hidden="true">↑</span></a>
+      </div>`;
+  }
+
   // ---------- Topbar: frostet bakgrunn + aktiv seksjon i nav-pillen ----------
   const topbar = document.querySelector(".topbar");
   const navLinks = [...document.querySelectorAll('.nav-pill a[href^="#"]')];

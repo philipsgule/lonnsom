@@ -77,6 +77,36 @@
   document.addEventListener("click", () => { const p = box && box.querySelector(".cd-pop"); if (p) p.hidden = true; });
   renderCountdowns();
 
+  // ---------- Myk innglidning av kort og overskrifter ----------
+  // Starter når alt er lastet (også kort som sidens eget skript lager). Klassene fjernes etterpå,
+  // så hover-effekter og markeringer fungerer som vanlig.
+  const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    window.addEventListener("load", () => {
+      const SEL = "main .section-head, main .card, main .rule, main .lov-head";
+      const els = [...document.querySelectorAll(SEL)].filter((el) => !el.parentElement.closest(".card, .rule"));
+      if (!els.length) return;
+      document.documentElement.classList.add("reveal-on");
+      const groups = new Map();
+      els.forEach((el) => {
+        const n = groups.get(el.parentElement) || 0;
+        groups.set(el.parentElement, n + 1);
+        el.style.setProperty("--rd", `${Math.min(n, 5) * 70}ms`);
+        el.classList.add("reveal");
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          io.unobserve(el);
+          el.classList.add("in");
+          setTimeout(() => { el.classList.remove("reveal", "in"); el.style.removeProperty("--rd"); }, 1100);
+        });
+      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+      els.forEach((el) => io.observe(el));
+    });
+  }
+
   // ---------- Påskeegg: Konami-koden gir nordlys ----------
   const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
   let pos = 0;

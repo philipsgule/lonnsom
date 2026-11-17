@@ -1390,3 +1390,80 @@ html[data-theme="light"] .menu-panel::-webkit-scrollbar-thumb { background: rgba
   .menu-panel.opening, .menu-panel.closing, .menu-panel :is(a, .menu-head, .menu-lock) { animation: none !important; }
 }
 .search-kind.k-kalkulator { color: #fff; background: var(--green); }
+
+/* =====================================================================
+   Visuell finpuss
+   ===================================================================== */
+
+/* Myk innglidning (aktiveres av fun.js) */
+html.reveal-on .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--rd, 0ms); }
+html.reveal-on .reveal.in { opacity: 1; transform: none; }
+@media print { html.reveal-on .reveal { opacity: 1 !important; transform: none !important; } }
+
+/* Diskret skillelinje mellom seksjoner */
+.section { position: relative; }
+.section::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line-2) 20%, var(--line-2) 80%, transparent); }
+
+/* Samme løfte-effekt på alle innholdskort (bare med mus) */
+@media (hover: hover) and (pointer: fine) {
+  :is(.example, .ot-rate, .layer, .cohort, .checklist li, .pct, .rate, .month) { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  :is(.example, .ot-rate, .layer, .cohort:not(.on), .checklist li, .pct, .rate, .month):hover { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+}
+
+/* Tynt scrollefelt i sidens farger */
+html { scrollbar-width: thin; scrollbar-color: rgba(155, 217, 74, 0.35) var(--night); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--night); }
+::-webkit-scrollbar-thumb { background: rgba(155, 217, 74, 0.3); border-radius: 99px; border: 2px solid var(--night); }
+::-webkit-scrollbar-thumb:hover { background: rgba(155, 217, 74, 0.5); }
+html[data-theme="light"] { scrollbar-color: rgba(11, 74, 43, 0.3) #eef5f0; }
+html[data-theme="light"] ::-webkit-scrollbar-track { background: #eef5f0; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(11, 74, 43, 0.28); border-color: #eef5f0; }
+
+/* Tidslinjen på mobil: datoen over kortet */
+@media (max-width: 640px) {
+  .timeline li { grid-template-columns: 36px minmax(0, 1fr); row-gap: 4px; }
+  .timeline .node { grid-row: 1 / span 2; align-self: center; }
+  .timeline .tl-date { grid-column: 2; grid-row: 1; margin: 6px 0 0 2px; text-align: left; font-size: 12.5px; }
+  .timeline .tl-date small { display: inline; margin-left: 6px; }
+  .timeline .tl-body { grid-column: 2; grid-row: 2; }
+}
+
+/* Ny footer */
+.foot { display: block; max-width: 1280px; margin: 90px auto 0; padding: 0 28px; border-top: 0; color: var(--muted); font-size: 13.5px; }
+.foot-inner {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 40px;
+  padding: 40px 36px; border-radius: 26px; border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(232, 248, 238, 0.06), rgba(232, 248, 238, 0.02));
+}
+.foot-brand { display: grid; gap: 12px; align-content: start; }
+.foot-brand .brand { font-size: 20px; }
+.foot-brand p { margin: 0; max-width: 340px; font-size: 15px; line-height: 1.55; color: rgba(240, 251, 244, 0.85); }
+.foot-note { font-size: 12.5px; line-height: 1.5; color: var(--faint); max-width: 360px; }
+.foot-col h4 { margin: 4px 0 14px; font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.foot-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+.foot-links a { color: rgba(240, 251, 244, 0.82); text-decoration: none; font-size: 14px; transition: color .15s; }
+.foot-links a:hover { color: #fff; }
+.foot-links a[aria-current="page"] { color: var(--yellow); }
+.foot-rates { margin: 0; display: grid; gap: 8px; }
+.foot-rates div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.foot-rates div:last-child { border-bottom: 0; }
+.foot-rates dt { color: var(--muted); }
+.foot-rates dd { margin: 0; font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.foot b { color: inherit; font-family: inherit; }
+.foot-bottom { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 22px 8px 34px; font-size: 12.5px; color: var(--faint); }
+.foot-top { color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); transition: all .15s; }
+.foot-top:hover { color: #fff; border-color: var(--line-2); }
+@media (max-width: 900px) { .foot-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .foot-brand { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .foot { padding: 0 16px; margin-top: 60px; } .foot-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 28px 22px; } }
+
+html[data-theme="light"] .foot-inner { background: rgba(255, 255, 255, 0.7); border-color: rgba(13, 42, 26, 0.09); }
+html[data-theme="light"] .foot .brand { color: var(--ink); }
+html[data-theme="light"] .foot .brand-mark { stroke: var(--ink); }
+html[data-theme="light"] .foot-brand p { color: rgba(13, 42, 26, 0.8); }
+html[data-theme="light"] .foot-links a { color: rgba(13, 42, 26, 0.78); }
+html[data-theme="light"] .foot-links a:hover { color: var(--ink); }
+html[data-theme="light"] .foot-links a[aria-current="page"] { color: #137a43; font-weight: 600; }
+html[data-theme="light"] .foot-rates dd { color: var(--ink); }
+html[data-theme="light"] .foot-top:hover { color: var(--ink); }
+html[data-theme="light"] :is(.example, .ot-rate, .layer, .cohort:not(.on), .checklist li, .pct, .rate, .month):hover { box-shadow: 0 1px 0 #fff inset, 0 26px 50px -30px rgba(11, 74, 43, 0.4); }
