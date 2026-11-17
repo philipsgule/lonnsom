@@ -100,12 +100,12 @@
       <div class="menu-panel" id="pageMenuPanel" hidden>
         <p class="menu-head">Velg side</p>
         ${PAGES.map((p, i) => `
-          <a href="${p.href}"${p === current ? ' aria-current="page"' : ""}>
+          <a href="${p.href}" style="--i:${i}"${p === current ? ' aria-current="page"' : ""}>
             <span class="menu-n">0${i + 1}</span>
             <span class="menu-text"><b>${p.title}</b><small>${p.desc}</small></span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>`).join("")}
-        <button type="button" class="menu-lock">
+        <button type="button" class="menu-lock" style="--i:${PAGES.length}">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
           Lås nettsiden
         </button>
@@ -113,14 +113,31 @@
     menu.querySelector(".menu-lock").addEventListener("click", lockSite);
     const btn = menu.querySelector(".menu-btn");
     const panel = menu.querySelector(".menu-panel");
+    // Åpne: menyen vokser ut fra knappen. Lukke: den imploderer inn i knappen igjen.
+    const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let isOpen = false, closeTimer = null;
     const setOpen = (open) => {
+      if (open === isOpen) return;
+      isOpen = open;
       btn.setAttribute("aria-expanded", String(open));
-      panel.hidden = !open;
       menu.classList.toggle("open", open);
+      clearTimeout(closeTimer);
+      panel.classList.remove("opening", "closing");
+      if (open) {
+        panel.hidden = false;
+        panel.scrollTop = 0;
+        if (!reduceMotion) { void panel.offsetWidth; panel.classList.add("opening"); }
+      } else if (reduceMotion) {
+        panel.hidden = true;
+      } else {
+        void panel.offsetWidth;
+        panel.classList.add("closing");
+        closeTimer = setTimeout(() => { panel.hidden = true; panel.classList.remove("closing"); }, 340);
+      }
     };
-    btn.addEventListener("click", (e) => { e.stopPropagation(); setOpen(panel.hidden); });
+    btn.addEventListener("click", (e) => { e.stopPropagation(); setOpen(!isOpen); });
     document.addEventListener("click", (e) => { if (!menu.contains(e.target)) setOpen(false); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") { setOpen(false); btn.focus(); } });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen) { setOpen(false); btn.focus(); } });
   }
 
   // ---------- Topbar: frostet bakgrunn + aktiv seksjon i nav-pillen ----------

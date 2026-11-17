@@ -1351,3 +1351,41 @@ html[data-theme="light"] .pct-out { background: rgba(13, 42, 26, 0.035); }
 html[data-theme="light"] .pct-big { color: #137a43; }
 html[data-theme="light"] .pct-sub { color: rgba(13, 42, 26, 0.7); }
 html[data-theme="light"] .dm.hl { border-color: rgba(11, 74, 43, 0.25); background: radial-gradient(120% 140% at 0% 0%, rgba(254, 237, 101, 0.3), transparent 55%), linear-gradient(135deg, var(--green), var(--deep)); }
+
+/* Sidemenyen kan scrolles når den er høyere enn skjermen */
+.menu-panel {
+  max-height: calc(100vh - 96px);
+  max-height: calc(100dvh - 96px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 248, 238, 0.25) transparent;
+}
+.menu-panel::-webkit-scrollbar { width: 8px; }
+.menu-panel::-webkit-scrollbar-thumb { background: rgba(232, 248, 238, 0.22); border-radius: 99px; border: 2px solid transparent; background-clip: padding-box; }
+html[data-theme="light"] .menu-panel { scrollbar-color: rgba(13, 42, 26, 0.25) transparent; }
+html[data-theme="light"] .menu-panel::-webkit-scrollbar-thumb { background: rgba(13, 42, 26, 0.22); background-clip: padding-box; }
+
+/* Sidemeny: «portal» – vokser ut fra knappen og imploderer tilbake */
+.menu-panel { animation: none; transform-origin: calc(100% - 48px) -14px; }
+@keyframes menuPortalIn {
+  0% { clip-path: circle(0% at calc(100% - 48px) -14px); transform: scale(0.92); opacity: 0.4; filter: blur(4px); }
+  60% { filter: blur(0); }
+  100% { clip-path: circle(150% at calc(100% - 48px) -14px); transform: none; opacity: 1; filter: none; }
+}
+@keyframes menuPortalOut {
+  0% { clip-path: circle(150% at calc(100% - 48px) -14px); transform: none; opacity: 1; filter: none; }
+  100% { clip-path: circle(0% at calc(100% - 48px) -14px); transform: scale(0.86); opacity: 0; filter: blur(6px); }
+}
+@keyframes menuItemIn { from { opacity: 0; transform: translate(14px, -6px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes menuItemOut { to { opacity: 0; transform: translate(10px, -4px) scale(0.97); } }
+.menu-panel.opening { animation: menuPortalIn 0.5s cubic-bezier(0.2, 0.9, 0.25, 1) both; }
+.menu-panel.closing { animation: menuPortalOut 0.34s cubic-bezier(0.55, 0, 0.75, 0.3) both; pointer-events: none; }
+.menu-panel.opening :is(a, .menu-head, .menu-lock) { animation: menuItemIn 0.42s cubic-bezier(0.2, 0.9, 0.25, 1) both; animation-delay: calc(80ms + var(--i, 0) * 32ms); }
+.menu-panel.opening .menu-head { --i: -1; }
+.menu-panel.closing :is(a, .menu-head, .menu-lock) { animation: menuItemOut 0.16s ease-in both; }
+.page-menu.open .menu-btn { box-shadow: 0 0 0 4px rgba(254, 237, 101, 0.18), 0 14px 36px -14px rgba(0, 0, 0, 0.55); }
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel.opening, .menu-panel.closing, .menu-panel :is(a, .menu-head, .menu-lock) { animation: none !important; }
+}
