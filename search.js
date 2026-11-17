@@ -56,7 +56,11 @@
     { sel: ".ot-rate", title: ".rate-label", text: "p", kind: "Sats" },
     { sel: ".cohort", title: "h3", text: "p, .pj-list", kind: "Ordning" },
     { sel: ".layer", title: "h3", text: "p", kind: "Oversikt" },
+    { sel: ".pct", title: "h3", text: "", attrText: true, kind: "Kalkulator" },
+    { sel: "[data-search]", attrTitle: true, attrText: true, kind: "Kalkulator" },
   ];
+  const titleOf = (el, r) => (r.attrTitle ? el.dataset.search : el.querySelector(r.title)?.textContent || "").trim();
+  const idOf = (el, t) => el.id || "s-" + slug(t);
   function extract(doc, page) {
     const items = [];
     const pageTitle = (PAGES.find((p) => p.href === page) || {}).title || "";
@@ -66,10 +70,11 @@
     });
     ITEM_RULES.forEach((r) => {
       doc.querySelectorAll(`main ${r.sel}`).forEach((el) => {
-        const t = el.querySelector(r.title)?.textContent.trim();
+        const t = titleOf(el, r);
         if (!t) return;
-        const text = [...el.querySelectorAll(r.text)].map((x) => x.textContent.trim()).join(" ").replace(/\s+/g, " ");
-        items.push({ kind: r.kind, title: t, text, page, id: "s-" + slug(t), pageTitle });
+        let text = r.text ? [...el.querySelectorAll(r.text)].map((x) => x.textContent.trim()).join(" ") : "";
+        if (r.attrText && el.dataset.searchText) text = (el.dataset.searchText + " " + text).trim();
+        items.push({ kind: r.kind, title: t, text: text.replace(/\s+/g, " "), page, id: idOf(el, t), pageTitle });
       });
     });
     return items;
@@ -78,7 +83,7 @@
   function assignIds() {
     ITEM_RULES.forEach((r) => {
       document.querySelectorAll(`main ${r.sel}`).forEach((el) => {
-        const t = el.querySelector(r.title)?.textContent.trim();
+        const t = titleOf(el, r);
         if (t && !el.id) el.id = "s-" + slug(t);
       });
     });
@@ -127,6 +132,7 @@
       }
       if (!ok) continue;
       if (it.kind === "Begrep") score += 3;
+      if (it.kind === "Kalkulator") score += 4;
       if (it.page === currentFile) score += 1;
       scored.push({ it, score });
     }

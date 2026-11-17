@@ -1389,3 +1389,4 @@ html[data-theme="light"] .menu-panel::-webkit-scrollbar-thumb { background: rgba
 @media (prefers-reduced-motion: reduce) {
   .menu-panel.opening, .menu-panel.closing, .menu-panel :is(a, .menu-head, .menu-lock) { animation: none !important; }
 }
+.search-kind.k-kalkulator { color: #fff; background: var(--green); }

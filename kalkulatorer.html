@@ -66,7 +66,7 @@
   <main>
     <!-- DATOER -->
     <section id="datoer" class="tools dato-tools">
-      <form class="card tool" id="dForm" autocomplete="off" onsubmit="return false">
+      <form class="card tool" id="dForm" data-search="Dager mellom to datoer" data-search-text="datokalkulator kalenderdager arbeidsdager helligdager helger" autocomplete="off" onsubmit="return false">
         <div class="card-head">
           <div>
             <p class="eyebrow">Datokalkulator</p>
@@ -93,7 +93,7 @@
         <div class="out" id="dOut" aria-live="polite"></div>
       </form>
 
-      <form class="card tool" id="aForm" autocomplete="off" onsubmit="return false">
+      <form class="card tool" id="aForm" data-search="Legg til arbeidsdager" data-search-text="frist arbeidsdager dato frem bakover" autocomplete="off" onsubmit="return false">
         <div class="card-head">
           <div>
             <p class="eyebrow">Frister</p>
@@ -124,32 +124,32 @@
         </div>
       </div>
       <div class="pct-grid">
-        <form class="card pct" data-calc="avY" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="avY" onsubmit="return false">
           <h3>Prosent av et tall</h3>
           <p class="pct-q">Hva er <input class="pin" data-k="a" value="12" inputmode="decimal" aria-label="Prosent" /> % av <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Tall" />?</p>
           <div class="pct-out"></div>
         </form>
-        <form class="card pct" data-calc="andel" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="andel" onsubmit="return false">
           <h3>Prosentandel</h3>
           <p class="pct-q"><input class="pin wide" data-k="a" value="74 400" inputmode="decimal" aria-label="Del" /> er hvor mange prosent av <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Helhet" />?</p>
           <div class="pct-out"></div>
         </form>
-        <form class="card pct" data-calc="endring" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="endring" onsubmit="return false">
           <h3>Prosentvis endring</h3>
           <p class="pct-q">Fra <input class="pin wide" data-k="a" value="600 000" inputmode="decimal" aria-label="Fra" /> til <input class="pin wide" data-k="b" value="624 000" inputmode="decimal" aria-label="Til" /></p>
           <div class="pct-out"></div>
         </form>
-        <form class="card pct" data-calc="pluss" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="pluss" onsubmit="return false">
           <h3>Legg til eller trekk fra prosent</h3>
           <p class="pct-q"><input class="pin wide" data-k="b" value="600 000" inputmode="decimal" aria-label="Tall" /> pluss <input class="pin" data-k="a" value="4,5" inputmode="decimal" aria-label="Prosent" /> % <small>(bruk minus for å trekke fra)</small></p>
           <div class="pct-out"></div>
         </form>
-        <form class="card pct" data-calc="stilling" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="stilling" onsubmit="return false">
           <h3>Stillingsprosent fra timer</h3>
           <p class="pct-q"><input class="pin" data-k="a" value="28" inputmode="decimal" aria-label="Timer per uke" /> timer per uke av <input class="pin" data-k="b" value="37,5" inputmode="decimal" aria-label="Full stilling" /> timer i full stilling</p>
           <div class="pct-out"></div>
         </form>
-        <form class="card pct" data-calc="lonn" onsubmit="return false">
+        <form class="card pct" data-search-text="prosentkalkulator prosent" data-calc="lonn" onsubmit="return false">
           <h3>Lønn ved stillingsprosent</h3>
           <p class="pct-q"><input class="pin" data-k="a" value="80" inputmode="decimal" aria-label="Stillingsprosent" /> % av årslønn <input class="pin wide" data-k="b" value="620 000" inputmode="decimal" aria-label="Årslønn" /></p>
           <div class="pct-out"></div>
