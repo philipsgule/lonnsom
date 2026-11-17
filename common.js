@@ -93,7 +93,7 @@
     const current = PAGES.find((p) => p.href === menu.dataset.current) || PAGES[0];
     menu.innerHTML = `
       <button type="button" class="menu-btn" aria-expanded="false" aria-controls="pageMenuPanel" aria-haspopup="true">
-        <span class="menu-label">Side</span>${current.title}
+        <span class="menu-label">Side</span><span class="menu-title">${current.title}</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="menu-panel" id="pageMenuPanel" hidden>

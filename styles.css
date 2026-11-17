@@ -1264,3 +1264,20 @@ html[data-theme="light"] .k-select:focus { border-color: var(--green); box-shado
 html[data-theme="light"] :is(.out-table tr.k-total td, .exp-item b) { color: var(--ink); }
 html[data-theme="light"] .exp-item p { color: rgba(13, 42, 26, 0.8); }
 html[data-theme="light"] .stat.hl { background: rgba(254, 237, 101, 0.22); border-color: rgba(180, 160, 20, 0.4); }
+
+/* Smal mobil: få plass til logo, søk, tema og sidemeny på én linje */
+.menu-btn svg { flex: none; }
+.menu-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 480px) {
+  .topbar { gap: 8px; }
+  .topbar-right { gap: 6px; min-width: 0; }
+  .brand { gap: 0; font-size: 0; }
+  .brand-mark { width: 28px; height: 28px; }
+  .search-btn, .theme-btn { width: 40px; height: 40px; }
+  .menu-btn { min-width: 0; max-width: 170px; padding: 10px 10px 10px 14px; gap: 6px; }
+}
+html[data-theme="light"] .cohort-years { color: var(--ink); background: rgba(13, 42, 26, 0.06); border-color: var(--line-2); }
+html[data-theme="light"] .big .arrow { color: rgba(13, 42, 26, 0.4); }
+html[data-theme="light"] .pane.agp .big .arrow { color: rgba(255, 255, 255, 0.55); }
+html[data-theme="light"] .d.nav.ferie { color: var(--ink); }
+html[data-theme="light"] .cohort.on::after { color: var(--accent-ink); }
