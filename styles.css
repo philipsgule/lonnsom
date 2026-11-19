@@ -801,7 +801,7 @@ button { font-family: inherit; cursor: pointer; }
 .oms-10 em { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font: 500 10.5px var(--mono); font-style: normal; color: var(--muted); }
 
 .leave-grid .leave { padding-top: 20px; }
-.leave[hidden] { display: none; }
+.leave[hidden], .field[hidden] { display: none; }
 .pay { display: inline-block; margin-bottom: 12px; padding: 4px 10px; border-radius: 99px; font: 500 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
 .pay.lonn { background: rgba(254, 237, 101, 0.12); color: var(--yellow); border: 1px solid rgba(254, 237, 101, 0.3); }
 .pay.nav { background: rgba(31, 168, 94, 0.18); color: #8fe3b4; border: 1px solid rgba(31, 168, 94, 0.4); }

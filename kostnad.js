@@ -50,6 +50,17 @@
     };
   }
 
+  // Arbeidstidsordning: fast valg (1950 / 1846 / 1747 årstimer) eller egne timer per uke
+  let lastOrdning = $("#kOrdning").value;
+  function syncOrdning() {
+    const sel = $("#kOrdning"), uke = $("#kUke");
+    if (sel.value === "annet" && lastOrdning !== "annet") uke.value = lastOrdning;
+    lastOrdning = sel.value;
+    $("#kUkeWrap").hidden = sel.value !== "annet";
+    if (sel.value !== "annet") { uke.value = sel.value; return Number(sel.value); }
+    return Math.max(1, Number(uke.value) || 37.5);
+  }
+
   function read() {
     return {
       lonn: num($("#kLonn").value),
@@ -60,7 +71,7 @@
       ferieSats: Math.max(0, Number($("#kFerie").value) || 0),
       pensjonSats: Math.max(0, Number($("#kPensjon").value) || 0),
       forsikringSats: Math.max(0, Number($("#kForsikring").value) || 0),
-      ukeTimer: Math.max(1, Number($("#kUke").value) || 37.5),
+      ukeTimer: syncOrdning(),
       ferieUker: Math.max(0, Number($("#kFerieUker").value) || 0),
       syk: Math.max(0, Math.min(90, Number($("#kSyk").value) || 0)),
       aar: Number($("#kAar").value) || new Date(todayUtc()).getUTCFullYear() + 1,
@@ -120,7 +131,7 @@
     const p = [
       ["Kort fortalt", `En ansatt med ${kr(r.lonn)} i lønn i året koster kommunen omtrent <b>${kr(r.total)}</b> i året, eller <b>${kr(r.maaned)}</b> i måneden. For hver krone den ansatte får i lønn, betaler kommunen <b>${nf2.format(r.perKrone)} kr</b>.`],
       ["Hvorfor mer enn lønnen?", `I tillegg til lønnen kommer feriepenger (${kr(r.ferie)}), kommunens del av pensjonen (${kr(r.pensjon)}), arbeidsgiveravgift til staten (${kr(r.aga)}) og forsikringer (${kr(r.forsikring)}). Til sammen er dette ${kr(r.total - r.lonn)}, eller ${pct(r.paslag * 100)} på toppen av lønnen.`],
-      ["Timelønn og timepris", `Den ansatte får ${kr2(r.timelonn)} per time i lønn. Når alle kostnadene tas med, koster hver time i stillingen ${kr2(r.prisBetalt)}. Det er tallet å bruke når man sammenligner med for eksempel innleie.`],
+      ["Timelønn og timepris", `Den ansatte får ${kr2(r.timelonn)} per time i lønn (årslønn delt på ${nf.format(Math.round(r.ukeTimer * 52))} årstimer, altså ${nf1.format(r.ukeTimer)} timer per uke × 52 uker${r.tillegg ? ", inkludert faste tillegg" : ""}). Når alle kostnadene tas med, koster hver time i stillingen ${kr2(r.prisBetalt)}. Det er tallet å bruke når man sammenligner med for eksempel innleie.`],
       ["Hvorfor er en produktiv time dyrere?", `Av ${t(r.betalte)} i stillingen går omtrent ${t(r.ferieT)} til ferie, ${t(r.helligT)} til ${r.hellig} helligdager på hverdager i ${r.aar}, og ${t(r.sykT)} til sykefravær (${pct(r.syk)}). Da står det igjen omtrent <b>${t(r.produktive)}</b> på jobb. Fordelt på disse timene koster hver time <b>${kr2(r.prisProduktiv)}</b>.`],
       ["Om tallene", `Beregningen bruker ${pct(r.pensjonSats)} i pensjon og ${pct(r.syk)} sykefravær${r.syk === 8 ? " (eksempelverdi)" : ""}. Kommunens egen pensjonssats og enhetens faktiske sykefravær gir det mest presise tallet.`],
       ["Hva er ikke med?", `Overtid, ubekvemstillegg, vikarer ved fravær, opplæring, utstyr og lokaler er ikke med. Refusjon fra NAV ved sykefravær kan trekke kostnaden noe ned. Bruk tallet som grunnkostnad for stillingen.`],
@@ -158,12 +169,12 @@
         "En leder vil vite hva en ny helsefagarbeider i full stilling med 520 000 kr i årslønn koster, i en kommune i sone 1.",
         [["Lønn", kr(a.lonn)], ["Feriepenger 12 %", kr(a.ferie)], ["Pensjon 19,5 %", kr(a.pensjon)], ["Arbeidsgiveravgift 14,1 %", kr(a.aga)], ["Total per år", kr(a.total)], ["Per produktiv time", kr2(a.prisProduktiv)]],
         `For hver krone i lønn betaler kommunen ${nf2.format(a.perKrone)} kr.`,
-        { kLonn: "520 000", kPct: "100", kTillegg: "", kSone: "14.1", kFerie: "12", kPensjon: "19.5", kForsikring: "0", kUke: "37.5", kFerieUker: "5", kSyk: "8", kAar: String(yr) }) +
+        { kLonn: "520 000", kPct: "100", kTillegg: "", kSone: "14.1", kFerie: "12", kPensjon: "19.5", kForsikring: "0", kOrdning: "37.5", kUke: "37.5", kFerieUker: "5", kSyk: "8", kAar: String(yr) }) +
       card("S", "Sykepleier i turnus, sone 4", "80 % stilling · 35,5 t", "Sone 4",
         "Sykepleier med 640 000 kr i årslønn (100 %), i 80 % turnusstilling med 35,5 timers uke, i en kommune i sone 4. Sykefraværet i avdelingen er 10 %.",
         [["Lønn (80 %)", kr(b.lonn)], ["Arbeidsgiveravgift 5,1 %", kr(b.aga)], ["Total per år", kr(b.total)], ["Per betalt time", kr2(b.prisBetalt)], ["Per produktiv time", kr2(b.prisProduktiv)]],
         "Lavere arbeidsgiveravgift i sone 4 gjør påslaget mindre enn i sone 1.",
-        { kLonn: "640 000", kPct: "80", kTillegg: "", kSone: "5.1", kFerie: "12", kPensjon: "19.5", kForsikring: "0", kUke: "35.5", kFerieUker: "5", kSyk: "10", kAar: String(yr) });
+        { kLonn: "640 000", kPct: "80", kTillegg: "", kSone: "5.1", kFerie: "12", kPensjon: "19.5", kForsikring: "0", kOrdning: "35.5", kUke: "35.5", kFerieUker: "5", kSyk: "10", kAar: String(yr) });
   }
 
   // ---------- Input ----------
