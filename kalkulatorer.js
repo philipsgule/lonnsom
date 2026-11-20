@@ -93,6 +93,8 @@
   // ---------- Dager per måned ----------
   const MND = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"];
   const cap = (x) => x.replace(/^./, (c) => c.toUpperCase());
+  const MND3 = ["jan.", "feb.", "mar.", "apr.", "mai", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "des."];
+  const span = (a, b) => { const x = new Date(a), y = new Date(b); return `${x.getUTCDate()}.${a === b ? "" : "–" + y.getUTCDate() + "."} ${MND3[x.getUTCMonth()]}`; };
   function perMonth(fra, til) {
     let a = fra, b = til, swapped = false;
     if (b < a) { [a, b] = [b, a]; swapped = true; }
@@ -135,22 +137,22 @@
           <div><b>${mo.arbeid}</b><span>arbeidsdager</span></div>
           <div><b>${mo.kal}</b><span>kalenderdager</span></div>
         </div>
-        <p class="mc-range">${fmt(mo.fra)} – ${fmt(mo.til)}</p>
+        <p class="mc-range">Perioden i ${MND[mo.m]}: ${span(mo.fra, mo.til)}</p>
       </div>`;
   }
   function renderMonths() {
     const r = mLast, out = $("#mOut");
     const mo = r.months[mSel];
-    const rows = r.months.map((x, i) => `<tr class="mrow${i === mSel ? " on" : ""}" data-mi="${i}" tabindex="0"><td>${cap(MND[x.m])} ${x.y}<small>${fmt(x.fra)} – ${fmt(x.til)}</small></td><td>${x.arbeid}<small class="k-share">arbeidsdager</small></td><td>${x.kal}<small class="k-share">kalenderdager</small></td></tr>`).join("");
+    const rows = r.months.map((x, i) => `<tr class="mrow${i === mSel ? " on" : ""}" data-mi="${i}" tabindex="0" aria-current="${i === mSel}"><td>${cap(MND[x.m])} ${x.y}<small>${span(x.fra, x.til)}</small></td><td>${x.arbeid}</td><td>${x.kal}</td></tr>`).join("");
     out.innerHTML = `
       ${r.swapped ? `<p class="out-note">Datoene var i omvendt rekkefølge og er byttet om.</p>` : ""}
       <div class="dato-main dato-two">
-        <div class="dm hl"><b>${nf0.format(r.arbeid)}</b><span>arbeidsdager<small>mandag–fredag, ${fmt(r.a)} – ${fmt(r.b)}</small></span></div>
+        <div class="dm hl"><b>${nf0.format(r.arbeid)}</b><span>arbeidsdager<small>mandag–fredag i hele perioden</small></span></div>
         <div class="dm"><b>${nf0.format(r.kal)}</b><span>kalenderdager<small>første og siste dag telles med</small></span></div>
       </div>
       <div class="m-layout">
         ${monthCal(r, mo)}
-        <table class="out-table m-table">${rows}<tr class="k-total"><td>Sum</td><td>${nf0.format(r.arbeid)}</td><td>${nf0.format(r.kal)}</td></tr></table>
+        <table class="out-table m-table"><thead><tr><th>Måned</th><th><span class="th-full">Arbeidsdager</span><span class="th-short">Arbeid</span></th><th><span class="th-full">Kalenderdager</span><span class="th-short">Kalender</span></th></tr></thead><tbody>${rows}</tbody><tfoot><tr class="k-total"><td>Sum</td><td>${nf0.format(r.arbeid)}</td><td>${nf0.format(r.kal)}</td></tr></tfoot></table>
       </div>`;
   }
   function updateMaaned() {

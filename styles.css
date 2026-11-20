@@ -22,8 +22,9 @@
   --line: rgba(224, 244, 232, 0.1);
   --line-2: rgba(224, 244, 232, 0.18);
   --radius: 22px;
-  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Bricolage Grotesque", "Geist", system-ui, sans-serif;
   color-scheme: dark;
 }
 
@@ -1360,13 +1361,20 @@ html[data-theme="light"] .k-select, html[data-theme="light"] .cd-pop select {
 .mc-sum b { font-size: 24px; font-weight: 500; letter-spacing: -0.03em; color: var(--yellow); font-variant-numeric: tabular-nums; line-height: 1.1; }
 .mc-sum span { font-size: 12px; color: var(--muted); }
 .mc-range { margin: 0; text-align: center; font-size: 12px; color: var(--muted); }
-.m-table .mrow { cursor: pointer; transition: background 0.2s; }
-.m-table .mrow:hover, .m-table .mrow:focus-visible { background: rgba(232, 248, 238, 0.05); outline: none; }
-.m-table .mrow.on td:first-child { color: var(--yellow); }
-.m-table .mrow.on { background: rgba(254, 237, 101, 0.07); }
-.m-table td:not(:first-child) { text-align: right; padding-left: 12px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.m-table { align-self: start; }
+.m-table th { padding: 0 0 10px; font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); text-align: right; border-bottom: 1px solid var(--line-2); }
+.m-table th:first-child { text-align: left; padding-left: 14px; }
+.m-table td:first-child { padding-left: 14px; }
+.m-table td:not(:first-child) { text-align: right; padding-left: 12px; font-weight: 600; color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .m-table td small { margin-left: 0; font-weight: 400; }
+.m-table .mrow { cursor: pointer; transition: background 0.2s, box-shadow 0.2s; }
+.m-table .mrow:hover, .m-table .mrow:focus-visible { background: rgba(232, 248, 238, 0.04); outline: none; }
+.m-table .mrow.on { background: rgba(232, 248, 238, 0.06); box-shadow: inset 3px 0 0 var(--yellow); }
+.m-table .mrow.on td:first-child { color: #fff; font-weight: 600; }
+.m-table tfoot td:first-child { padding-left: 14px; }
+.th-short { display: none; }
 @media (max-width: 860px) { .m-layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .th-full { display: none; } .th-short { display: inline; } }
 @media (max-width: 420px) { .mc-cell { height: 34px; font-size: 13px; } .mcal { padding: 12px; } }
 
 
@@ -1514,8 +1522,8 @@ html[data-theme="light"] .mc-cell.first, html[data-theme="light"] .mc-cell.last 
 html[data-theme="light"] .mc-cell.hol::after { background: #c9a400; }
 html[data-theme="light"] .mc-sum div { background: #fff; }
 html[data-theme="light"] .mc-sum b { color: var(--green); }
-html[data-theme="light"] .m-table .mrow.on td:first-child { color: var(--green); }
-html[data-theme="light"] .m-table .mrow.on { background: rgba(31, 168, 94, 0.08); }
+html[data-theme="light"] .m-table .mrow.on td:first-child, html[data-theme="light"] .m-table td:not(:first-child) { color: var(--ink); }
+html[data-theme="light"] .m-table .mrow.on { background: rgba(31, 168, 94, 0.07); box-shadow: inset 3px 0 0 var(--green); }
 
 /* ============ Egne nedtrekksmenyer ============ */
 .dd { position: relative; }
@@ -1563,3 +1571,14 @@ html[data-theme="light"] .dd-list { background: #fff; border-color: rgba(13, 42,
 html[data-theme="light"] .dd-opt { color: rgba(13, 42, 26, 0.85); }
 html[data-theme="light"] .dd-opt.act { background: rgba(31, 168, 94, 0.09); color: var(--ink); }
 html[data-theme="light"] .dd-opt.on { color: var(--green); }
+
+/* ============ Titler og store tall: Bricolage Grotesque ============ */
+:is(h1, h2, .big, .maks-date, .out-big, .rate-row b, .ot-rate b, .dm b, .pct-big, .cd-num, .mc-sum b, .mc-head b, .stat b, .menu-title) {
+  font-family: var(--display);
+  font-optical-sizing: auto;
+}
+h1 { font-weight: 500; letter-spacing: -0.022em; font-variation-settings: "wdth" 90; line-height: 0.98; }
+h2 { font-weight: 500; letter-spacing: -0.025em; }
+.section-head h2 { font-weight: 500; letter-spacing: -0.035em; font-variation-settings: "wdth" 88; }
+.gate h1 { font-variation-settings: "wdth" 92; letter-spacing: -0.03em; }
+:is(.big, .maks-date, .out-big, .rate-row b, .ot-rate b, .dm b, .pct-big, .cd-num) { font-weight: 500; letter-spacing: -0.035em; }
