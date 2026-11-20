@@ -113,6 +113,27 @@
         <small class="hint">Arbeidsdager er mandag–fredag uten helligdager. Telling starter dagen etter startdatoen.</small>
         <div class="out" id="aOut" aria-live="polite"></div>
       </form>
+
+      <form class="card tool tool-wide" id="mForm" data-search="Dager per måned" data-search-text="datokalkulator kalenderdager arbeidsdager måned kalender mandag fredag periode" autocomplete="off" onsubmit="return false">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Datokalkulator</p>
+            <h2>Dager per måned</h2>
+          </div>
+        </div>
+        <div class="grid2">
+          <label class="field">
+            <span>Fra og med</span>
+            <input type="date" id="mFra" />
+          </label>
+          <label class="field">
+            <span>Til og med</span>
+            <input type="date" id="mTil" />
+          </label>
+        </div>
+        <small class="hint">Første og siste dag telles med. Arbeidsdager er mandag–fredag. Helligdager er markert i kalenderen, men ikke trukket fra.</small>
+        <div class="out" id="mOut" aria-live="polite"></div>
+      </form>
     </section>
 
     <!-- PROSENT -->

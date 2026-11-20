@@ -335,8 +335,121 @@
   const nf = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 0 });
   const nf1 = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1 });
 
+  // ---------- Egne nedtrekksmenyer ----------
+  // Den vanlige <select> blir liggende skjult (verdier og hendelser virker som før),
+  // mens en knapp og en liste i sidens stil vises i stedet for nettleserens standardmeny.
+  const CHEV = `<svg class="dd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
+  const CHECK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`;
+  const escHtml = (x) => String(x).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const ddAll = new Set();
+  let ddSeq = 0;
+  function enhanceSelect(sel) {
+    if (!sel || sel.dataset.dd) return;
+    sel.dataset.dd = "1";
+    const id = (sel.id || "dd" + ++ddSeq) + "-dd";
+    const wrap = document.createElement("div");
+    wrap.className = "dd";
+    sel.parentNode.insertBefore(wrap, sel);
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "dd-btn";
+    btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-controls", id);
+    const list = document.createElement("ul");
+    list.className = "dd-list"; list.id = id; list.tabIndex = -1; list.setAttribute("role", "listbox");
+    wrap.append(btn, sel, list); // knappen først, så <label> rundt aktiverer knappen
+    sel.classList.add("dd-native"); sel.tabIndex = -1; sel.setAttribute("aria-hidden", "true");
+
+    let active = -1, typed = "", typedAt = 0;
+    const items = () => [...list.children];
+    const refresh = () => {
+      const o = sel.selectedOptions[0];
+      btn.innerHTML = `<span class="dd-val">${escHtml(o ? o.textContent : "")}</span>${CHEV}`;
+    };
+    const build = () => {
+      list.innerHTML = [...sel.options].map((o, i) =>
+        `<li role="option" id="${id}-${i}" data-i="${i}" aria-selected="${o.selected}" class="dd-opt${o.selected ? " on" : ""}${o.disabled ? " dis" : ""}"><span>${escHtml(o.textContent)}${o.dataset.sub ? `<small>${escHtml(o.dataset.sub)}</small>` : ""}</span>${CHECK}</li>`).join("");
+    };
+    const setActive = (i) => {
+      const li = items();
+      if (!li.length) return;
+      active = Math.max(0, Math.min(li.length - 1, i));
+      li.forEach((x, k) => x.classList.toggle("act", k === active));
+      list.setAttribute("aria-activedescendant", li[active].id);
+      li[active].scrollIntoView({ block: "nearest" });
+    };
+    const move = (dir) => {
+      const li = items();
+      let i = active;
+      for (let n = 0; n < li.length; n++) { i += dir; if (i < 0 || i >= li.length) return; if (!sel.options[i].disabled) { setActive(i); return; } }
+    };
+    const isOpen = () => wrap.classList.contains("open");
+    const open = () => {
+      build();
+      const r = btn.getBoundingClientRect(), below = innerHeight - r.bottom, need = Math.min(300, list.scrollHeight) + 16;
+      wrap.classList.toggle("up", below < need && r.top > below);
+      wrap.classList.add("open");
+      wrap.closest(".card, .cd-pop")?.classList.add("dd-host");
+      btn.setAttribute("aria-expanded", "true");
+      setActive(Math.max(0, sel.selectedIndex));
+      list.focus({ preventScroll: true });
+    };
+    const close = (focus = true) => {
+      if (!isOpen()) return;
+      wrap.classList.remove("open");
+      wrap.closest(".dd-host")?.classList.remove("dd-host");
+      btn.setAttribute("aria-expanded", "false");
+      if (focus) btn.focus({ preventScroll: true });
+    };
+    const choose = (i) => {
+      if (i < 0 || sel.options[i].disabled) return;
+      const changed = sel.selectedIndex !== i;
+      sel.selectedIndex = i;
+      refresh();
+      close();
+      if (changed) {
+        sel.dispatchEvent(new Event("input", { bubbles: true }));
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    };
+    btn.addEventListener("click", () => (isOpen() ? close() : open()));
+    btn.addEventListener("keydown", (e) => {
+      if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) { e.preventDefault(); open(); }
+    });
+    list.addEventListener("keydown", (e) => {
+      const k = e.key;
+      if (k === "ArrowDown") { e.preventDefault(); move(1); }
+      else if (k === "ArrowUp") { e.preventDefault(); move(-1); }
+      else if (k === "Home") { e.preventDefault(); setActive(0); }
+      else if (k === "End") { e.preventDefault(); setActive(items().length - 1); }
+      else if (k === "Enter" || k === " ") { e.preventDefault(); choose(active); }
+      else if (k === "Escape") { e.preventDefault(); e.stopPropagation(); close(); }
+      else if (k === "Tab") close(false);
+      else if (k.length === 1 && /\S/.test(k)) {
+        const now = Date.now();
+        typed = (now - typedAt > 700 ? "" : typed) + k.toLowerCase(); typedAt = now;
+        const i = [...sel.options].findIndex((o) => o.textContent.trim().toLowerCase().startsWith(typed));
+        if (i >= 0) setActive(i);
+      }
+    });
+    list.addEventListener("click", (e) => { const li = e.target.closest(".dd-opt"); if (li) choose(Number(li.dataset.i)); });
+    list.addEventListener("mousemove", (e) => { const li = e.target.closest(".dd-opt"); if (li && Number(li.dataset.i) !== active) setActive(Number(li.dataset.i)); });
+    const outside = (e) => {
+      if (!wrap.isConnected) { document.removeEventListener("pointerdown", outside, true); return; }
+      if (isOpen() && !wrap.contains(e.target)) close(false);
+    };
+    document.addEventListener("pointerdown", outside, true);
+    sel._ddRefresh = refresh;
+    ddAll.add(sel);
+    refresh();
+  }
+  // Verdier som settes fra kode (eksempelknapper o.l.) vises i knappen
+  const ddRefreshAll = () => ddAll.forEach((s) => (s.isConnected ? s._ddRefresh() : ddAll.delete(s)));
+  document.addEventListener("input", ddRefreshAll, true);
+  document.addEventListener("change", ddRefreshAll, true);
+  document.addEventListener("click", () => setTimeout(ddRefreshAll), true);
+  document.querySelectorAll("select.k-select").forEach(enhanceSelect);
+
   window.LS = {
-    PAGES, initialHash, onWeb, cleanHref,
+    PAGES, initialHash, onWeb, cleanHref, enhanceSelect,
     DAY, parseDate, toIso, addDays, dow, todayUtc, holidayName,
     fmt: (t) => (t == null ? "–" : fDate.format(t).replace(/\.$/, "")),
     kr: (n) => nf.format(Math.round(n)) + " kr",

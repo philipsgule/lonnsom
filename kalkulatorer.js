@@ -90,6 +90,95 @@
       ${r.skipped.length ? `<p class="out-note">Hoppet over helligdager: ${r.skipped.map(([t, h]) => `<b>${h}</b> (${fmt(t)})`).join(", ")}.</p>` : ""}`;
   }
 
+  // ---------- Dager per måned ----------
+  const MND = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"];
+  const cap = (x) => x.replace(/^./, (c) => c.toUpperCase());
+  function perMonth(fra, til) {
+    let a = fra, b = til, swapped = false;
+    if (b < a) { [a, b] = [b, a]; swapped = true; }
+    const months = [];
+    let cur = null;
+    for (let t = a; t <= b; t += DAY) {
+      const d = new Date(t), y = d.getUTCFullYear(), m = d.getUTCMonth();
+      if (!cur || cur.y !== y || cur.m !== m) { cur = { y, m, kal: 0, arbeid: 0, fra: t, til: t }; months.push(cur); }
+      cur.kal++; cur.til = t;
+      const w = dow(t);
+      if (w !== 0 && w !== 6) cur.arbeid++;
+    }
+    const kal = months.reduce((s, x) => s + x.kal, 0), arbeid = months.reduce((s, x) => s + x.arbeid, 0);
+    return { a, b, swapped, months, kal, arbeid };
+  }
+
+  let mSel = 0, mKey = "", mLast = null;
+  function monthCal(r, mo) {
+    const first = Date.UTC(mo.y, mo.m, 1), days = new Date(Date.UTC(mo.y, mo.m + 1, 0)).getUTCDate();
+    const off = (dow(first) + 6) % 7;
+    let cells = "";
+    for (let i = 0; i < off; i++) cells += `<span class="mc-cell empty"></span>`;
+    for (let n = 1; n <= days; n++) {
+      const t = Date.UTC(mo.y, mo.m, n), w = dow(t), h = holidayName(t);
+      const inn = t >= r.a && t <= r.b;
+      const cls = ["mc-cell", inn ? "in" : "", w === 0 || w === 6 ? "we" : "", h ? "hol" : "", t === r.a ? "first" : "", t === r.b ? "last" : ""].filter(Boolean).join(" ");
+      cells += `<span class="${cls}"${h ? ` title="${h}"` : ""}>${n}</span>`;
+    }
+    const many = r.months.length > 1;
+    return `
+      <div class="mcal">
+        <div class="mc-head">
+          <button type="button" class="mc-nav" data-mnav="-1" aria-label="Forrige måned"${mSel === 0 ? " disabled" : ""}>‹</button>
+          <b>${cap(MND[mo.m])} ${mo.y}</b>
+          <button type="button" class="mc-nav" data-mnav="1" aria-label="Neste måned"${mSel === r.months.length - 1 ? " disabled" : ""}>›</button>
+        </div>
+        ${many ? `<p class="mc-pos">Måned ${mSel + 1} av ${r.months.length}</p>` : ""}
+        <div class="mc-grid" aria-hidden="true">${["ma", "ti", "on", "to", "fr", "lø", "sø"].map((d) => `<span class="mc-dow">${d}</span>`).join("")}${cells}</div>
+        <div class="mc-sum">
+          <div><b>${mo.arbeid}</b><span>arbeidsdager</span></div>
+          <div><b>${mo.kal}</b><span>kalenderdager</span></div>
+        </div>
+        <p class="mc-range">${fmt(mo.fra)} – ${fmt(mo.til)}</p>
+      </div>`;
+  }
+  function renderMonths() {
+    const r = mLast, out = $("#mOut");
+    const mo = r.months[mSel];
+    const rows = r.months.map((x, i) => `<tr class="mrow${i === mSel ? " on" : ""}" data-mi="${i}" tabindex="0"><td>${cap(MND[x.m])} ${x.y}<small>${fmt(x.fra)} – ${fmt(x.til)}</small></td><td>${x.arbeid}<small class="k-share">arbeidsdager</small></td><td>${x.kal}<small class="k-share">kalenderdager</small></td></tr>`).join("");
+    out.innerHTML = `
+      ${r.swapped ? `<p class="out-note">Datoene var i omvendt rekkefølge og er byttet om.</p>` : ""}
+      <div class="dato-main dato-two">
+        <div class="dm hl"><b>${nf0.format(r.arbeid)}</b><span>arbeidsdager<small>mandag–fredag, ${fmt(r.a)} – ${fmt(r.b)}</small></span></div>
+        <div class="dm"><b>${nf0.format(r.kal)}</b><span>kalenderdager<small>første og siste dag telles med</small></span></div>
+      </div>
+      <div class="m-layout">
+        ${monthCal(r, mo)}
+        <table class="out-table m-table">${rows}<tr class="k-total"><td>Sum</td><td>${nf0.format(r.arbeid)}</td><td>${nf0.format(r.kal)}</td></tr></table>
+      </div>`;
+  }
+  function updateMaaned() {
+    const fra = parseDate($("#mFra").value), til = parseDate($("#mTil").value);
+    const out = $("#mOut");
+    if (fra == null || til == null) { out.innerHTML = `<p class="out-note">Velg begge datoene.</p>`; return; }
+    if (Math.abs(til - fra) / DAY > 3660) { out.innerHTML = `<p class="out-note stop">Velg en periode på høyst 10 år.</p>`; return; }
+    const key = fra + ":" + til;
+    if (key !== mKey) { mKey = key; mSel = 0; }
+    mLast = perMonth(fra, til);
+    mSel = Math.min(mSel, mLast.months.length - 1);
+    renderMonths();
+  }
+  $("#mOut").addEventListener("click", (e) => {
+    const nav = e.target.closest("[data-mnav]"), row = e.target.closest("[data-mi]");
+    if (nav) mSel = Math.max(0, Math.min(mLast.months.length - 1, mSel + Number(nav.dataset.mnav)));
+    else if (row) mSel = Number(row.dataset.mi);
+    else return;
+    renderMonths();
+    if (nav) $(`#mOut [data-mnav="${nav.dataset.mnav}"]`)?.focus();
+  });
+  $("#mOut").addEventListener("keydown", (e) => {
+    const row = e.target.closest("[data-mi]");
+    if (!row || (e.key !== "Enter" && e.key !== " ")) return;
+    e.preventDefault(); mSel = Number(row.dataset.mi); renderMonths();
+    $(`#mOut [data-mi="${mSel}"]`)?.focus();
+  });
+
   // ---------- Prosent ----------
   const CALC = {
     avY: (a, b) => b == null || a == null ? null : [`${nf2.format(a)} % av ${nf2.format(b)} er`, nf2.format((a / 100) * b), ""],
@@ -127,14 +216,19 @@
   $("#dForm").addEventListener("change", updateDager);
   $("#aForm").addEventListener("input", updateArbeid);
   $("#aForm").addEventListener("change", updateArbeid);
+  $("#mForm").addEventListener("input", updateMaaned);
+  $("#mForm").addEventListener("change", updateMaaned);
 
   // Standard: inneværende år og i dag + 10 arbeidsdager
   const t = todayUtc(), y = new Date(t).getUTCFullYear();
   $("#dFra").value = toIso(Date.UTC(y, 0, 1));
   $("#dTil").value = toIso(Date.UTC(y, 11, 31));
   $("#aStart").value = toIso(t);
+  $("#mFra").value = toIso(t);
+  $("#mTil").value = toIso(Date.UTC(y, new Date(t).getUTCMonth() + 1, 12));
   updateDager();
   updateArbeid();
+  updateMaaned();
 
-  window.__kalk = { between, addWorkdays, CALC, parseNum };
+  window.__kalk = { between, addWorkdays, perMonth, CALC, parseNum };
 })();

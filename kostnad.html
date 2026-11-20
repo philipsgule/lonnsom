@@ -122,16 +122,20 @@
 
         <details class="adv">
           <summary>Arbeidstid og fravær <span>timepris · ferie · sykefravær</span></summary>
-          <div class="grid3">
-            <label class="field">
-              <span>Arbeidstidsordning</span>
-              <select id="kOrdning" class="k-select">
-                <option value="37.5" selected>37,5 t · 1950 årstimer</option>
-                <option value="35.5">35,5 t · 1846 årstimer</option>
-                <option value="33.6">33,6 t · 1747 årstimer</option>
-                <option value="annet">Annet …</option>
-              </select>
-            </label>
+          <label class="field">
+            <span>Arbeidstidsordning</span>
+            <select id="kOrdning" class="k-select">
+              <option value="37.5" data-sub="Dagtid" selected>37,5 t per uke · 1950 årstimer</option>
+              <option value="35.5" data-sub="Turnus med to-skift eller helgearbeid">35,5 t per uke · 1846 årstimer</option>
+              <option value="33.6" data-sub="Helkontinuerlig eller tredelt turnus">33,6 t per uke · 1747 årstimer</option>
+              <option value="annet" data-sub="Skriv inn timer per uke selv">Annet</option>
+            </select>
+          </label>
+          <label class="field" id="kUkeWrap" hidden>
+            <span>Timer per uke</span>
+            <div class="suffix"><input type="number" id="kUke" min="1" max="60" step="0.1" value="37.5" inputmode="decimal" /><i>t</i></div>
+          </label>
+          <div class="grid2">
             <label class="field">
               <span>Ferie</span>
               <div class="suffix"><input type="number" id="kFerieUker" min="0" max="8" step="1" value="5" inputmode="numeric" /><i>uker</i></div>
@@ -141,11 +145,6 @@
               <div class="suffix"><input type="number" id="kSyk" min="0" max="50" step="0.5" value="8" inputmode="decimal" /><i>%</i></div>
             </label>
           </div>
-          <small class="hint">Arbeidstid: <b>37,5 t</b> er vanlig dagtid. <b>35,5 t</b> gjelder turnus med to-skift eller helgearbeid, og <b>33,6 t</b> helkontinuerlig eller tredelt turnus. Velg «Annet» for andre ordninger.</small>
-          <label class="field" id="kUkeWrap" hidden>
-            <span>Timer per uke</span>
-            <div class="suffix"><input type="number" id="kUke" min="1" max="60" step="0.1" value="37.5" inputmode="decimal" /><i>t</i></div>
-          </label>
           <label class="field">
             <span>År <em>for helligdager</em></span>
             <input type="number" id="kAar" min="2024" max="2040" inputmode="numeric" />

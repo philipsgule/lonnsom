@@ -70,7 +70,8 @@
       </div>`;
     const pop = box.querySelector(".cd-pop"), sel = box.querySelector("#cdDay");
     sel.value = day;
-    box.querySelector(".cd-edit").addEventListener("click", (e) => { e.stopPropagation(); pop.hidden = !pop.hidden; if (!pop.hidden) sel.focus(); });
+    window.LS.enhanceSelect(sel);
+    box.querySelector(".cd-edit").addEventListener("click", (e) => { e.stopPropagation(); pop.hidden = !pop.hidden; if (!pop.hidden) (pop.querySelector(".dd-btn") || sel).focus(); });
     sel.addEventListener("change", () => { setDay(sel.value); renderCountdowns(); });
     pop.addEventListener("click", (e) => e.stopPropagation());
   }
