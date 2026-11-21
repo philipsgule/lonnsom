@@ -1615,3 +1615,40 @@ html[data-theme="light"] :is(main, .foot, .search, .menu-panel) { --yellow: #111
 .stage-bg { filter: blur(26px); }
 .b1 { width: 110%; height: 58%; left: 8%; top: 56%;
   background: radial-gradient(ellipse 46% 55% at 52% 14%, #ff5a2e 0%, #e3120b 24%, rgba(170, 12, 6, 0.8) 46%, rgba(80, 5, 2, 0.4) 66%, transparent 80%); }
+/* Heroen: én sirkel, mørk i midten og sterk rød ut mot kantene */
+.stage-bg { inset: 0; filter: none; background: radial-gradient(ellipse 75% 85% at 50% 50%, #050000 0%, #120101 28%, #3e0503 50%, #8f0a05 70%, #d0110a 88%, #e3120b 100%); }
+.stage-bg .blob { display: none; }
+.scrim { background: radial-gradient(ellipse 60% 55% at 20% 45%, rgba(8, 0, 0, 0.35), transparent 75%); }
+
+/* ============ Én bakgrunn for hele siden ============ */
+/* Vignetten ligger fast bak alt innhold, så fargen flyter sømløst fra hero og nedover */
+html { background: #050000; }
+html::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 95% 105% at 50% 50%, #050000 0%, #0b0101 45%, #1c0201 66%, #3d0503 84%, #620804 96%, #6e0904 100%);
+}
+body { background: transparent; }
+body::after { display: none; }               /* det mørke kantlaget motarbeidet de røde kantene */
+.stage { background: transparent; margin: 0; border-radius: 0; isolation: auto; }
+.stage-bg, .scrim { display: none; }
+@media (max-width: 640px) { .stage { margin: 0; border-radius: 0; } }
+
+/* Lyst tema: lys midte og myke røde kanter, mørk tekst også i heroen */
+html[data-theme="light"] { background: #ffffff; }
+html[data-theme="light"]::before {
+  background: radial-gradient(ellipse 95% 105% at 50% 50%, #ffffff 0%, #fcfcfc 50%, #f8eeed 72%, #f3d9d6 88%, #efc6c2 100%);
+}
+html[data-theme="light"] body { background: transparent; }
+html[data-theme="light"] .stage :is(h1, .lead, .fact b, .facts-head, .fact span, .features li, .cd-num, .cd-num small, .eyebrow) { color: var(--ink); text-shadow: none; }
+html[data-theme="light"] .stage :is(.cd-label, .cd-date, .fact i) { color: rgba(17, 17, 17, 0.62); }
+html[data-theme="light"] .stage .eyebrow { background: rgba(255, 255, 255, 0.7); border-color: rgba(17, 17, 17, 0.14); }
+html[data-theme="light"] .stage .features li { border-color: rgba(17, 17, 17, 0.35); background: rgba(255, 255, 255, 0.55); }
+html[data-theme="light"] .stage .features svg { stroke: var(--ink); }
+html[data-theme="light"] .stage :is(.facts, .cd) { background: rgba(255, 255, 255, 0.6); border-color: rgba(17, 17, 17, 0.18); }
+html[data-theme="light"] .stage .fact { border-color: rgba(17, 17, 17, 0.16); }
+html[data-theme="light"] .stage .fact i { background: rgba(17, 17, 17, 0.06); }
+html[data-theme="light"] .stage .cd-edit { color: var(--ink); border-color: rgba(17, 17, 17, 0.2); background: rgba(17, 17, 17, 0.05); }
+html[data-theme="light"] .stage .cta-pill { background: #111111; color: #ffffff; }
+html[data-theme="light"] .topbar .brand { color: var(--ink); }
+html[data-theme="light"] .topbar .brand-mark { stroke: var(--ink); }
+html[data-theme="light"] .topbar :is(.nav-pill, .search-btn, .theme-btn) { background: rgba(122, 8, 4, 0.9); border-color: rgba(122, 8, 4, 0.3); }
