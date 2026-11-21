@@ -430,7 +430,8 @@
         if (i >= 0) setActive(i);
       }
     });
-    list.addEventListener("click", (e) => { const li = e.target.closest(".dd-opt"); if (li) choose(Number(li.dataset.i)); });
+    // preventDefault: listen ligger inne i en <label>, som ellers ville «klikket» knappen og åpnet menyen igjen
+    list.addEventListener("click", (e) => { e.preventDefault(); const li = e.target.closest(".dd-opt"); if (li) choose(Number(li.dataset.i)); });
     list.addEventListener("mousemove", (e) => { const li = e.target.closest(".dd-opt"); if (li && Number(li.dataset.i) !== active) setActive(Number(li.dataset.i)); });
     const outside = (e) => {
       if (!wrap.isConnected) { document.removeEventListener("pointerdown", outside, true); return; }

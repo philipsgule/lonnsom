@@ -80,11 +80,11 @@
 
   // ---------- Visning ----------
   const PARTS = [
-    { key: "lonn", label: "Lønn", color: "var(--yellow)" },
+    { key: "lonn", label: "Lønn", color: "var(--text)" },
     { key: "ferie", label: "Feriepenger", color: "var(--lime)" },
     { key: "pensjon", label: "Pensjon", color: "var(--green)" },
-    { key: "aga", label: "Arbeidsgiveravgift", color: "#14834a" },
-    { key: "forsikring", label: "Forsikring o.l.", color: "rgba(150, 110, 255, 0.85)" },
+    { key: "aga", label: "Arbeidsgiveravgift", color: "#8c100b" },
+    { key: "forsikring", label: "Forsikring o.l.", color: "rgba(150, 150, 150, 0.85)" },
   ];
 
   function renderResult(r) {

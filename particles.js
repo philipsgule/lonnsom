@@ -11,7 +11,7 @@
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
   // ---------- Farger: grønn → lime → gul ----------
-  const GREEN = [31, 168, 94], LIME = [155, 217, 74], YELLOW = [254, 237, 101];
+  const GREEN = [227, 18, 11], LIME = [255, 77, 61], YELLOW = [255, 255, 255];
   const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
   const colorAt = (t) => (t < 0.5 ? mix(GREEN, LIME, t * 2) : mix(LIME, YELLOW, (t - 0.5) * 2));
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -220,7 +220,7 @@
     return c;
   }
   // Grønt, turkis, gult, fiolett og en rosa underkant – som ekte nordlys, og synlig mot den grønne heroen
-  const CURTAINS = [curtain("60,235,140"), curtain("70,225,215"), curtain("254,237,101"), curtain("150,110,255"), curtain("255,110,190")];
+  const CURTAINS = [curtain("227,18,11"), curtain("255,77,61"), curtain("255,255,255"), curtain("190,190,190"), curtain("255,140,130")];
   const auroraCanvas = document.createElement("canvas");
   auroraCanvas.className = "aurora-layer";
   auroraCanvas.setAttribute("aria-hidden", "true");
