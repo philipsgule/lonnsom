@@ -29,6 +29,7 @@
     ["Feriepengegrunnlag", "Lønnen som er utbetalt i opptjeningsåret, og som feriepengene regnes av.", "ferie.html"],
     ["Opptjeningsår og ferieår", "Feriepenger tjenes opp ett år (opptjeningsåret) og utbetales og brukes året etter (ferieåret).", "ferie.html"],
     ["Virkedag", "Alle dager unntatt søndager og helligdager. Lørdag er en virkedag etter ferieloven.", "ferie.html"],
+    ["Feriedag", "En dag mandag–fredag som brukes av ferien. En ferieuke er 5 feriedager, og 5 uker er 25 feriedager.", "ferie.html"],
     ["Påslagsmodellen", "Tjenestepensjonen for dem som er født 1963 eller senere: 5,7 % opptil 7,1 G og 18,1 % mellom 7,1 og 12 G.", "pensjon.html"],
     ["Bruttoordning", "Den gamle tjenestepensjonen for dem som er født før 1963: omtrent 66 % av sluttlønn, samordnet med folketrygden.", "pensjon.html"],
     ["AFP – avtalefestet pensjon", "Pensjon i offentlig sektor. Livsvarig tillegg fra 62 år for født 1963 eller senere.", "pensjon.html"],

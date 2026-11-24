@@ -48,7 +48,7 @@
         ${rows.map(([l, v]) => `<tr><td>${l}</td><td>${kr(v)}</td></tr>`).join("")}
         ${sats === "hta" ? `<tr class="muted"><td>Mer enn ferielovens minimum</td><td>+${kr(total - lovTotal)}</td></tr>` : ""}
       </table>
-      ${is60 ? `<p class="out-note ok">Den ansatte fyller ${aar - fodt} år i ${aar} og får også en <b>ekstra ferieuke</b> (6 virkedager).</p>` : ""}
+      ${is60 ? `<p class="out-note ok">Den ansatte fyller ${aar - fodt} år i ${aar} og får også en <b>ekstra ferieuke</b> (5 feriedager).</p>` : ""}
       ${fodt != null && !is60 && aar - fodt >= 55 ? `<p class="out-note">Den ansatte fyller 60 år i ${fodt + 60} og får da 60+-tillegget og en ekstra ferieuke.</p>` : ""}
     `;
     renderTimeline(aar);
@@ -75,31 +75,31 @@
       else if (d === 0) { c.push("we"); label += " · søndag (teller ikke)"; }
       else {
         virke++;
-        if (d === 6) { lor++; c.push("nav", "we"); label += " · lørdag (virkedag)"; }
-        else { arbeid++; c.push("nav"); label += " · virkedag"; }
+        if (d === 6) { lor++; c.push("we", "sat"); label += " · lørdag (teller ikke)"; }
+        else { arbeid++; c.push("nav"); label += " · feriedag"; }
       }
       strip += `<span class="${c.join(" ")}" title="${label}">${new Date(t).getUTCDate()}</span>`;
     }
 
     const y = new Date(fra).getUTCFullYear();
     const inMain = fra >= Date.UTC(y, 5, 1) && til <= Date.UTC(y, 8, 30);
-    const hovedferie = inMain && virke >= 18
-      ? `<p class="out-note ok">Ferien ligger i hovedferieperioden og har minst 18 virkedager, så retten til hovedferie er oppfylt.</p>`
-      : inMain ? `<p class="out-note">Ferien ligger i hovedferieperioden, men har færre enn 18 virkedager.</p>` : "";
+    const hovedferie = inMain && arbeid >= 15
+      ? `<p class="out-note ok">Ferien ligger i hovedferieperioden og er minst 3 uker (15 feriedager), så retten til hovedferie er oppfylt.</p>`
+      : inMain ? `<p class="out-note">Ferien ligger i hovedferieperioden, men er kortere enn 3 uker (15 feriedager).</p>` : "";
 
     el.fdOut.innerHTML = `
       <div class="out-main">
         <span class="out-label">${fmt(fra)} – ${fmt(til)} · ${days} ${days === 1 ? "dag" : "dager"}</span>
-        <b class="out-big">${virke} <small>virkedager</small></b>
-        <span class="out-sub">≈ ${nf1.format(virke / 6)} ferieuker · ${arbeid} arbeidsdager (man–fre)${lor ? ` · ${lor} lørdager` : ""}</span>
+        <b class="out-big">${arbeid} <small>${arbeid === 1 ? "feriedag" : "feriedager"}</small></b>
+        <span class="out-sub">≈ ${nf1.format(arbeid / 5)} ferieuker (mandag–fredag) · tilsvarer ${virke} virkedager etter ferieloven</span>
       </div>
       <div class="strip-wrap">
         <div class="dow">${["Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"].map((d) => `<span>${d}</span>`).join("")}</div>
         <div class="days">${strip}</div>
       </div>
       <div class="legend mini">
-        <span><i class="sw nav"></i>Virkedag</span>
-        <span><i class="sw sat"></i>Lørdag (virkedag)</span>
+        <span><i class="sw nav"></i>Feriedag</span>
+        <span><i class="sw we"></i>Lørdag og søndag</span>
         <span><i class="sw hol"></i>Helligdag</span>
       </div>
       ${hol.length ? `<p class="out-note">Helligdager som ikke teller som feriedager: ${hol.map(([t, h]) => `<b>${h}</b> (${fmt(t)})`).join(", ")}.</p>` : ""}
@@ -114,9 +114,9 @@
       { t: Date.UTC(Y, 0, 1), n: "JAN", date: `1. jan ${Y}`, title: "Ferieåret starter", body: "Ferien for året kan tas fra nå, og den betales med feriepengene som ble opptjent i fjor." },
       { t: Date.UTC(Y, 3, 1), n: "APR", date: `1. apr ${Y}`, title: "Siste frist for varsel om sommerferie", body: "Starter hovedferien 1. juni, må den ansatte ha fått beskjed senest nå (2 måneder før)." },
       { t: Date.UTC(Y, 5, 1), n: "JUN", date: `juni ${Y}`, title: "Feriepenger utbetales", body: "Vanlig praksis i kommunen er at feriepengene utbetales i juni, og at det samtidig trekkes lønn for feriedagene.", key: true },
-      { t: Date.UTC(Y, 5, 1), n: "SOM", date: `1. jun – 30. sep`, title: "Hovedferieperioden", body: "Den ansatte kan kreve 18 virkedager sammenhengende ferie i denne perioden.", key: true },
-      { t: Date.UTC(Y, 8, 30), n: "SEP", date: `30. sep ${Y}`, title: "Hovedferieperioden er slutt", body: "Den som begynner i jobben etter denne datoen, kan bare kreve 6 virkedager ferie i år." },
-      { t: Date.UTC(Y, 11, 31), n: "DES", date: `31. des ${Y}`, title: "Ferieåret er slutt", body: "Ferie som ikke er tatt, kan bare overføres etter skriftlig avtale (inntil 12 virkedager) eller hvis den ansatte var syk." },
+      { t: Date.UTC(Y, 5, 1), n: "SOM", date: `1. jun – 30. sep`, title: "Hovedferieperioden", body: "Den ansatte kan kreve 3 uker (15 feriedager) sammenhengende ferie i denne perioden.", key: true },
+      { t: Date.UTC(Y, 8, 30), n: "SEP", date: `30. sep ${Y}`, title: "Hovedferieperioden er slutt", body: "Den som begynner i jobben etter denne datoen, kan bare kreve 1 uke (5 feriedager) ferie i år." },
+      { t: Date.UTC(Y, 11, 31), n: "DES", date: `31. des ${Y}`, title: "Ferieåret er slutt", body: "Ferie som ikke er tatt, kan bare overføres etter skriftlig avtale (inntil 2 uker, 10 feriedager) eller hvis den ansatte var syk." },
     ];
     el.timeline.innerHTML = items.map((x) => {
       const past = x.t <= today;

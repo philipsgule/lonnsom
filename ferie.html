@@ -7,7 +7,7 @@
   <script>/* Tema: lyst eller mørkt, settes før siden tegnes */try{var t=localStorage.getItem("lonnsom.tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
   <script>/* Tilgangskode: skjul siden til koden er skrevet inn (se common.js) */try{if(localStorage.getItem("lonnsom.tilgang")!=="6b29b11ce68a262dfa3caf9f489eb4ff62b6685bd73b86b9f7c54dc0cec670ff")document.documentElement.classList.add("locked")}catch(e){document.documentElement.classList.add("locked")}</script>
   <title>Lønnsom – Ferie og feriepenger</title>
-  <meta name="description" content="Ferie og feriepenger i kommunal sektor forklart kort – med feriepengekalkulator og teller for virkedager." />
+  <meta name="description" content="Ferie og feriepenger i kommunal sektor forklart kort – med feriepengekalkulator og teller for feriedager." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%237a0804%27/%3E%3Cpath d=%27M12 20l8-8M13.5 9.5l1.6-1.6a5 5 0 0 1 7 7L20.5 16.5M18.5 22.5l-1.6 1.6a5 5 0 0 1-7-7l1.6-1.6%27 fill=%27none%27 stroke=%27%23ffffff%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,14 +51,14 @@
         <p class="eyebrow">Ferieloven · Hovedtariffavtalen (KS)</p>
         <h1>Ferie og feriepenger,<br />enkelt forklart</h1>
         <div class="hero-row">
-          <p class="lead">En kort oversikt over ferie og feriepenger for ansatte i kommunen. Du kan regne ut feriepengene og telle hvor mange virkedager en ferie bruker.</p>
+          <p class="lead">En kort oversikt over ferie og feriepenger for ansatte i kommunen. Du kan regne ut feriepengene og telle hvor mange feriedager en ferie bruker.</p>
           <a class="cta-pill" href="#verktoy">Regn ut feriepenger <span>→</span></a>
         </div>
       </div>
 
       <ul class="features">
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/></svg><span>Feriepengekalkulator for kommunal sektor</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Teller virkedager og helligdager i ferien</span></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Teller feriedager (man–fre) og helligdager</span></li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Ferieåret steg for steg</span></li>
         <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z"/><path d="M12 9v6M9 12h6"/></svg><span>Sykdom før og under ferien</span></li>
       </ul>
@@ -107,7 +107,7 @@
       </form>
 
       <!-- Feriedager -->
-      <form class="card tool" id="fdForm" data-search="Feriedagteller" data-search-text="feriedager virkedager helligdager hovedferie lørdag" autocomplete="off" onsubmit="return false">
+      <form class="card tool" id="fdForm" data-search="Feriedagteller" data-search-text="feriedager arbeidsdager virkedager helligdager hovedferie mandag fredag" autocomplete="off" onsubmit="return false">
         <div class="card-head">
           <div>
             <p class="eyebrow">Teller</p>
@@ -125,7 +125,7 @@
             <input type="date" id="fdTil" />
           </label>
         </div>
-        <small class="hint">Ferieloven teller <b>virkedager</b>, det vil si alle dager unntatt søndager og helligdager. Lørdager teller altså med. En ferieuke er 6 virkedager.</small>
+        <small class="hint">Kalkulatoren teller <b>feriedager mandag–fredag</b>. Helger og helligdager teller ikke. En ferieuke er 5 feriedager, og 5 uker er 25 feriedager. Ferieloven bruker virkedager (mandag–lørdag), der en uke er 6 dager.</small>
 
         <div class="out" id="fdOut" aria-live="polite"></div>
       </form>
@@ -142,12 +142,12 @@
       <div class="rate-grid">
         <div class="card rate">
           <span class="rate-label">Ferieloven (minimum)</span>
-          <div class="rate-row"><div><b>25</b><span>virkedager<br />4 uker + 1 dag</span></div><div><b>10,2 %</b><span>feriepenger</span></div></div>
-          <div class="rate-row sub60"><div><b>+6</b><span>virkedager<br />fra 60 år</span></div><div><b>12,5 %</b><span>feriepenger<br />fra 60 år</span></div></div>
+          <div class="rate-row"><div><b>4 uker</b><span>+ 1 dag (21 feriedager)<br />25 virkedager i loven</span></div><div><b>10,2 %</b><span>feriepenger</span></div></div>
+          <div class="rate-row sub60"><div><b>+5</b><span>feriedager<br />fra 60 år</span></div><div><b>12,5 %</b><span>feriepenger<br />fra 60 år</span></div></div>
         </div>
         <div class="card rate hl">
           <span class="rate-label">Kommunal sektor (HTA)</span>
-          <div class="rate-row"><div><b>5 uker</b><span>lovfestet + avtalefestet ferie</span></div><div><b>12 %</b><span>feriepenger</span></div></div>
+          <div class="rate-row"><div><b>5 uker</b><span>25 feriedager (man–fre)<br />lovfestet + avtalefestet</span></div><div><b>12 %</b><span>feriepenger</span></div></div>
           <div class="rate-row sub60"><div><b>+1 uke</b><span>ekstra ferie<br />fra 60 år</span></div><div><b>14,3 %</b><span>feriepenger<br />fra 60 år</span></div></div>
         </div>
       </div>
@@ -184,7 +184,7 @@
             <li><span>12 % av 1 000 000 kr</span><b>120 000 kr</b></li>
             <li><span>2,3 % tillegg, bare av 6 G (819 294 kr)</span><b>18 844 kr</b></li>
             <li><span>Feriepenger i juni 2027</span><b>138 844 kr</b></li>
-            <li><span>Ekstra ferieuke fordi han er over 60</span><b>6 virkedager</b></li>
+            <li><span>Ekstra ferieuke fordi han er over 60</span><b>5 feriedager</b></li>
           </ol>
           <p class="ex-note">Uten 6G-taket ville tillegget vært 23 000 kr. Beløpet for G er per 1. mai 2026.</p>
           <button type="button" class="primary ex-btn" data-form="fpForm" data-scroll="#verktoy" data-fill='{"fpGrunnlag": "1 000 000", "fpAar": "2027", "fpFodt": "1966", "fpG": "136 549"}' data-click='[data-sats="hta"]'>Prøv i kalkulatoren</button>
@@ -193,14 +193,14 @@
           <header class="ex-head">
             <span class="ex-avatar">M</span>
             <div><h3>Mona, barnehagelærer</h3><p>Påskeferie 2027</p></div>
-            <span class="ex-tag">Virkedager</span>
+            <span class="ex-tag">Feriedager</span>
           </header>
           <p class="ex-text">Mona har fri fra mandag 22. mars til fredag 2. april 2027, til sammen 12 dager. Hvor mange feriedager bruker hun?</p>
           <ol class="ex-steps">
             <li><span>Kalenderdager</span><b>12</b></li>
             <li><span>Skjærtorsdag, langfredag, 1. og 2. påskedag teller ikke</span><b>− 4</b></li>
-            <li><span>Virkedager brukt (lørdag 27. mars teller med)</span><b>8</b></li>
-            <li><span>Arbeidsdager (mandag–fredag)</span><b>7</b></li>
+            <li><span>Lørdag 27. mars teller ikke</span><b>− 1</b></li>
+            <li><span>Feriedager brukt (mandag–fredag)</span><b>7</b></li>
           </ol>
           <p class="ex-note">Fordi helligdagene ikke regnes som feriedager, gir påsken mange fridager for få feriedager.</p>
           <button type="button" class="primary ex-btn" data-form="fdForm" data-scroll="#verktoy" data-fill='{"fdFra": "2027-03-22", "fdTil": "2027-04-02"}'>Prøv i kalkulatoren</button>
@@ -219,7 +219,7 @@
       <div class="rules">
         <article class="rule">
           <h3>Ferierett</h3>
-          <p>Ferieloven gir <b>25 virkedager</b> ferie i året, altså 4 uker og 1 dag. Hovedtariffavtalen gir i tillegg avtalefestet ferie, så ansatte i kommunen har <b>5 uker</b> ferie i året.</p>
+          <p>Ansatte i kommunen har <b>5 uker</b> ferie i året, altså <b>25 feriedager</b> når man teller mandag–fredag. Ferieloven gir 4 uker og 1 dag (25 virkedager), og hovedtariffavtalen gir resten som avtalefestet ferie.</p>
           <span class="ref">ferieloven § 5 · HTA</span>
         </article>
         <article class="rule">
@@ -229,12 +229,12 @@
         </article>
         <article class="rule">
           <h3>Fra 60 år</h3>
-          <p>Ansatte som fyller 60 år i løpet av ferieåret, får <b>en ekstra ferieuke</b> (6 virkedager) og et tillegg på <b>2,3 %</b> i feriepenger. Tillegget regnes ikke av den delen av grunnlaget som er over <b>6 G</b>.</p>
+          <p>Ansatte som fyller 60 år i løpet av ferieåret, får <b>en ekstra ferieuke</b> (5 feriedager) og et tillegg på <b>2,3 %</b> i feriepenger. Tillegget regnes ikke av den delen av grunnlaget som er over <b>6 G</b>.</p>
           <span class="ref">ferieloven §§ 5, 10</span>
         </article>
         <article class="rule">
           <h3>Hovedferie</h3>
-          <p>Den ansatte kan kreve <b>18 virkedager</b> sammenhengende ferie i perioden <b>1. juni til 30. september</b>.</p>
+          <p>Den ansatte kan kreve <b>3 uker</b> (15 feriedager) sammenhengende ferie i perioden <b>1. juni til 30. september</b>.</p>
           <span class="ref">ferieloven § 7</span>
         </article>
         <article class="rule">
@@ -259,12 +259,12 @@
         </article>
         <article class="rule">
           <h3>Overføring og forskuddsferie</h3>
-          <p>Den ansatte og arbeidsgiveren kan avtale skriftlig å overføre inntil <b>12 virkedager</b> til neste ferieår, eller å ta inntil 12 virkedager ferie på forskudd. Ferie som ikke ble tatt på grunn av sykdom, kan overføres.</p>
+          <p>Den ansatte og arbeidsgiveren kan avtale skriftlig å overføre inntil <b>2 uker</b> (10 feriedager) til neste ferieår, eller å ta inntil 2 uker ferie på forskudd. Ferie som ikke ble tatt på grunn av sykdom, kan overføres.</p>
           <span class="ref">ferieloven § 7</span>
         </article>
         <article class="rule">
           <h3>Nyansatt</h3>
-          <p>En nyansatt har rett til ferie, men ikke alltid til feriepenger for hele ferien. Begynner den ansatte etter <b>30. september</b>, kan hen bare kreve 6 virkedager ferie det året.</p>
+          <p>En nyansatt har rett til ferie, men ikke alltid til feriepenger for hele ferien. Begynner den ansatte etter <b>30. september</b>, kan hen bare kreve 1 uke (5 feriedager) ferie det året.</p>
           <span class="ref">ferieloven § 5</span>
         </article>
         <article class="rule">

@@ -1652,3 +1652,7 @@ html[data-theme="light"] .stage .cta-pill { background: #111111; color: #ffffff;
 html[data-theme="light"] .topbar .brand { color: var(--ink); }
 html[data-theme="light"] .topbar .brand-mark { stroke: var(--ink); }
 html[data-theme="light"] .topbar :is(.nav-pill, .search-btn, .theme-btn) { background: rgba(122, 8, 4, 0.9); border-color: rgba(122, 8, 4, 0.3); }
+/* Kalenderdager: helg-prøve i forklaringen, og lesbare NAV-/feriedager i lyst tema */
+.sw.we { background: transparent; border: 1px solid var(--line-2); }
+html[data-theme="light"] .d.nav { background: #111111; color: #ffffff; }
+html[data-theme="light"] .d.nav.we { background: rgba(17, 17, 17, 0.35); color: #ffffff; }
